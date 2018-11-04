@@ -11,15 +11,25 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vertical.CommandLine", "src
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vertical.CommandLine.Tests", "test\Vertical.CommandLine.Tests\Vertical.CommandLine.Tests.csproj", "{10615ADB-6D94-45FF-B422-5216E23D7DF8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Basic", "samples\Basic\Basic.csproj", "{6C8A3F7D-9D30-4650-8F93-D21705698BF3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Basic", "samples\Basic\Basic.csproj", "{6C8A3F7D-9D30-4650-8F93-D21705698BF3}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{5923275C-C5E5-436D-9850-7E22781ECB4E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommandPattern", "samples\CommandPattern\CommandPattern.csproj", "{F15C37F3-964B-4A26-AAD8-6C23D0213A69}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommandPattern", "samples\CommandPattern\CommandPattern.csproj", "{F15C37F3-964B-4A26-AAD8-6C23D0213A69}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ComplexMapping", "samples\ComplexMapping\ComplexMapping.csproj", "{CCC5E550-58FD-48B7-9FF4-8F6703F46E6D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ComplexMapping", "samples\ComplexMapping\ComplexMapping.csproj", "{CCC5E550-58FD-48B7-9FF4-8F6703F46E6D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LessHelp", "samples\LessHelp\LessHelp.csproj", "{4A386925-B23D-48C0-B951-BD5F68EEF53B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LessHelp", "samples\LessHelp\LessHelp.csproj", "{4A386925-B23D-48C0-B951-BD5F68EEF53B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{11B94181-470B-418D-80B0-C9124438913E}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		appveyor.yml = appveyor.yml
+		build.ps1 = build.ps1
+		LICENSE.txt = LICENSE.txt
+		README.md = README.md
+		vertical-commandline.sln.licenseheader = vertical-commandline.sln.licenseheader
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

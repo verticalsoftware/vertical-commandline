@@ -6,12 +6,18 @@
     <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>..\..\assets\Vertical.CommandLine.snk</AssemblyOriginatorKeyFile>
+	<PublicSign Condition="'$(OS)' != 'Windows_NT'">true</PublicSign>
     <Description>Simple command line argument mapping</Description>
     <Authors>Vertical Software contributors</Authors>
+	<VersionPrefix>0.1.0</VersionPrefix>
     <PackageId>vertical-commandline</PackageId>
+	<PackageTags>commandline;utilities</PackageTags>
+	<PackageProjectUrl>https://github.com/verticalsoftware/vertical-commandline</PackageProjectUrl>
+	<PackageLicenseUrl>https://opensource.org/licenses/MIT</PackageLicenseUrl>
+	<RepositoryType>git</RepositoryType>
+	<GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
     <Title>vertical-commandline</Title>
-    <Copyright>Copyright (C) 2018 Vertical Software</Copyright>
-    <PackageLicenseUrl>https://opensource.org/licenses/MIT</PackageLicenseUrl>
+    <Copyright>Copyright (C) 2018 Vertical Software</Copyright>    
     
   </PropertyGroup>
 </Project>

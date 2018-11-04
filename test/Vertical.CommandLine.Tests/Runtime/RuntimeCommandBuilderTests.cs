@@ -64,29 +64,6 @@ namespace Vertical.CommandLine.Tests.Runtime
         }
 
         [Fact]
-        public void HelpInvokedOnConsoleByDefault()
-        {
-            var config = new ApplicationConfiguration<Models.Options>();
-            config.HelpOption("--help")
-                .Help.UseContent(new[] { "help" });
-            using (var textWriter = new StringWriter())
-            {
-                var consoleOut = Console.Out;
-                try
-                {
-                    Console.SetOut(textWriter);
-                    RuntimeCommandBuilder.Build(config, new[] { "--help" }, out var options)
-                        .Invoke(options);
-                    textWriter.ToString().ShouldBe("help" + Environment.NewLine);
-                }
-                finally
-                {
-                    Console.SetOut(consoleOut);
-                }
-            }
-        }
-
-        [Fact]
         public void HelpInvokedWhenCommandConfigured()
         {
             var config = new ApplicationConfiguration<Models.Options>();
