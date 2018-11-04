@@ -1,4 +1,6 @@
 # vertical-commandline
+[![Build status](https://ci.appveyor.com/api/projects/status/gbmvafn7v40i4t09?svg=true)](https://ci.appveyor.com/project/daningalla/vertical-commandline)
+
 An easily configured command line arguments parser that makes short work of turning those pesky `string[] args` into a strongly-typed configuration object.
 
 ## At a glance
@@ -14,7 +16,7 @@ An easily configured command line arguments parser that makes short work of turn
 ## Quick start
 Install the vertical-command nuget package into your project.
 ```
-> Install-Package vertical-commandline 
+> Install-Package vertical-commandline --AllowPrereleaseVersions
 ```
 Define a class that will hold the application options, build a configuration, and then call the `Run` method of the `CommandLineApplication` class.
 ```csharp
@@ -256,3 +258,10 @@ The API can throw two flavors of exceptions:
 - `UsageException` is thrown when the configuration is correct, but the client of your application misuses the command line parameters. Examples include not providing a parameter value to an option, conversion failure, validation errors, etc. Specific types that derive from `UsageException` are `ConversionException` and `ValidationException`.
 
 It is important to note that exceptions in the API are caught _up until_ control is referred to the defined client handler. This allows for clean separation between parsing problems and errors in the logic of your program.
+
+## Finally
+### Additional resources
+Check out the projects in the [samples](https://github.com/verticalsoftware/vertical-commandline/tree/master/samples) folder to see complete configuration examples. If you're stuck, raise an issue for the benfit of others.
+
+### Contributing
+Yes! Help from the community is highly appreciated. Please [create an issue](https://github.com/verticalsoftware/vertical-commandline/issues/new) though so we can discuss the bug or feature.
