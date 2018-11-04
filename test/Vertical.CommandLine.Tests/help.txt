@@ -1,0 +1,31 @@
+NAME
+    squeeze - File compression and archiving utility.
+
+SYNOPSIS
+    squeeze c compress | x extract | v verify [options] <arguments>
+   
+DESCRIPTION
+    squeeze is a program that can create and extract archives. It supports multiple encryption and checksum algorithms.
+    
+COMMANDS
+    c, compress
+        Creates an archive file.
+        
+    h, help
+        Prints help for the application.
+        
+    v, verify
+        Verifies the checksum of an archive file.
+        
+    x, extract
+        Extracts files from an archive.
+        
+OPTIONS
+     -h, --help
+        Prints help for the indicated command.
+        
+     For other options and arguments, reference the help material for the supported commands, e.g. squeeze compress --help.
+
+(C) 2018 Vertical Software
+
+    

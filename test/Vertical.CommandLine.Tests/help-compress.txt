@@ -1,0 +1,37 @@
+NAME
+    squeeze - File compression and archiving utility.
+
+SYNOPSIS
+    squeeze c | compress [options] <target> <file[,...]>
+   
+DESCRIPTION
+    squeeze is a program that can create and extract archives. It supports multiple encryption and checksum algorithms. The compress function accepts one or more input files to include in the archive.
+           
+OPTIONS
+    --checksum
+        Generates an MD5 checksum computed from the output.
+    
+    -e, --encrypt <ALGORITHM>
+        Encrypts the file using the specified algorithm. ALGORITHM can be AES, TripleDES or RSA. Encryption defaults to AES if not specified.
+        
+    -h, --help
+        Display help for the program.
+    
+    -p, --password
+        Password applied to the algorithm used to symmetrically encrypt the output file.
+        
+    -s, --split <SIZE>
+        Maximum size, in bytes, of the output file. If the size of the output file is greater than SIZE, then the file is split into multiple parts. 
+    
+ARGUMENTS
+    file [,...]
+        Relative or fully qualified path to one or more files to include in the archive.
+        
+    target
+        Relative or fully qualified path that identifies the name of the file write.
+
+(C) 2018 Vertical Software
+    
+        
+        
+    

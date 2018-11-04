@@ -1,0 +1,79 @@
+﻿NAME
+	dotnet build - Build a project and all of its dependencies.
+
+USAGE
+	dotnet build [<PROJECT>] [options]
+
+DESCRIPTION
+	The dotnet build command builds the project and its dependencies into a set of binaries. The binaries include the project's code in Intermediate Language (IL) files with a .dll extension and symbol files used for debugging with a .pdb extension. A dependencies JSON file (*.deps.json) is produced that lists the dependencies of the application. A *.runtimeconfig.json file is produced, which specifies the shared runtime and its version for the application.
+
+	If the project has third-party dependencies, such as libraries from NuGet, they're resolved from the NuGet cache and aren't available with the project's built output. With that in mind, the product of dotnet build isn't ready to be transferred to another machine to run. This is in contrast to the behavior of the .NET Framework in which building an executable project (an application) produces output that's runnable on any machine where the .NET Framework is installed. To have a similar experience with .NET Core, you need to use the dotnet publish command. For more information, see .NET Core Application Deployment.
+
+	Building requires the project.assets.json file, which lists the dependencies of your application. The file is created when dotnet restore is executed. Without the assets file in place, the tooling cannot resolve reference assemblies, which results in errors. With .NET Core 1.x SDK, you needed to explicitly run the dotnet restore before running dotnet build. Starting with .NET Core 2.0 SDK, dotnet restore runs implicitly when you run dotnet build. If you want to disable implicit restore when running the build command, you can pass the --no-restore option.
+
+	Note:
+		Starting with .NET Core 2.0, you don't have to run dotnet restore because it's run implicitly by all commands, such as dotnet build and dotnet run, that require a restore to occur. It's still a valid command in certain scenarios where doing an explicit restore makes sense, such as continuous integration builds in Azure DevOps Services or in build systems that need to explicitly control the time at which the restore occurs.
+
+		This command also supports the dotnet restore options when passed in the long form (for example, --source). Short form options, such as -s, are not supported.
+
+	dotnet build uses MSBuild to build the project, so it supports both parallel and incremental builds. For more information, see Incremental Builds.
+
+	In addition to its options, the dotnet build command accepts MSBuild options, such as -p for setting properties or -l to define a logger. For more information about these options, see the MSBuild Command-Line Reference.
+
+	Whether the project is executable or not is determined by the <OutputType> property in the project file. The following example shows a project that produces executable code:
+
+		<PropertyGroup>
+			<OutputType>Exe</OutputType>
+		</PropertyGroup>
+
+	In order to produce a library, omit the <OutputType> property. The main difference in built output is that the IL DLL for a library doesn't contain entry points and can't be executed.
+
+ARGUMENTS
+	PROJECT
+		The project file to build. If a project file is not specified, MSBuild searches the current working directory for a file that has a file extension that ends in proj and uses that file.
+
+OPTIONS
+	-c, --configuration <CONFIG>
+		Defines the build configuration, either Debug or Realse. The default value is Debug.
+
+	--force
+		Forces all dependencies to be resolved even if the last restore was successful. Specifying this flag is the same as deleting the project.assets.json file.
+
+	-h, --help
+		Prints out a short help for the command.
+
+	--no-dependencies
+		Ignores project-to-project (P2P) references and only builds the specified root project.
+
+	--no-incremental
+		Marks the build as unsafe for incremental build. This flag turns off incremental compilation and forces a clean rebuild of the project's dependency graph.
+
+	--no-restore
+		Doesn't execute an implicit restore during build.
+
+	-o, --output <DIRECTORY>
+		Directory in which to place the built binaries. You also need to define --framework when you specify this option.
+
+	-r, --runtime <RUNTIME_IDENTIFIER>
+		Specifies the target runtime. For a list of Runtime Identifiers (RIDs), see the RID catalog.
+
+	-v, --verbosity <LEVEL
+		Sets the verbosity level of the command. Allowed values are q[uiet], m[inimal], n[ormal], d[etailed], and diag[nostic].
+
+	--version-suffix <VERSION_SUFFIX>
+		Defines the version suffix for an asterisk (*) in the version field of the project file. The format follows NuGet's version guidelines.
+
+EXAMPLES
+	Build a project and its dependencies:
+		dotnet build
+
+	Build a project and its dependencies using Release configuration:
+		dotnet build --configuration Release
+
+	Build a project and its dependencies for a specific runtime (in this example, Ubuntu 16.04):
+		dotnet build --runtime ubuntu.16.04-x64
+
+	Build the project and use the specified NuGet package source during the restore operation (.NET Core SDK 2.0 and later versions):
+		dotnet build --source c:\packages\mypackages		
+
+** This is the very last line **

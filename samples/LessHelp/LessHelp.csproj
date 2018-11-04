@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="help.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="help.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Vertical.CommandLine\Vertical.CommandLine.csproj" />
+    <ProjectReference Include="..\CommandPattern\CommandPattern.csproj" />
+  </ItemGroup>
+
+</Project>
