@@ -16,7 +16,7 @@ An easily configured command line arguments parser that makes short work of turn
 ## Quick start
 Install the vertical-command nuget package into your project.
 ```
-> Install-Package vertical-commandline --AllowPrereleaseVersions
+> Install-Package vertical-commandline -prerelease
 ```
 Define a class that will hold the application options, build a configuration, and then call the `Run` method of the `CommandLineApplication` class.
 ```csharp
