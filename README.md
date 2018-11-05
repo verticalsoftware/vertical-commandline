@@ -1,5 +1,9 @@
 # vertical-commandline
-[![Build status](https://ci.appveyor.com/api/projects/status/gbmvafn7v40i4t09?svg=true)](https://ci.appveyor.com/project/daningalla/vertical-commandline)
+[![Master status](https://ci.appveyor.com/api/projects/status/gbmvafn7v40i4t09/branch/master?svg=true&passingText=master%20-%20OK)](https://ci.appveyor.com/project/daningalla/vertical-commandline)
+[![Dev status](https://ci.appveyor.com/api/projects/status/gbmvafn7v40i4t09/branch/dev?svg=true&passingText=dev%20-%20OK)](https://ci.appveyor.com/project/daningalla/vertical-commandline)
+[![Coverage Status](https://coveralls.io/repos/github/verticalsoftware/vertical-commandline/badge.svg?branch=master)](https://coveralls.io/github/verticalsoftware/vertical-commandline?branch=master)
+![Package info](https://img.shields.io/nuget/v/vertical-commandline.svg)
+
 
 An easily configured command line arguments parser that makes short work of turning those pesky `string[] args` into a strongly-typed configuration object.
 
