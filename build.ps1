@@ -23,20 +23,48 @@ Write-Host "Build:    $buildSuffix";
 
 $src = ".\src\Vertical.CommandLine\Vertical.CommandLine.csproj";
 $test = ".\test\Vertical.CommandLine.Tests\Vertical.CommandLine.Tests.csproj";
+$coverageFile = '..\..\artifacts\test-coverage.xml';
 
 # Build
+Write-Host "Building"
+
 & dotnet build $src -c Release --version-suffix=$buildSuffix;
 
 # Package
-if ($suffix){
-    & dotnet pack $src -c Release --no-build -o ..\..\artifacts --version-suffix=$suffix
-}
-else {
-    & dotnet pack $src -c Release --no-build -o ..\..\artifacts
+if ($branch -eq "master"){
+	
+	Write-Host "Creating nuget packages"
+
+	if ($suffix){
+		& dotnet pack $src -c Release --no-build -o ..\..\artifacts --version-suffix=$suffix
+	}
+	else {
+		& dotnet pack $src -c Release --no-build -o ..\..\artifacts
+	}
 }
 
-# Test
-& dotnet test $test -c Release
+# Test & collect code coverage
+Write-Host "Running unit tests and collecting code coverage"
+
+& dotnet test $test -c Debug /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:CoverletOutput=$coverageFile
 
 if ($LASTEXITCODE -ne 0) { exit 3 }
 
+# Publish coverage file
+if ($env:APPVEYOR_JOB_ID) {
+
+	Write-Host "Publishing code coverage results"
+
+	& dotnet tool install coveralls.net --version 1.0.0 --tool-path tools
+
+	$coveralls = ".\tools\csmacnz.coveralls.exe"
+
+	& $coveralls --opencover -i .\artifacts\test-coverage.xml `
+		--repoToken $env:COVERALLS_API_TOKEN `
+		--commitId $env:APPVEYOR_REPO_COMMIT `
+		--commitBranch $env:APPVEYOR_REPO_BRANCH `
+		--commitAuthor $env:APPVEYOR_REPO_COMMIT_AUTHOR `
+		--commitMessage $env:APPVEYOR_REPO_COMMIT_MESSAGE `
+		--jobId $env:APPVEYOR_JOB_ID
+
+}
