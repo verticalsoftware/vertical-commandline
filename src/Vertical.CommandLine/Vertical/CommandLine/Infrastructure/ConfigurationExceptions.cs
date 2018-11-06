@@ -51,7 +51,7 @@ namespace Vertical.CommandLine.Infrastructure
         // Template token in use.
         internal static Exception TemplateTokenInUse(Token token)
         {
-            return new ConfigurationException($"{Quote(token.Template)} is already in use by another option or switch.");
+            return new ConfigurationException($"{Quote(token.DistinguishedForm)} is already in use by another option or switch.");
         }
 
         // Error in argument configuration
