@@ -56,7 +56,7 @@ namespace Vertical.CommandLine.Parsing
 
         /// <inheritdoc />
         public override string ToString() => string.Join(TokenSeparator.ToString(),
-            Tokens.Select(token => token.Template));
+            Tokens.Select(token => token.DistinguishedForm));
 
         /// <summary>
         /// Determines if the template contains the given token.
