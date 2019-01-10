@@ -53,12 +53,7 @@ namespace Vertical.CommandLine.Parsing
         /// Gets the token value.
         /// </summary>
         public string Value { get; }
-
-        /// <summary>
-        /// Gets the template for the token.
-        /// </summary>
-        public string Template => GetTemplate();
-
+        
         /// <inheritdoc />
         public override string ToString() => $"Type={Type}, Value={Formatting.Quote(Value)}";
 
@@ -75,26 +70,9 @@ namespace Vertical.CommandLine.Parsing
                 {
                     case TokenType.ShortOption: return $"{Common.SingleDash}{Value}";
                     case TokenType.LongOption: return $"{Common.DoubleDash}{Value}";
+                    case TokenType.OptionsEnd: return Common.DoubleDash;
                     default: return Value;
                 }
-            }
-        }
-
-        private string GetTemplate()
-        {
-            switch (Type)
-            {
-                case TokenType.ShortOption:
-                    return $"{Common.SingleDash}{Value}";
-                
-                case TokenType.LongOption:
-                    return $"{Common.DoubleDash}{Value}";
-                
-                case TokenType.OptionsEnd:
-                    return Common.DoubleDash;
-                
-                default:
-                    return Formatting.Quote(Value);
             }
         }
 

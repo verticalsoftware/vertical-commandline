@@ -51,7 +51,7 @@ namespace Vertical.CommandLine.Infrastructure
         // Template token in use.
         internal static Exception TemplateTokenInUse(Token token)
         {
-            return new ConfigurationException($"{Quote(token.Template)} is already in use by another option or switch.");
+            return new ConfigurationException($"{Quote(token.DistinguishedForm)} is already in use by another option or switch.");
         }
 
         // Error in argument configuration
@@ -143,16 +143,6 @@ namespace Vertical.CommandLine.Infrastructure
                 innerException);
         }
 
-        internal static Exception HandlerSynchAsyncMismatch(Type expectedReturn)
-        {
-            var handlerType = typeof(Task).IsAssignableFrom(expectedReturn) ? "asynchronous" : "synchronous";
-
-            return new ConfigurationException(
-                $"Selected client handler should be {handlerType} but was not." +
-                Environment.NewLine +
-                "The handler types must be consistent across commands and the root configuration.");
-        }
-
         internal static Exception MappingFailed(string context, Exception exception)
         {
             return new ConfigurationException($"{context}: mapping failed - {exception.Message}", exception);
@@ -185,6 +175,22 @@ namespace Vertical.CommandLine.Infrastructure
                 $"Options provider failed when asking for a {FriendlyName(optionsType)} instance.",
                 innerException
             );
+        }
+
+        internal static Exception MinimumFormatInfoWidthNotMet(int minimumWidth)
+        {
+            return new ConfigurationException($"Minimum margin width for format info is {minimumWidth}");
+        }
+
+        internal static Exception MinimumFormatInfoHeightNotMet(int minimumHeight)
+        {
+            return new ConfigurationException($"Minimum margin height for format info is {minimumHeight}");
+        }
+
+        internal static Exception HelpLineFormatterNotSet()
+        {
+            return new ConfigurationException("Line formatter is null, use either Formatter.JustifiedFormatter" + 
+                                              " or Formatter.DefaultFormatter.");
         }
     }
 }

@@ -4,6 +4,8 @@
 // MIT license. Please refer to LICENSE.txt in the root directory
 // or refer to https://opensource.org/licenses/MIT
 
+using Vertical.CommandLine.Infrastructure;
+
 namespace Vertical.CommandLine.Help
 {
     /// <summary>
@@ -11,6 +13,16 @@ namespace Vertical.CommandLine.Help
     /// </summary>
     public class FormatInfo
     {
+        /// <summary>
+        /// Defines the minimum margin width.
+        /// </summary>
+        public const int MinimumMarginWidth = 1;
+
+        /// <summary>
+        /// Defines the minimum margin height.
+        /// </summary>
+        public const int MinimumMarginHeight = 1;
+
         /// <summary>
         /// Creates a new instance of this type using the default formatter.
         /// </summary>
@@ -31,10 +43,16 @@ namespace Vertical.CommandLine.Help
         /// <param name="formatter">Line formatter</param>
         public FormatInfo(int marginWidth, int marginHeight, int startRow, IFormatter formatter)
         {
+            if (marginWidth < MinimumMarginWidth)
+                throw ConfigurationExceptions.MinimumFormatInfoWidthNotMet(MinimumMarginWidth);
+
+            if (marginHeight < MinimumMarginHeight)
+                throw ConfigurationExceptions.MinimumFormatInfoHeightNotMet(MinimumMarginHeight);
+
             FormatWidth = marginWidth;
             FormatHeight = marginHeight;
             StartRow = startRow;
-            LineFormatter = formatter;
+            LineFormatter = formatter ?? throw ConfigurationExceptions.HelpLineFormatterNotSet();
         }
 
         /// <summary>

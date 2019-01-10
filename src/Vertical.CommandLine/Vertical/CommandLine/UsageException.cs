@@ -18,7 +18,7 @@ namespace Vertical.CommandLine
         /// </summary>
         /// <param name="message">Message describing the error</param>
         /// <param name="innerException">Inner exception</param>
-        internal UsageException(string message, Exception innerException = null)
+        public UsageException(string message, Exception innerException = null)
             : base(message, innerException)
         {
         }
