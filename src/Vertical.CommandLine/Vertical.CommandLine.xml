@@ -1,0 +1,2364 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Vertical.CommandLine</name>
+    </assembly>
+    <members>
+        <member name="T:Vertical.CommandLine.CommandLineApplication">
+            <summary>
+            Represents an orchestrator for command line application execution.
+            </summary>
+        </member>
+        <member name="M:Vertical.CommandLine.CommandLineApplication.Run(Vertical.CommandLine.Configuration.ICommandLineConfiguration,System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Executes the application.
+            </summary>
+            <param name="configuration">Configuration instance.</param>
+            <param name="arguments">Arguments given on the command line.</param>
+        </member>
+        <member name="M:Vertical.CommandLine.CommandLineApplication.RunAsync(Vertical.CommandLine.Configuration.ICommandLineConfiguration,System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Executes the application asynchronously.
+            </summary>
+            <param name="configuration">Configuration instance.</param>
+            <param name="arguments">Arguments given on the command line.</param>
+        </member>
+        <member name="M:Vertical.CommandLine.CommandLineApplication.ParseArguments``1(Vertical.CommandLine.Configuration.ICommandLineConfiguration,System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Parses the arguments without invoking the client handler.
+            </summary>
+            <typeparam name="TOptions">Options type.</typeparam>
+            <param name="configuration">Configuration</param>
+            <param name="arguments">Arguments given on the command line</param>
+            <returns>Populated options object</returns>
+        </member>
+        <member name="M:Vertical.CommandLine.CommandLineApplication.ShowHelp(Vertical.CommandLine.Configuration.ICommandLineConfiguration,System.String)">
+            <summary>
+            Displays help, bypassing any invocation of client program handlers.
+            </summary>
+            <param name="configuration">Configuration instance</param>
+            <param name="command">The help context - if showing help for the root application,
+            leave as null.</param>
+        </member>
+        <member name="T:Vertical.CommandLine.Configuration.ApplicationConfiguration`1">
+            <summary>
+            Configuration object used to define the options, switches and commands of a command
+            line application.
+            </summary>
+            <typeparam name="TOptions">Options type.</typeparam>
+        </member>
+        <member name="P:Vertical.CommandLine.Configuration.ApplicationConfiguration`1.HelpWriter">
+            <inheritdoc />
+        </member>
+        <member name="P:Vertical.CommandLine.Configuration.ApplicationConfiguration`1.SubConfigurations">
+            <inheritdoc />
+        </member>
+        <member name="M:Vertical.CommandLine.Configuration.ApplicationConfiguration`1.Command(System.String,System.Action{Vertical.CommandLine.Configuration.CommandConfiguration{`0}})">
+            <summary>
+            Registers a command as an application sub-program.
+            </summary>
+            <param name="template">Template that identifies the command.</param>
+            <param name="configureAction">Configuration action.</param>
+            <returns>Configuration.</returns>
+            <exception cref="T:System.Exception">Invalid configuration.</exception>
+        </member>
+        <member name="M:Vertical.CommandLine.Configuration.ApplicationConfiguration`1.Command``1(System.String,System.Action{Vertical.CommandLine.Configuration.CommandConfiguration{``0}})">
+            <summary>
+            Registers a command as an application sub-program.
+            </summary>
+            <param name="template">Template that identifies the command.</param>
+            <param name="configureAction">Configuration action.</param>
+            <typeparam name="TCommandOptions">Command options.</typeparam>
+            <returns>Configuration.</returns>
+            <exception cref="T:System.Exception">Invalid configuration.</exception>
+        </member>
+        <member name="M:Vertical.CommandLine.Configuration.ApplicationConfiguration`1.HelpOption(System.String,Vertical.CommandLine.Help.IHelpWriter)">
+            <summary>
+            Registers the template of the help option.
+            </summary>
+            <param name="template">Template that identifies invocation of the help option.</param>
+            <param name="helpWriter">Help writer instance to use. If not specified, the default console
+            writer is used.</param>
+            <returns>Configuration.</returns>
+        </member>
+        <member name="M:Vertical.CommandLine.Configuration.ApplicationConfiguration`1.ToString">
+            <inheritdoc />
+        </member>
+        <member name="T:Vertical.CommandLine.Configuration.ArgumentConfiguration`2">
+            <summary>
+            Configuration object used to define an argument's conversion, validation and mapping
+            properties.
+            </summary>
+            <typeparam name="TOptions">Options type.</typeparam>
+            <typeparam name="TValue">Value type.</typeparam>
+        </member>
+        <member name="M:Vertical.CommandLine.Configuration.ArgumentConfiguration`2.#ctor(Vertical.CommandLine.Parsing.IParserBuilder{`0,`1})">
+            <summary>
+            Creates a new instance.
+            </summary>
+            <param name="parserBuilder">Parser builder.</param>
+        </member>
+        <member name="P:Vertical.CommandLine.Configuration.ArgumentConfiguration`2.ParserBuilder">
+            <summary>
+            Gets the argument parser.
+            </summary>
+        </member>
+        <member name="M:Vertical.CommandLine.Configuration.ArgumentConfiguration`2.Configure(Vertical.CommandLine.Parsing.ParserBuilder{`0,`1},System.Action{Vertical.CommandLine.Configuration.ArgumentConfiguration{`0,`1}})">
+            <summary>
+            Configures the argument.
+            </summary>
+        </member>
+        <member name="P:Vertical.CommandLine.Configuration.ArgumentConfiguration`2.Map">
+            <summary>
+            Gets a configuration object used to define value mapping.
+            </summary>
+        </member>
+        <member name="P:Vertical.CommandLine.Configuration.ArgumentConfiguration`2.Convert">
+            <summary>
+            Gets a configuration object used to define value conversion.
+            </summary>
+        </member>
+        <member name="P:Vertical.CommandLine.Configuration.ArgumentConfiguration`2.Validate">
+            <summary>
+            Gets a configuration object used to define validation.
+            </summary>
+        </member>
+        <member name="T:Vertical.CommandLine.Configuration.CommandConfiguration`1">
+            <summary>
+            Configuration object used to define application arguments, options, and switches.
+            </summary>
+            <typeparam name="TOptions">Options type.</typeparam>
+        </member>
+        <member name="M:Vertical.CommandLine.Configuration.CommandConfiguration`1.#ctor">
+            <summary>
+            Creates a new instance.
+            </summary>
+        </member>
+        <member name="P:Vertical.CommandLine.Configuration.CommandConfiguration`1.ParserConfig">
+            <summary>
+            Gets the parser configuration.
+            </summary>
+        </member>
+        <member name="M:Vertical.CommandLine.Configuration.CommandConfiguration`1.#ctor(Vertical.CommandLine.Parsing.Template)">
+            <summary>
+            Creates a new instance.
+            </summary>
+            <param name="template">The template that identifies the command - null if this is an application
+            configuration.</param>
+        </member>
+        <member name="P:Vertical.CommandLine.Configuration.CommandConfiguration`1.RuntimeCommand">
+            <summary>
+            Gets the runtime command.
+            </summary>
+        </member>
+        <member name="P:Vertical.CommandLine.Configuration.CommandConfiguration`1.HelpTemplate">
+            <inheritdoc />
+        </member>
+        <member name="M:Vertical.CommandLine.Configuration.CommandConfiguration`1.PositionArgument(System.Action{Vertical.CommandLine.Configuration.MultiValueArgumentConfiguration{`0,System.String}})">
+            <summary>
+            Adds a position argument to the configuration.
+            </summary>
+            <param name="configureAction">Configuration action.</param>
+            <returns>Configuration.</returns>
+        </member>
+        <member name="M:Vertical.CommandLine.Configuration.CommandConfiguration`1.PositionArgument``1(System.Action{Vertical.CommandLine.Configuration.MultiValueArgumentConfiguration{`0,``0}})">
+            <summary>
+            Adds a position argument to the configuration.
+            </summary>
+            <param name="configureAction">Configuration action.</param>
+            <typeparam name="TValue">Value type.</typeparam>
+            <returns>Configuration.</returns>
+        </member>
+        <member name="M:Vertical.CommandLine.Configuration.CommandConfiguration`1.Option(System.String,System.Action{Vertical.CommandLine.Configuration.MultiValueArgumentConfiguration{`0,System.String}})">
+            <summary>
+            Adds an option to the configuration.
+            </summary>
+            <param name="template">Template that identifies the option.</param>
+            <param name="configureAction">Configuration action.</param>
+            <returns>Configuration.</returns>
+        </member>
+        <member name="M:Vertical.CommandLine.Configuration.CommandConfiguration`1.Option``1(System.String,System.Action{Vertical.CommandLine.Configuration.MultiValueArgumentConfiguration{`0,``0}})">
+            <summary>
+            Adds an option to the configuration.
+            </summary>
+            <param name="template">Template that identifies the option.</param>
+            <param name="configureAction">Configuration action.</param>
+            <typeparam name="TValue">Value type.</typeparam>
+            <returns>Configuration.</returns>
+        </member>
+        <member name="M:Vertical.CommandLine.Configuration.CommandConfiguration`1.Switch(System.String,System.Action{Vertical.CommandLine.Configuration.ArgumentConfiguration{`0,System.Boolean}})">
+            <summary>
+            Adds a switch style option to the configuration.
+            </summary>
+            <param name="template">Template that identifies the switch.</param>
+            <param name="configureAction">Configuration action.</param>
+            <returns>Configuration.</returns>
+        </member>
+        <member name="M:Vertical.CommandLine.Configuration.CommandConfiguration`1.OnExecute(System.Action{`0})">
+            <summary>
+            Registers the action handler for the application.
+            </summary>
+            <param name="action">Synchronous handler.</param>
+            <returns>Configuration.</returns>
+        </member>
+        <member name="M:Vertical.CommandLine.Configuration.CommandConfiguration`1.OnExecuteAsync(System.Func{`0,System.Threading.Tasks.Task})">
+            <summary>
+            Registers an asynchronous handler for the application.
+            </summary>
+            <param name="asyncAction">Asynchronous handler.</param>
+            <returns>Configuration.</returns>
+        </member>
+        <member name="P:Vertical.CommandLine.Configuration.CommandConfiguration`1.Options">
+            <summary>
+            Gets a configuration object used to define how the options instance is provided.
+            </summary>
+        </member>
+        <member name="P:Vertical.CommandLine.Configuration.CommandConfiguration`1.Help">
+            <summary>
+            Gets a configuration object used to define help content.
+            </summary>
+        </member>
+        <member name="P:Vertical.CommandLine.Configuration.CommandConfiguration`1.SubConfigurations">
+            <inheritdoc />
+        </member>
+        <member name="P:Vertical.CommandLine.Configuration.CommandConfiguration`1.HelpWriter">
+            <inheritdoc />
+        </member>
+        <member name="M:Vertical.CommandLine.Configuration.CommandConfiguration`1.ToString">
+            <inheritdoc />
+        </member>
+        <member name="M:Vertical.CommandLine.Configuration.CommandConfiguration`1.Vertical#CommandLine#Configuration#IComponentSink{Vertical#CommandLine#Provider#IProvider{TOptions}}#Sink(Vertical.CommandLine.Provider.IProvider{`0})">
+            <inheritdoc />
+        </member>
+        <member name="M:Vertical.CommandLine.Configuration.CommandConfiguration`1.Vertical#CommandLine#Configuration#ICommandLineConfiguration#GetRuntimeCommand">
+            <inheritdoc />
+        </member>
+        <member name="T:Vertical.CommandLine.Configuration.ConfigurationException">
+            <summary>
+            Represents an error in configuration.
+            </summary>
+            <remarks>
+            This exception is thrown for one of the following scenarios:
+            - An invalid character in a template. Typically templates only allow letters, numbers and dashes
+            - An invalid template, e.g. short option with more than once character
+            - An argument, option or switch does not have an assigned property mapping at runtime
+            - A converter wasn't specified, and the API didn't find an out-of-box option
+            - An exception was thrown in mapping, conversion or validation delegate code
+            </remarks>
+        </member>
+        <member name="M:Vertical.CommandLine.Configuration.ConfigurationException.#ctor(System.String,System.Exception)">
+            <inheritdoc />
+        </member>
+        <member name="T:Vertical.CommandLine.Configuration.ConversionConfiguration`2">
+            <summary>
+            Configuration object used to define how values are converted from string arguments to the
+            target type.
+            </summary>
+            <typeparam name="TOptions">Options type.</typeparam>
+            <typeparam name="TValue">Value type.</typeparam>
+        </member>
+        <member name="M:Vertical.CommandLine.Configuration.ConversionConfiguration`2.#ctor(Vertical.CommandLine.Configuration.ArgumentConfiguration{`0,`1},Vertical.CommandLine.Configuration.IComponentSink{Vertical.CommandLine.Conversion.IValueConverter{`1}})">
+            <summary>
+            Creates a new instance.
+            </summary>
+            <param name="configuration">Argument configuration.</param>
+            <param name="converterSink">Component sink.</param>
+        </member>
+        <member name="M:Vertical.CommandLine.Configuration.ConversionConfiguration`2.Using(Vertical.CommandLine.Conversion.IValueConverter{`1})">
+            <summary>
+            Converts the value using the specified converter.
+            </summary>
+            <param name="converter">Converter instance.</param>
+            <returns>Configuration.</returns>
+        </member>
+        <member name="M:Vertical.CommandLine.Configuration.ConversionConfiguration`2.Using(System.Func{System.String,`1})">
+            <summary>
+            Converts the value using the function.
+            </summary>
+            <param name="function">Function used to converter the string argument.</param>
+            <returns>Configuration.</returns>
+        </member>
+        <member name="M:Vertical.CommandLine.Configuration.ConversionConfiguration`2.UsingValues(System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{System.String,`1}},System.Collections.Generic.IEqualityComparer{System.String})">
+            <summary>
+            Converts the value using a dictionary of key/value pairs.
+            </summary>
+            <param name="values">Values that map string arguments to option values.</param>
+            <param name="keyComparer">Key comparer.</param>
+            <returns>Configuration.</returns>
+        </member>
+        <member name="T:Vertical.CommandLine.Configuration.HelpConfiguration`1">
+            <summary>
+            Configuration object used to define help for the command.
+            </summary>
+            <typeparam name="TOptions">Command options type.</typeparam>
+        </member>
+        <member name="M:Vertical.CommandLine.Configuration.HelpConfiguration`1.#ctor(Vertical.CommandLine.Configuration.CommandConfiguration{`0},Vertical.CommandLine.Configuration.IComponentSink{Vertical.CommandLine.Provider.IProvider{System.Collections.Generic.IReadOnlyCollection{System.String}}})">
+            <summary>
+            Creates a new instance.
+            </summary>
+            <param name="configuration">Configuration</param>
+            <param name="componentSink">Component sink</param>
+        </member>
+        <member name="M:Vertical.CommandLine.Configuration.HelpConfiguration`1.Using(Vertical.CommandLine.Provider.IProvider{System.Collections.Generic.IReadOnlyCollection{System.String}})">
+            <summary>
+            Uses the given content provider to return help content for the command.
+            </summary>
+            <param name="contentProvider">Content provider.</param>
+            <returns>Configuration.</returns>
+        </member>
+        <member name="M:Vertical.CommandLine.Configuration.HelpConfiguration`1.UseFile(System.String)">
+            <summary>
+            Uses the content in the file specified by the path.
+            </summary>
+            <param name="path">Path to the help content file.</param>
+            <returns>Configuration.</returns>
+        </member>
+        <member name="M:Vertical.CommandLine.Configuration.HelpConfiguration`1.UseContent(System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Uses the given reference as help content.
+            </summary>
+            <param name="content">Content to display </param>
+            <returns></returns>
+        </member>
+        <member name="T:Vertical.CommandLine.Configuration.ICommandLineConfiguration">
+            <summary>
+            Defines the interface of a configuration object.
+            </summary>
+        </member>
+        <member name="P:Vertical.CommandLine.Configuration.ICommandLineConfiguration.SubConfigurations">
+            <summary>
+            Gets the sub configurations for this instance.
+            </summary>
+        </member>
+        <member name="P:Vertical.CommandLine.Configuration.ICommandLineConfiguration.HelpWriter">
+            <summary>
+            Gets the help writer instance.
+            </summary>
+        </member>
+        <member name="M:Vertical.CommandLine.Configuration.ICommandLineConfiguration.GetRuntimeCommand">
+            <summary>
+            Gets the runtime command for the configuration.
+            </summary>
+            <returns><see cref="T:Vertical.CommandLine.Runtime.IRuntimeCommand"/></returns>
+        </member>
+        <member name="P:Vertical.CommandLine.Configuration.ICommandLineConfiguration.HelpTemplate">
+            <summary>
+            Gets the template that identifies the help option.
+            </summary>
+        </member>
+        <member name="T:Vertical.CommandLine.Configuration.IComponentSink`1">
+            <summary>
+            Represents an object that receives configuration components.
+            </summary>
+        </member>
+        <member name="M:Vertical.CommandLine.Configuration.IComponentSink`1.Sink(`0)">
+            <summary>
+            Sinks the given component.
+            </summary>
+            <param name="component">The component instance.</param>
+        </member>
+        <member name="T:Vertical.CommandLine.Configuration.MappingConfiguration`2">
+            <summary>
+            Configuration object used to define property mapping.
+            </summary>
+            <typeparam name="TOptions">Options type.</typeparam>
+            <typeparam name="TValue">Value type.</typeparam>
+        </member>
+        <member name="M:Vertical.CommandLine.Configuration.MappingConfiguration`2.#ctor(Vertical.CommandLine.Configuration.ArgumentConfiguration{`0,`1},Vertical.CommandLine.Configuration.IComponentSink{Vertical.CommandLine.Mapping.IMapper{`0,`1}})">
+            <summary>
+            Creates a new instance.
+            </summary>
+            <param name="configuration">Configuration.</param>
+            <param name="mapperSink">Mapper sink component.</param>
+        </member>
+        <member name="P:Vertical.CommandLine.Configuration.MappingConfiguration`2.Configuration">
+            <summary>
+            Gets the configuration.
+            </summary>
+        </member>
+        <member name="M:Vertical.CommandLine.Configuration.MappingConfiguration`2.ToProperty(System.Linq.Expressions.Expression{System.Func{`0,`1}})">
+            <summary>
+            Maps an argument value to the property specified by the expression.
+            </summary>
+            <param name="expression">The expression that identifies the property.</param>
+            <returns>Configuration.</returns>
+        </member>
+        <member name="M:Vertical.CommandLine.Configuration.MappingConfiguration`2.Using(Vertical.CommandLine.Mapping.IMapper{`0,`1})">
+            <summary>
+            Maps an argument value using the given mapper instance.
+            </summary>
+            <param name="mapper">The mapper instance.</param>
+            <returns>Configuration.</returns>
+        </member>
+        <member name="M:Vertical.CommandLine.Configuration.MappingConfiguration`2.Using(System.Action{`0,`1})">
+            <summary>
+            Maps an argument value using the given delegate.
+            </summary>
+            <param name="action">The action that maps the value to the options instance.</param>
+            <returns>Configuration.</returns>
+        </member>
+        <member name="P:Vertical.CommandLine.Configuration.MappingConfiguration`2.MultiValued">
+            <summary>
+            Gets whether the configuration is multi-valued.
+            </summary>
+        </member>
+        <member name="T:Vertical.CommandLine.Configuration.MultiValueArgumentConfiguration`2">
+            <summary>
+            Configuration object used to define a multi-valued argument.
+            </summary>
+            <typeparam name="TOptions">Options type.</typeparam>
+            <typeparam name="TValue">Value type.</typeparam>
+        </member>
+        <member name="M:Vertical.CommandLine.Configuration.MultiValueArgumentConfiguration`2.Configure(Vertical.CommandLine.Parsing.ParserBuilder{`0,`1},System.Action{Vertical.CommandLine.Configuration.MultiValueArgumentConfiguration{`0,`1}})">
+            <summary>
+            Invokes configuration.
+            </summary>
+            <param name="parserBuilder">Parser builder.</param>
+            <param name="configureAction">Configuration action.</param>
+        </member>
+        <member name="P:Vertical.CommandLine.Configuration.MultiValueArgumentConfiguration`2.MapMany">
+            <summary>
+            Gets a configuration object used to map a multi-valued argument or option.
+            </summary>
+        </member>
+        <member name="T:Vertical.CommandLine.Configuration.MultiValueMappingConfiguration`2">
+            <summary>
+            Configuration object used to define multiple value mapping.
+            </summary>
+            <typeparam name="TOptions">Options type.</typeparam>
+            <typeparam name="TValue">Value type.</typeparam>
+        </member>
+        <member name="M:Vertical.CommandLine.Configuration.MultiValueMappingConfiguration`2.#ctor(Vertical.CommandLine.Configuration.MultiValueArgumentConfiguration{`0,`1},Vertical.CommandLine.Configuration.IComponentSink{Vertical.CommandLine.Mapping.IMapper{`0,`1}})">
+            <inheritdoc />
+        </member>
+        <member name="M:Vertical.CommandLine.Configuration.MultiValueMappingConfiguration`2.ToCollection(System.Linq.Expressions.Expression{System.Func{`0,System.Collections.Generic.ICollection{`1}}})">
+            <summary>
+            Maps one or more argument values to the collection specified by the expression.
+            </summary>
+            <param name="expression">Expression that identifies the collection.</param>
+            <returns>Configuration.</returns>
+        </member>
+        <member name="M:Vertical.CommandLine.Configuration.MultiValueMappingConfiguration`2.ToStack(System.Linq.Expressions.Expression{System.Func{`0,System.Collections.Generic.Stack{`1}}})">
+            <summary>
+            Maps one or more argument values to the stack specified by the expression.
+            </summary>
+            <param name="expression">Expression that identifies the collection.</param>
+            <returns>Configuration.</returns>
+        </member>
+        <member name="M:Vertical.CommandLine.Configuration.MultiValueMappingConfiguration`2.ToQueue(System.Linq.Expressions.Expression{System.Func{`0,System.Collections.Generic.Queue{`1}}})">
+            <summary>
+            Maps one or more argument values to the queue specified by the expression.
+            </summary>
+            <param name="expression">Expression that identifies the collection.</param>
+            <returns>Configuration.</returns>
+        </member>
+        <member name="M:Vertical.CommandLine.Configuration.MultiValueMappingConfiguration`2.ToSet(System.Linq.Expressions.Expression{System.Func{`0,System.Collections.Generic.ISet{`1}}})">
+            <summary>
+            Maps one or more argument values to the queue specified by the expression.
+            </summary>
+            <param name="expression">Expression that identifies the collection.</param>
+            <returns>Configuration.</returns>
+        </member>
+        <member name="P:Vertical.CommandLine.Configuration.MultiValueMappingConfiguration`2.MultiValued">
+            <inheritdoc />
+        </member>
+        <member name="T:Vertical.CommandLine.Configuration.ParserConfiguration`1">
+            <summary>
+            Base class for configurations.
+            </summary>
+            <typeparam name="TOptions">Options type.</typeparam>
+        </member>
+        <member name="M:Vertical.CommandLine.Configuration.ParserConfiguration`1.ConfigureParser``1(System.Object,System.Func{Vertical.CommandLine.Parsing.ParserBuilder{`0,``0},Vertical.CommandLine.Parsing.IArgumentParser{`0}})">
+            <summary>
+            Configures an argument.
+            </summary>
+            <param name="context">Context of the argument.</param>
+            <param name="configuration">Configuration action.</param>
+            <typeparam name="TValue">Value type.</typeparam>
+            <exception cref="T:System.Exception">Configuration exception.</exception>
+        </member>
+        <member name="M:Vertical.CommandLine.Configuration.ParserConfiguration`1.AddParser(Vertical.CommandLine.Parsing.IArgumentParser{`0})">
+            <summary>
+            Adds a parser.
+            </summary>
+            <param name="parser">The parser to add.</param>
+        </member>
+        <member name="M:Vertical.CommandLine.Configuration.ParserConfiguration`1.AddTemplate(Vertical.CommandLine.Parsing.Template)">
+            <summary>
+            Adds a template.
+            </summary>
+            <param name="template">Template to add.</param>
+        </member>
+        <member name="P:Vertical.CommandLine.Configuration.ParserConfiguration`1.ArgumentParsers">
+            <summary>
+            Gets the argument parsers.
+            </summary>
+        </member>
+        <member name="M:Vertical.CommandLine.Configuration.ParserConfiguration`1.GetNextArgumentIdentity">
+            <summary>
+            Gets the identity of the next argument.
+            </summary>
+            <returns>Identity.</returns>
+        </member>
+        <member name="T:Vertical.CommandLine.Configuration.ProviderConfiguration`1">
+            <summary>
+            Configuration object used to define how an options instance is provided.
+            </summary>
+            <typeparam name="TOptions">Options type.</typeparam>
+        </member>
+        <member name="M:Vertical.CommandLine.Configuration.ProviderConfiguration`1.#ctor(Vertical.CommandLine.Configuration.CommandConfiguration{`0},Vertical.CommandLine.Configuration.IComponentSink{Vertical.CommandLine.Provider.IProvider{`0}})">
+            <summary>
+            Creates a new instance.
+            </summary>
+            <param name="configuration">Configuration.</param>
+            <param name="componentSink">Component sink.</param>
+        </member>
+        <member name="M:Vertical.CommandLine.Configuration.ProviderConfiguration`1.UseInstance(`0)">
+            <summary>
+            Registers the given instance to be used.
+            </summary>
+            <param name="options">The options instance to populate with parsed argument values.</param>
+            <returns>Configuration.</returns>
+        </member>
+        <member name="M:Vertical.CommandLine.Configuration.ProviderConfiguration`1.UseFactory(System.Func{`0})">
+            <summary>
+            Registers the given factory to be used.
+            </summary>
+            <param name="factory">The factory function used to provide the options instance.</param>
+            <returns>Configuration.</returns>
+        </member>
+        <member name="M:Vertical.CommandLine.Configuration.ProviderConfiguration`1.UseDefault">
+            <summary>
+            Uses the default constructor provider for the options type.
+            </summary>
+            <returns>Configuration.</returns>
+            <exception cref="T:System.Exception">No default constructor exists.</exception>
+        </member>
+        <member name="T:Vertical.CommandLine.Configuration.ValidationConfiguration`2">
+            <summary>
+            Configuration object used to define how values are validated after conversion.
+            </summary>
+            <typeparam name="TValue">Value type.</typeparam>
+            <typeparam name="TOptions">Options type.</typeparam>
+        </member>
+        <member name="M:Vertical.CommandLine.Configuration.ValidationConfiguration`2.Using(System.Predicate{`1},System.Func{`1,System.String})">
+            <summary>
+            Uses the given predicate to check the converted value.
+            </summary>
+            <param name="predicate">Predicate that returns a boolean indicating if the value is valid.</param>
+            <param name="messageFormat">A function that formats the error to display if validation fails.</param>
+            <returns>Configuration.</returns>
+        </member>
+        <member name="M:Vertical.CommandLine.Configuration.ValidationConfiguration`2.Using``1(``0,Vertical.CommandLine.Validation.Validation{``0,`1},Vertical.CommandLine.Validation.MessageFormat{``0,`1})">
+            <summary>
+            Uses the given predicate to check the converted value.
+            </summary>
+            <param name="predicate">Predicate that returns a boolean indicating if the value is valid.</param>
+            <param name="state">A state object used in the predicate.</param>
+            <param name="messageFormat">A function that formats the error to display if validation fails.</param>
+            <returns>Configuration.</returns>
+        </member>
+        <member name="M:Vertical.CommandLine.Configuration.ValidationConfiguration`2.Less(`1,System.Collections.Generic.IComparer{`1},Vertical.CommandLine.Validation.MessageFormat{`1,`1})">
+            <summary>
+            Validates that the argument value is less than the given value.
+            </summary>
+            <param name="value">The value to compare.</param>
+            <param name="comparer">The comparer implementation to use.</param>
+            <param name="messageFormat">A function that formats the error to display if validation fails.</param>
+            <returns>Configuration.</returns>
+        </member>
+        <member name="M:Vertical.CommandLine.Configuration.ValidationConfiguration`2.LessOrEqual(`1,System.Collections.Generic.IComparer{`1},Vertical.CommandLine.Validation.MessageFormat{`1,`1})">
+            <summary>
+            Validates that the argument value is less or equal to the given value.
+            </summary>
+            <param name="value">The value to compare.</param>
+            <param name="comparer">The comparer implementation to use.</param>
+            <param name="messageFormat">A function that formats the error to display if validation fails.</param>
+            <returns>Configuration.</returns>
+        </member>
+        <member name="M:Vertical.CommandLine.Configuration.ValidationConfiguration`2.Greater(`1,System.Collections.Generic.IComparer{`1},Vertical.CommandLine.Validation.MessageFormat{`1,`1})">
+            <summary>
+            Validates that the argument value is greater than the given value.
+            </summary>
+            <param name="value">The value to compare.</param>
+            <param name="comparer">The comparer implementation to use.</param>
+            <param name="messageFormat">A function that formats the error to display if validation fails.</param>
+            <returns>Configuration.</returns>
+        </member>
+        <member name="M:Vertical.CommandLine.Configuration.ValidationConfiguration`2.GreaterOrEqual(`1,System.Collections.Generic.IComparer{`1},Vertical.CommandLine.Validation.MessageFormat{`1,`1})">
+            <summary>
+            Validates that the argument value is greater or equal to the given value.
+            </summary>
+            <param name="value">The value to compare.</param>
+            <param name="comparer">The comparer implementation to use.</param>
+            <param name="messageFormat">A function that formats the error to display if validation fails.</param>
+            <returns>Configuration.</returns>
+        </member>
+        <member name="M:Vertical.CommandLine.Configuration.ValidationConfiguration`2.Between(`1,`1,System.Collections.Generic.IComparer{`1},Vertical.CommandLine.Validation.MessageFormat{`1,`1})">
+            <summary>
+            Validates that the argument value is inclusively between the given minimum and maximum values.
+            </summary>
+            <param name="min">The minimum acceptable value.</param>
+            <param name="max">The maximum acceptable value.</param>
+            <param name="comparer">The comparer implementation to use.</param>
+            <param name="messageFormat">A function that formats the error to display if validation fails.</param>
+            <returns>Configuration.</returns>
+        </member>
+        <member name="M:Vertical.CommandLine.Configuration.ValidationConfiguration`2.In(System.Collections.Generic.IEnumerable{`1},System.Collections.Generic.IEqualityComparer{`1},Vertical.CommandLine.Validation.MessageFormat{System.Collections.Generic.ISet{`1},`1})">
+            <summary>
+            Validates that an argument value is found in the given set of values.
+            </summary>
+            <param name="values">Acceptable values.</param>
+            <param name="comparer">The comparer implementation to use.</param>
+            <param name="messageFormat">A function that formats the error to display if validation fails.</param>
+            <returns>Configuration.</returns>
+        </member>
+        <member name="M:Vertical.CommandLine.Configuration.ValidationConfiguration`2.Matches(System.String,Vertical.CommandLine.Validation.MessageFormat{System.Text.RegularExpressions.Regex,`1})">
+            <summary>
+            Validates that an argument value is found in the given set of values.
+            </summary>
+            <param name="pattern">The regular expression pattern to match.</param>
+            <param name="messageFormat">A function that formats the error to display if validation fails.</param>
+            <returns>Configuration.</returns>
+        </member>
+        <member name="M:Vertical.CommandLine.Configuration.ValidationConfiguration`2.Using(Vertical.CommandLine.Validation.IValidator{`1})">
+            <summary>
+            Uses the given validator instance to check the converted value.
+            </summary>
+        </member>
+        <member name="T:Vertical.CommandLine.Conversion.CastConverter`1">
+            <summary>
+            Represents a converter that casts values.
+            </summary>
+            <typeparam name="TValue">Value type.</typeparam>
+        </member>
+        <member name="M:Vertical.CommandLine.Conversion.CastConverter`1.#ctor(System.Func{System.String,`0})">
+            <inheritdoc />
+        </member>
+        <member name="M:Vertical.CommandLine.Conversion.CastConverter`1.TryCreate(Vertical.CommandLine.Conversion.IValueConverter{`0}@)">
+            <summary>
+            Attempts to create an instance.
+            </summary>
+        </member>
+        <member name="M:Vertical.CommandLine.Conversion.CastConverter`1.ToString">
+            <inheritdoc />
+        </member>
+        <member name="T:Vertical.CommandLine.Conversion.ConstructorConverter`1">
+            <summary>
+            Represents a converter that uses a type's constructor.
+            </summary>
+            <typeparam name="TValue">Value</typeparam>
+        </member>
+        <member name="M:Vertical.CommandLine.Conversion.ConstructorConverter`1.#ctor(System.Func{System.String,`0})">
+            <inheritdoc />
+        </member>
+        <member name="M:Vertical.CommandLine.Conversion.ConstructorConverter`1.TryCreate(Vertical.CommandLine.Conversion.IValueConverter{`0}@)">
+            <summary>
+            Tries to create an instance.
+            </summary>
+        </member>
+        <member name="T:Vertical.CommandLine.Conversion.ConversionException">
+            <summary>
+            Represents an error that occurs during conversion.
+            </summary>
+        </member>
+        <member name="M:Vertical.CommandLine.Conversion.ConversionException.#ctor(System.String,System.Type,System.String,System.Exception)">
+            <summary>
+            Creates a new instance.
+            </summary>
+            <param name="context">The context (template or argument).</param>
+            <param name="targetType">Target type.</param>
+            <param name="argumentValue">Argument value.</param>
+            <param name="innerException">Inner exception that occurred.</param>
+        </member>
+        <member name="P:Vertical.CommandLine.Conversion.ConversionException.ArgumentValue">
+            <summary>
+            Gets the argument value that was the problem.
+            </summary>
+        </member>
+        <member name="P:Vertical.CommandLine.Conversion.ConversionException.TargetType">
+            <summary>
+            Gets the type being converted to.
+            </summary>
+        </member>
+        <member name="P:Vertical.CommandLine.Conversion.ConversionException.Context">
+            <summary>
+            Gets the context of the conversion. This will be the template
+            of an option or switch or the index of a position argument.
+            </summary>
+        </member>
+        <member name="T:Vertical.CommandLine.Conversion.ConverterFactory">
+            <summary>
+            Factory for out-of-box converters.
+            </summary>
+        </member>
+        <member name="M:Vertical.CommandLine.Conversion.ConverterFactory.CreateOrThrow``1">
+            <summary>
+            Creates or throws a converter.
+            </summary>
+        </member>
+        <member name="T:Vertical.CommandLine.Conversion.DelegateConverter`1">
+            <summary>
+            Represents a converter that uses an underlying delegate to perform the conversion.
+            </summary>
+            <typeparam name="TValue">The value type.</typeparam>
+        </member>
+        <member name="M:Vertical.CommandLine.Conversion.DelegateConverter`1.Convert(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:Vertical.CommandLine.Conversion.DelegateConverter`1.ToString">
+            <inheritdoc />
+        </member>
+        <member name="T:Vertical.CommandLine.Conversion.DictionaryConverter`1">
+            <summary>
+            Represents a converter that uses a dictionary to associate string values
+            with valid values.
+            </summary>
+            <typeparam name="TValue">Value type.</typeparam>
+        </member>
+        <member name="M:Vertical.CommandLine.Conversion.DictionaryConverter`1.#ctor(System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{System.String,`0}},System.Collections.Generic.IEqualityComparer{System.String})">
+            <summary>
+            Creates a new instance of this type.
+            </summary>
+            <param name="values">The key/value pairs that provide the conversion mapping.</param>
+            <param name="keyComparer">Key comparer.</param>
+        </member>
+        <member name="M:Vertical.CommandLine.Conversion.DictionaryConverter`1.Convert(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:Vertical.CommandLine.Conversion.DictionaryConverter`1.ToString">
+            <inheritdoc />
+        </member>
+        <member name="T:Vertical.CommandLine.Conversion.EnumConverter`1">
+            <summary>
+            Represents an object that converts string values to enum.
+            </summary>
+            <typeparam name="TValue">Enum type.</typeparam>
+        </member>
+        <member name="M:Vertical.CommandLine.Conversion.EnumConverter`1.TryCreate(Vertical.CommandLine.Conversion.IValueConverter{`0}@)">
+            <summary>
+            Tries to create a new instance.
+            </summary>
+        </member>
+        <member name="M:Vertical.CommandLine.Conversion.EnumConverter`1.Convert(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:Vertical.CommandLine.Conversion.EnumConverter`1.ToString">
+            <inheritdoc />
+        </member>
+        <member name="T:Vertical.CommandLine.Conversion.IValueConverter`1">
+            <summary>
+            Defines the interface of an object that converts values from string to the target
+            type.
+            </summary>
+            <typeparam name="TValue"></typeparam>
+        </member>
+        <member name="M:Vertical.CommandLine.Conversion.IValueConverter`1.Convert(System.String)">
+            <summary>
+            Converts the given argument value to the target type.
+            </summary>
+            <param name="value">Value to convert.</param>
+            <returns>Converted value</returns>
+        </member>
+        <member name="T:Vertical.CommandLine.Conversion.NullableEnumConverter`1">
+            <summary>
+            Represents an object that converts string to nullable enum.
+            </summary>
+        </member>
+        <member name="M:Vertical.CommandLine.Conversion.NullableEnumConverter`1.#ctor(System.Func{System.String,`0})">
+            <inheritdoc />
+        </member>
+        <member name="M:Vertical.CommandLine.Conversion.NullableEnumConverter`1.TryCreate(Vertical.CommandLine.Conversion.IValueConverter{`0}@)">
+            <summary>
+            Tries to create an instance.
+            </summary>
+        </member>
+        <member name="M:Vertical.CommandLine.Conversion.NullableEnumConverter`1.ToString">
+            <inheritdoc />
+        </member>
+        <member name="T:Vertical.CommandLine.Conversion.NullableTypeParseConverter`1">
+            <summary>
+            Represents a converter that uses a nullable type's Parse method.
+            </summary>
+            <typeparam name="TValue"></typeparam>
+        </member>
+        <member name="M:Vertical.CommandLine.Conversion.NullableTypeParseConverter`1.#ctor(System.Func{System.String,`0})">
+            <inheritdoc />
+        </member>
+        <member name="M:Vertical.CommandLine.Conversion.NullableTypeParseConverter`1.TryCreate(Vertical.CommandLine.Conversion.IValueConverter{`0}@)">
+            <summary>
+            Tries to create a new instance.
+            </summary>
+        </member>
+        <member name="M:Vertical.CommandLine.Conversion.NullableTypeParseConverter`1.ToString">
+            <inheritdoc />
+        </member>
+        <member name="T:Vertical.CommandLine.Conversion.ParseConverter`1">
+            <summary>
+            Represents a converter that uses a type's Parse method.
+            </summary>
+            <typeparam name="TValue">Value type.</typeparam>
+        </member>
+        <member name="M:Vertical.CommandLine.Conversion.ParseConverter`1.#ctor(System.Func{System.String,`0})">
+            <inheritdoc />
+        </member>
+        <member name="M:Vertical.CommandLine.Conversion.ParseConverter`1.TryCreate(Vertical.CommandLine.Conversion.IValueConverter{`0}@)">
+            <summary>
+            Tries to create an instance.
+            </summary>
+        </member>
+        <member name="M:Vertical.CommandLine.Conversion.ParseConverter`1.ToString">
+            <inheritdoc />
+        </member>
+        <member name="M:Vertical.CommandLine.Conversion.StringConverter`1.Convert(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:Vertical.CommandLine.Conversion.StringConverter`1.TryCreate(Vertical.CommandLine.Conversion.IValueConverter{`0}@)">
+            <summary>
+            Tries to create an instance.
+            </summary>
+        </member>
+        <member name="M:Vertical.CommandLine.Conversion.StringConverter`1.ToString">
+            <inheritdoc />
+        </member>
+        <member name="T:Vertical.CommandLine.Conversion.ValueConverter">
+            <summary>
+            Functional class for conversion.
+            </summary>
+        </member>
+        <member name="M:Vertical.CommandLine.Conversion.ValueConverter.Convert``1(Vertical.CommandLine.Conversion.IValueConverter{``0},System.String,System.String)">
+            <summary>
+            Performs value conversion.
+            </summary>
+            <typeparam name="TValue">Value type.</typeparam>
+            <param name="converter">Converter instance</param>
+            <param name="context">Context template or argument</param>
+            <param name="value">Value to convert</param>
+            <returns>The converted value</returns>
+        </member>
+        <member name="T:Vertical.CommandLine.Help.ConsoleHelpWriter">
+            <summary>
+            Represents a text writer that writes help content to the console.
+            </summary>
+        </member>
+        <member name="P:Vertical.CommandLine.Help.ConsoleHelpWriter.Default">
+            <summary>
+            Defines a default instance.
+            </summary>
+        </member>
+        <member name="M:Vertical.CommandLine.Help.ConsoleHelpWriter.WriteContent(System.Collections.Generic.IReadOnlyCollection{System.String})">
+            <inheritdoc />
+        </member>
+        <member name="T:Vertical.CommandLine.Help.FileHelpContentProvider">
+            <summary>
+            Represents a provider that loads help content from a file.
+            </summary>
+        </member>
+        <member name="M:Vertical.CommandLine.Help.FileHelpContentProvider.#ctor(System.String)">
+            <summary>
+            Creates a new instance.
+            </summary>
+        </member>
+        <member name="M:Vertical.CommandLine.Help.FileHelpContentProvider.GetInstance">
+            <inheritdoc />
+        </member>
+        <member name="T:Vertical.CommandLine.Help.FormatInfo">
+            <summary>
+            Represents properties that control how help content is formatted.
+            </summary>
+        </member>
+        <member name="M:Vertical.CommandLine.Help.FormatInfo.#ctor(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Creates a new instance of this type using the default formatter.
+            </summary>
+            <param name="marginWidth">Output width.</param>
+            <param name="marginHeight">Output height.</param>
+            <param name="startRow">Start row.</param>
+        </member>
+        <member name="M:Vertical.CommandLine.Help.FormatInfo.#ctor(System.Int32,System.Int32,System.Int32,Vertical.CommandLine.Help.IFormatter)">
+            <summary>
+            Creates a new instance of this type.
+            </summary>
+            <param name="marginWidth">Output width.</param>
+            <param name="marginHeight">Output height.</param>
+            <param name="startRow">Start row.</param>
+            <param name="formatter">Line formatter</param>
+        </member>
+        <member name="P:Vertical.CommandLine.Help.FormatInfo.Default">
+            <summary>
+            Defines a default instance.
+            </summary>
+        </member>
+        <member name="P:Vertical.CommandLine.Help.FormatInfo.FormatWidth">
+            <summary>
+            Gets the character width of the output.
+            </summary>
+        </member>
+        <member name="P:Vertical.CommandLine.Help.FormatInfo.FormatHeight">
+            <summary>
+            Gets the character height of the output.
+            </summary>
+        </member>
+        <member name="P:Vertical.CommandLine.Help.FormatInfo.StartRow">
+            <summary>
+            Gets the first row to print.
+            </summary>
+        </member>
+        <member name="P:Vertical.CommandLine.Help.FormatInfo.LineFormatter">
+            <summary>
+            Gets the line formatter.
+            </summary>
+        </member>
+        <member name="T:Vertical.CommandLine.Help.Formatter">
+            <summary>
+            Represents a formatter.
+            </summary>
+        </member>
+        <member name="P:Vertical.CommandLine.Help.Formatter.JustifiedFormatter">
+            <summary>
+            Defines a formatter that justifies strings.
+            </summary>
+        </member>
+        <member name="P:Vertical.CommandLine.Help.Formatter.DefaultFormatter">
+            <summary>
+            Defines a formatter that performs no formatting.
+            </summary>
+        </member>
+        <member name="M:Vertical.CommandLine.Help.Formatter.CreateFormatted(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="T:Vertical.CommandLine.Help.HelpWriter">
+            <summary>
+            Represents an object that writes help content to a text writer.
+            </summary>
+        </member>
+        <member name="M:Vertical.CommandLine.Help.HelpWriter.#ctor(System.IO.TextWriter,Vertical.CommandLine.Help.FormatInfo)">
+            <summary>
+            Creates a new instance of this type.
+            </summary>
+            <param name="textWriter">Text writer that receives the output.</param>
+            <param name="formatInfo">Formatting information.</param>
+        </member>
+        <member name="P:Vertical.CommandLine.Help.HelpWriter.FormatInfo">
+            <summary>
+            Gets the format info.
+            </summary>
+        </member>
+        <member name="P:Vertical.CommandLine.Help.HelpWriter.TextWriter">
+            <summary>
+            Gets the text writer.
+            </summary>
+        </member>
+        <member name="M:Vertical.CommandLine.Help.HelpWriter.WriteContent(System.Collections.Generic.IReadOnlyCollection{System.String})">
+            <inheritdoc />
+        </member>
+        <member name="M:Vertical.CommandLine.Help.HelpWriter.WriteContent(System.IO.TextWriter,System.Collections.Generic.IEnumerable{System.String},Vertical.CommandLine.Help.FormatInfo)">
+            <summary>
+            Writes the given help content within the specified display region.
+            </summary>
+            <param name="textWriter">The text writer that receives the content.</param>
+            <param name="content">The source content.</param>
+            <param name="formatInfo">The format info.</param>
+            <returns>The number of virtually rendered lines of help content.</returns>
+        </member>
+        <member name="T:Vertical.CommandLine.Help.IFormattedString">
+            <summary>
+            Defines the interface of a formatted string.
+            </summary>
+        </member>
+        <member name="M:Vertical.CommandLine.Help.IFormattedString.SplitToWidth(System.Int32)">
+            <summary>
+            Splits the justified string to the given width.
+            </summary>
+            <param name="width">Width.</param>
+            <returns><see cref="T:System.Collections.Generic.IEnumerable`1"/></returns>
+        </member>
+        <member name="P:Vertical.CommandLine.Help.IFormattedString.Indent">
+            <summary>
+            Gets the number of spaces in the string indent.
+            </summary>
+        </member>
+        <member name="P:Vertical.CommandLine.Help.IFormattedString.StartIndex">
+            <summary>
+            Gets the index within the string where the non white-space content begins.
+            </summary>
+        </member>
+        <member name="P:Vertical.CommandLine.Help.IFormattedString.Source">
+            <summary>
+            Gets the source string.
+            </summary>
+        </member>
+        <member name="T:Vertical.CommandLine.Help.IFormatter">
+            <summary>
+            Defines the interface of an object that creates formatted strings.
+            </summary>
+        </member>
+        <member name="M:Vertical.CommandLine.Help.IFormatter.CreateFormatted(System.String)">
+            <summary>
+            Creates a formatted string.
+            </summary>
+            <param name="source">Source string to format</param>
+            <returns><see cref="T:Vertical.CommandLine.Help.IFormattedString"/></returns>
+        </member>
+        <member name="T:Vertical.CommandLine.Help.IHelpWriter">
+            <summary>
+            Defines the interface of an object that writes help content.
+            </summary>
+        </member>
+        <member name="M:Vertical.CommandLine.Help.IHelpWriter.WriteContent(System.Collections.Generic.IReadOnlyCollection{System.String})">
+            <summary>
+            Writes the command help content obtained from the given file resource.
+            </summary>
+            <param name="content">The content to display.</param>
+        </member>
+        <member name="T:Vertical.CommandLine.Help.InteractiveConsoleHelpWriter">
+            <summary>
+            Represents a help text writer that provides an interactive environment for
+            paging.
+            </summary>
+        </member>
+        <member name="P:Vertical.CommandLine.Help.InteractiveConsoleHelpWriter.Default">
+            <summary>
+            Defines a default instance.
+            </summary>
+        </member>
+        <member name="M:Vertical.CommandLine.Help.InteractiveConsoleHelpWriter.WriteContent(System.Collections.Generic.IReadOnlyCollection{System.String})">
+            <inheritdoc />
+        </member>
+        <member name="T:Vertical.CommandLine.Help.JustifiedString">
+            <summary>
+            Represents a justified string.
+            </summary>
+        </member>
+        <member name="M:Vertical.CommandLine.Help.JustifiedString.#ctor(System.String)">
+            <summary>
+            Creates a new instance.
+            </summary>
+            <param name="source">The source string.</param>
+        </member>
+        <member name="M:Vertical.CommandLine.Help.JustifiedString.SplitToWidth(System.Int32)">
+            <summary>
+            Splits the justified string to the given width.
+            </summary>
+            <param name="width">Width.</param>
+            <returns><see cref="T:System.Collections.Generic.IEnumerable`1"/></returns>
+        </member>
+        <member name="P:Vertical.CommandLine.Help.JustifiedString.Indent">
+            <summary>
+            Gets the number of spaces in the string indent.
+            </summary>
+        </member>
+        <member name="P:Vertical.CommandLine.Help.JustifiedString.StartIndex">
+            <summary>
+            Gets the index within the string where the non white-space content begins.
+            </summary>
+        </member>
+        <member name="P:Vertical.CommandLine.Help.JustifiedString.Source">
+            <summary>
+            Gets the source string.
+            </summary>
+        </member>
+        <member name="M:Vertical.CommandLine.Help.JustifiedString.ToString">
+            <inheritdoc />
+        </member>
+        <member name="T:Vertical.CommandLine.Help.Span">
+            <summary>
+            Represents a span that consists of a start index and a length.
+            </summary>
+        </member>
+        <member name="M:Vertical.CommandLine.Help.Span.#ctor(System.Int32,System.Int32)">
+            <summary>
+            Creates a new instance.
+            </summary>
+            <param name="start">Start position.</param>
+            <param name="length">Span length.</param>
+        </member>
+        <member name="P:Vertical.CommandLine.Help.Span.Empty">
+            <summary>
+            Defines an empty instance.
+            </summary>
+        </member>
+        <member name="P:Vertical.CommandLine.Help.Span.Start">
+            <summary>
+            Gets the start position of the span.
+            </summary>
+        </member>
+        <member name="P:Vertical.CommandLine.Help.Span.Length">
+            <summary>
+            Gets the length of the span.
+            </summary>
+        </member>
+        <member name="M:Vertical.CommandLine.Help.Span.Equals(Vertical.CommandLine.Help.Span)">
+            <inheritdoc />
+        </member>
+        <member name="M:Vertical.CommandLine.Help.Span.op_Equality(Vertical.CommandLine.Help.Span,Vertical.CommandLine.Help.Span)">
+            <summary>
+            Determines equality among values
+            </summary>
+            <param name="x">First value to compare</param>
+            <param name="y">Second value to compare</param>
+            <returns>True if the instances are equal</returns>
+        </member>
+        <member name="M:Vertical.CommandLine.Help.Span.op_Inequality(Vertical.CommandLine.Help.Span,Vertical.CommandLine.Help.Span)">
+            <summary>
+            Determines inequality among values
+            </summary>
+            <param name="x">First value to compare</param>
+            <param name="y">Second value to compare</param>
+            <returns>True if the instances are not equal</returns>
+        </member>
+        <member name="M:Vertical.CommandLine.Help.Span.Equals(System.Object)">
+            <inheritdoc />
+        </member>
+        <member name="M:Vertical.CommandLine.Help.Span.GetHashCode">
+            <inheritdoc />
+        </member>
+        <member name="M:Vertical.CommandLine.Help.Span.ToString">
+            <inheritdoc />
+        </member>
+        <member name="T:Vertical.CommandLine.Help.UnformattedString">
+            <summary>
+            Represents an unformatted string.
+            </summary>
+        </member>
+        <member name="M:Vertical.CommandLine.Help.UnformattedString.#ctor(System.String)">
+            <summary>
+            Creates a new instance.
+            </summary>
+            <param name="source">Source string</param>
+        </member>
+        <member name="M:Vertical.CommandLine.Help.UnformattedString.SplitToWidth(System.Int32)">
+            <inheritdoc />
+        </member>
+        <member name="P:Vertical.CommandLine.Help.UnformattedString.Indent">
+            <inheritdoc />
+        </member>
+        <member name="P:Vertical.CommandLine.Help.UnformattedString.StartIndex">
+            <inheritdoc />
+        </member>
+        <member name="P:Vertical.CommandLine.Help.UnformattedString.Source">
+            <inheritdoc />
+        </member>
+        <member name="T:Vertical.CommandLine.Infrastructure.Check">
+            <summary>
+            Diagnostics checking.
+            </summary>
+        </member>
+        <member name="M:Vertical.CommandLine.Infrastructure.Check.True(System.Boolean,System.String,System.String)">
+            <summary>
+            Verifies a parameter condition.
+            </summary>
+        </member>
+        <member name="M:Vertical.CommandLine.Infrastructure.Check.NotNull(System.Object,System.String)">
+            <summary>
+            Verifies a reference is not null.
+            </summary>
+        </member>
+        <member name="M:Vertical.CommandLine.Infrastructure.Check.NotNullOrWhiteSpace(System.String,System.String)">
+            <summary>
+            Verifies a string is not null or whitespace.
+            </summary>
+        </member>
+        <member name="T:Vertical.CommandLine.Infrastructure.ConfigurationExceptions">
+            <summary>
+            Factory for configuration related exceptions.
+            </summary>
+        </member>
+        <member name="T:Vertical.CommandLine.Infrastructure.Exceptions">
+            <summary>
+            Defines general exceptions.
+            </summary>
+        </member>
+        <member name="T:Vertical.CommandLine.Infrastructure.ExpressionHelpers">
+            <summary>
+            Functional class with expression helpers.
+            </summary>
+        </member>
+        <member name="M:Vertical.CommandLine.Infrastructure.ExpressionHelpers.GetPropertyInfo``2(System.Linq.Expressions.Expression{System.Func{``0,``1}},System.Boolean)">
+            <summary>
+            Gets PropertyInfo from an expression.
+            </summary>
+        </member>
+        <member name="M:Vertical.CommandLine.Infrastructure.ExpressionHelpers.CreatePropertyWriter``2(System.Linq.Expressions.Expression{System.Func{``0,``1}},System.String@)">
+            <summary>
+            Creates a property writer delegate.
+            </summary>
+        </member>
+        <member name="M:Vertical.CommandLine.Infrastructure.ExpressionHelpers.CreateCollectionWriter``3(System.Linq.Expressions.Expression{System.Func{``0,``1}},System.Reflection.MethodInfo,System.String@)">
+            <summary>
+            Creates a collection writer delegate.
+            </summary>
+        </member>
+        <member name="T:Vertical.CommandLine.Infrastructure.Formatting">
+            <summary>
+            Defines formatting methods.
+            </summary>
+        </member>
+        <member name="M:Vertical.CommandLine.Infrastructure.Formatting.FriendlyName(System.Type)">
+            <summary>
+            Used for debugging mostly in ToString methods.
+            </summary>
+        </member>
+        <member name="T:Vertical.CommandLine.Infrastructure.HashCode">
+            <summary>
+            Utility method used to combine hash codes.
+            </summary>
+        </member>
+        <member name="M:Vertical.CommandLine.Infrastructure.HashCode.Combine(System.Int32,System.Int32)">
+            <summary>
+            Combines two hash codes
+            </summary>
+            <param name="h1">First hash</param>
+            <param name="h2">Second hash</param>
+            <returns></returns>
+        </member>
+        <member name="T:Vertical.CommandLine.Infrastructure.TypeHelpers">
+            <summary>
+            Reflection type helpers.
+            </summary>
+        </member>
+        <member name="P:Vertical.CommandLine.Infrastructure.TypeHelpers.StringIsNullOrWhiteSpaceMethodInfo">
+            <summary>
+            Defines the string IsNullOrWhiteSpace method
+            </summary>
+        </member>
+        <member name="M:Vertical.CommandLine.Infrastructure.TypeHelpers.IsNullableType(System.Type)">
+            <summary>
+            Determines if a type is nullable.
+            </summary>
+        </member>
+        <member name="M:Vertical.CommandLine.Infrastructure.TypeHelpers.IsSystemType(System.Type)">
+            <summary>
+            Determines if a type is in the System namespace
+            </summary>
+        </member>
+        <member name="M:Vertical.CommandLine.Infrastructure.TypeHelpers.GetNullableUnderlyingType(System.Type)">
+            <summary>
+            Gets the underlying type of a Nullable{T}
+            </summary>
+        </member>
+        <member name="M:Vertical.CommandLine.Infrastructure.TypeHelpers.GetEnumParseMethodInfo">
+            <summary>
+            Defines the Enum.Parse method.
+            </summary>
+        </member>
+        <member name="M:Vertical.CommandLine.Infrastructure.TypeHelpers.TryGetParseMethodInfo(System.Type,System.Reflection.MethodInfo@)">
+            <summary>
+            Gets the Parse method for a type.
+            </summary>
+        </member>
+        <member name="M:Vertical.CommandLine.Infrastructure.TypeHelpers.TryGetStringConstructor(System.Type,System.Reflection.ConstructorInfo@)">
+            <summary>
+            Gets a constructor that accepts a string parameter.
+            </summary>
+        </member>
+        <member name="M:Vertical.CommandLine.Infrastructure.TypeHelpers.GetKnownMethodInfo(System.Type,System.String,System.Type[],System.Type)">
+            <summary>
+            Gets a known API method
+            </summary>
+        </member>
+        <member name="M:Vertical.CommandLine.Infrastructure.TypeHelpers.GetGenericTypeName(System.String)">
+            <summary>
+            Gets a generic type name
+            </summary>
+        </member>
+        <member name="T:Vertical.CommandLine.Mapping.CollectionMapper`2">
+            <summary>
+            Represents an object that maps values to a collection.
+            </summary>
+            <typeparam name="TOptions">Options type.</typeparam>
+            <typeparam name="TValue">Value type.</typeparam>
+        </member>
+        <member name="M:Vertical.CommandLine.Mapping.CollectionMapper`2.#ctor(System.Action{`0,`1},System.String)">
+            <inheritdoc />
+        </member>
+        <member name="P:Vertical.CommandLine.Mapping.CollectionMapper`2.PropertyName">
+            <summary>
+            Gets the property name that identifies the collection.
+            </summary>
+        </member>
+        <member name="P:Vertical.CommandLine.Mapping.CollectionMapper`2.CollectionType">
+            <summary>
+            Gets the collection type for debugging information.
+            </summary>
+        </member>
+        <member name="M:Vertical.CommandLine.Mapping.CollectionMapper`2.MapValue(`0,`1)">
+            <inheritdoc />
+        </member>
+        <member name="M:Vertical.CommandLine.Mapping.CollectionMapper`2.ToString">
+            <inheritdoc />
+        </member>
+        <member name="T:Vertical.CommandLine.Mapping.DelegateMapper`2">
+            <summary>
+            Represents an object that maps converted argument values to the options type.
+            </summary>
+            <typeparam name="TOptions">Options type.</typeparam>
+            <typeparam name="TValue">Value type.</typeparam>
+        </member>
+        <member name="M:Vertical.CommandLine.Mapping.DelegateMapper`2.MapValue(`0,`1)">
+            <inheritdoc />
+        </member>
+        <member name="M:Vertical.CommandLine.Mapping.DelegateMapper`2.MapValueCore(`0,`1)">
+            <summary>
+            Invokes the underlying delegate.
+            </summary>
+            <param name="options">Options</param>
+            <param name="value">Value to map</param>
+        </member>
+        <member name="P:Vertical.CommandLine.Mapping.DelegateMapper`2.MultiValued">
+            <inheritdoc />
+        </member>
+        <member name="M:Vertical.CommandLine.Mapping.DelegateMapper`2.ToString">
+            <inheritdoc />
+        </member>
+        <member name="T:Vertical.CommandLine.Mapping.IMapper`2">
+            <summary>
+            Defines the interface of an object that maps a converted argument value
+            to an options instance.
+            </summary>
+        </member>
+        <member name="M:Vertical.CommandLine.Mapping.IMapper`2.MapValue(`0,`1)">
+            <summary>
+            Maps a value to the given options instance.
+            </summary>
+            <param name="options">Options instance.</param>
+            <param name="value">Value to map.</param>
+        </member>
+        <member name="P:Vertical.CommandLine.Mapping.IMapper`2.MultiValued">
+            <summary>
+            Gets whether the mapper supports multiple values.
+            </summary>
+        </member>
+        <member name="T:Vertical.CommandLine.Mapping.Mapper">
+            <summary>
+            Functional class used for mapping.
+            </summary>
+        </member>
+        <member name="M:Vertical.CommandLine.Mapping.Mapper.MapValue``2(Vertical.CommandLine.Mapping.IMapper{``0,``1},System.String,``0,``1)">
+            <summary>
+            Performs mapping of a converted value to options.
+            </summary>
+            <typeparam name="TOptions">Options type</typeparam>
+            <typeparam name="TValue">Value type</typeparam>
+            <param name="mapper">Mapper instance</param>
+            <param name="options">Options object</param>
+            <param name="context">Context, template or position argument</param>
+            <param name="value">Value to map</param>
+        </member>
+        <member name="T:Vertical.CommandLine.Mapping.PropertyMapper`2">
+            <summary>
+            Represents an object that maps values using a property expression.
+            </summary>
+            <typeparam name="TOptions">Options type.</typeparam>
+            <typeparam name="TValue">Value type.</typeparam>
+        </member>
+        <member name="M:Vertical.CommandLine.Mapping.PropertyMapper`2.#ctor(System.Action{`0,`1},System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:Vertical.CommandLine.Mapping.PropertyMapper`2.MapValue(`0,`1)">
+            <inheritdoc />
+        </member>
+        <member name="M:Vertical.CommandLine.Mapping.PropertyMapper`2.Create(System.Linq.Expressions.Expression{System.Func{`0,`1}})">
+            <summary>
+            Creates a new instance.
+            </summary>
+        </member>
+        <member name="M:Vertical.CommandLine.Mapping.PropertyMapper`2.ToString">
+            <inheritdoc />
+        </member>
+        <member name="T:Vertical.CommandLine.Mapping.QueueMapper`2">
+            <summary>
+            Represents an object that maps values to a stack.
+            </summary>
+            <typeparam name="TOptions">Options type.</typeparam>
+            <typeparam name="TValue">Value type.</typeparam>
+        </member>
+        <member name="M:Vertical.CommandLine.Mapping.QueueMapper`2.#ctor(System.Action{`0,`1},System.String)">
+            <inheritdoc />
+        </member>
+        <member name="P:Vertical.CommandLine.Mapping.QueueMapper`2.CollectionType">
+            <inheritdoc />
+        </member>
+        <member name="M:Vertical.CommandLine.Mapping.QueueMapper`2.ToString">
+            <inheritdoc />
+        </member>
+        <member name="T:Vertical.CommandLine.Mapping.SetMapper`2">
+            <summary>
+            Represents an object that maps values to a stack.
+            </summary>
+            <typeparam name="TOptions">Options type.</typeparam>
+            <typeparam name="TValue">Value type.</typeparam>
+        </member>
+        <member name="M:Vertical.CommandLine.Mapping.SetMapper`2.#ctor(System.Action{`0,`1},System.String)">
+            <inheritdoc />
+        </member>
+        <member name="P:Vertical.CommandLine.Mapping.SetMapper`2.CollectionType">
+            <inheritdoc />
+        </member>
+        <member name="M:Vertical.CommandLine.Mapping.SetMapper`2.ToString">
+            <inheritdoc />
+        </member>
+        <member name="T:Vertical.CommandLine.Mapping.StackMapper`2">
+            <summary>
+            Represents an object that maps values to a stack.
+            </summary>
+            <typeparam name="TOptions">Options type.</typeparam>
+            <typeparam name="TValue">Value type.</typeparam>
+        </member>
+        <member name="M:Vertical.CommandLine.Mapping.StackMapper`2.#ctor(System.Action{`0,`1},System.String)">
+            <inheritdoc />
+        </member>
+        <member name="P:Vertical.CommandLine.Mapping.StackMapper`2.CollectionType">
+            <inheritdoc />
+        </member>
+        <member name="M:Vertical.CommandLine.Mapping.StackMapper`2.Create(System.Linq.Expressions.Expression{System.Func{`0,System.Collections.Generic.Stack{`1}}})">
+            <summary>
+            Creates an instance.
+            </summary>
+        </member>
+        <member name="M:Vertical.CommandLine.Mapping.StackMapper`2.ToString">
+            <inheritdoc />
+        </member>
+        <member name="T:Vertical.CommandLine.Parsing.ArgumentParser`2">
+            <summary>
+            Provides a base class for argument parsers.
+            </summary>
+            <typeparam name="TOptions">Options type.</typeparam>
+            <typeparam name="TValue">Value type.</typeparam>
+        </member>
+        <member name="M:Vertical.CommandLine.Parsing.ArgumentParser`2.#ctor(Vertical.CommandLine.Parsing.ParserType,Vertical.CommandLine.Conversion.IValueConverter{`1},Vertical.CommandLine.Validation.IValidator{`1},Vertical.CommandLine.Mapping.IMapper{`0,`1})">
+            <summary>
+            Creates a new instance.
+            </summary>
+            <param name="order"><see cref="T:Vertical.CommandLine.Parsing.ParserType"/></param>
+            <param name="converter">Converter instance.</param>
+            <param name="validator">Validator instance chain.</param>
+            <param name="mapper">Mapper instance.</param>
+        </member>
+        <member name="M:Vertical.CommandLine.Parsing.ArgumentParser`2.#ctor(Vertical.CommandLine.Parsing.Template,Vertical.CommandLine.Parsing.ParserType,Vertical.CommandLine.Conversion.IValueConverter{`1},Vertical.CommandLine.Validation.IValidator{`1},Vertical.CommandLine.Mapping.IMapper{`0,`1})">
+            <summary>
+            Creates a new instance.
+            </summary>
+            <param name="template">The template.</param>
+            <param name="parserType">Parse order.</param>
+            <param name="converter">Converter instance.</param>
+            <param name="validator">Validator chain.</param>
+            <param name="mapper">Mapper instance.</param>
+        </member>
+        <member name="P:Vertical.CommandLine.Parsing.ArgumentParser`2.ParserType">
+            <inheritdoc />
+        </member>
+        <member name="P:Vertical.CommandLine.Parsing.ArgumentParser`2.MultiValued">
+            <inheritdoc />
+        </member>
+        <member name="M:Vertical.CommandLine.Parsing.ArgumentParser`2.ProcessContext(`0,Vertical.CommandLine.Parsing.ParseContext)">
+            <inheritdoc />
+        </member>
+        <member name="P:Vertical.CommandLine.Parsing.ArgumentParser`2.Template">
+            <summary>
+            Gets the template value.
+            </summary>
+        </member>
+        <member name="M:Vertical.CommandLine.Parsing.ArgumentParser`2.AcceptArgumentValue(`0,Vertical.CommandLine.Parsing.Token)">
+            <summary>
+            Maps the given argument value.
+            </summary>
+            <param name="options">Options instance.</param>
+            <param name="token">Value to map.</param>
+        </member>
+        <member name="P:Vertical.CommandLine.Parsing.ArgumentParser`2.Context">
+            <summary>
+            Gets the context for the parser.
+            </summary>
+        </member>
+        <member name="M:Vertical.CommandLine.Parsing.ArgumentParser`2.ToString">
+            <inheritdoc />
+        </member>
+        <member name="T:Vertical.CommandLine.Parsing.ContextResult">
+            <summary>
+            Defines the result of context processing.
+            </summary>
+        </member>
+        <member name="F:Vertical.CommandLine.Parsing.ContextResult.NoMatch">
+            <summary>
+            Indicates the parser did not match any tokens.
+            </summary>
+        </member>
+        <member name="F:Vertical.CommandLine.Parsing.ContextResult.Help">
+            <summary>
+            Indicates the parser matched a help template.
+            </summary>
+        </member>
+        <member name="F:Vertical.CommandLine.Parsing.ContextResult.Argument">
+            <summary>
+            Indicates the parser matched an argument, option or switch.
+            </summary>
+        </member>
+        <member name="F:Vertical.CommandLine.Parsing.ContextResult.Command">
+            <summary>
+            Indicates the parser matched a command template.
+            </summary>
+        </member>
+        <member name="T:Vertical.CommandLine.Parsing.HelpOptionParser`1">
+            <summary>
+            Represents a parser specific to the options parser.
+            </summary>
+            <typeparam name="TOptions">Options type.</typeparam>
+        </member>
+        <member name="P:Vertical.CommandLine.Parsing.HelpOptionParser`1.ParserType">
+            <inheritdoc />
+        </member>
+        <member name="P:Vertical.CommandLine.Parsing.HelpOptionParser`1.MultiValued">
+            <inheritdoc />
+        </member>
+        <member name="M:Vertical.CommandLine.Parsing.HelpOptionParser`1.ProcessContext(`0,Vertical.CommandLine.Parsing.ParseContext)">
+            <inheritdoc />
+        </member>
+        <member name="T:Vertical.CommandLine.Parsing.IArgumentParser`1">
+            <summary>
+            Defines the interface of an object that handles a specific type
+            of command line argument.
+            </summary>
+            <typeparam name="TOptions">Options type.</typeparam>
+        </member>
+        <member name="P:Vertical.CommandLine.Parsing.IArgumentParser`1.ParserType">
+            <summary>
+            Gets the parse order for the parser.
+            </summary>
+        </member>
+        <member name="P:Vertical.CommandLine.Parsing.IArgumentParser`1.MultiValued">
+            <summary>
+            Gets whether the parser can handle multiple arguments.
+            </summary>
+        </member>
+        <member name="M:Vertical.CommandLine.Parsing.IArgumentParser`1.ProcessContext(`0,Vertical.CommandLine.Parsing.ParseContext)">
+            <summary>
+            Evaluates the parse context.
+            </summary>
+            <param name="options">Target options instance.</param>
+            <param name="parseContext">Parse context.</param>
+            <returns>The result of argument processing.</returns>
+        </member>
+        <member name="T:Vertical.CommandLine.Parsing.IParserBuilder`2">
+            <summary>
+            Defines the interface of a parser builder.
+            </summary>
+            <typeparam name="TOptions">Options type.</typeparam>
+            <typeparam name="TValue">Value type.</typeparam>
+        </member>
+        <member name="T:Vertical.CommandLine.Parsing.ITokenMatcher">
+            <summary>
+            Defines the interface of an object that matches string values to patterns
+            and produces tokens.
+            </summary>
+        </member>
+        <member name="M:Vertical.CommandLine.Parsing.ITokenMatcher.GetTokens(System.String)">
+            <summary>
+            Gets the tokens for the given value.
+            </summary>
+            <param name="value">Value to parse.</param>
+            <returns>Token array or null if no match was made.</returns>
+        </member>
+        <member name="T:Vertical.CommandLine.Parsing.OptionParser`2">
+            <summary>
+            Represents a parser that handles an option.
+            </summary>
+            <typeparam name="TOptions">Options type.</typeparam>
+            <typeparam name="TValue">Value type.</typeparam>
+        </member>
+        <member name="M:Vertical.CommandLine.Parsing.OptionParser`2.#ctor(Vertical.CommandLine.Parsing.Template,Vertical.CommandLine.Conversion.IValueConverter{`1},Vertical.CommandLine.Validation.IValidator{`1},Vertical.CommandLine.Mapping.IMapper{`0,`1})">
+            <inheritdoc />
+        </member>
+        <member name="P:Vertical.CommandLine.Parsing.OptionParser`2.Context">
+            <inheritdoc />
+        </member>
+        <member name="M:Vertical.CommandLine.Parsing.OptionParser`2.ProcessContext(`0,Vertical.CommandLine.Parsing.ParseContext)">
+            <inheritdoc />
+        </member>
+        <member name="T:Vertical.CommandLine.Parsing.ParseContext">
+            <summary>
+            Represents a contextual iterator tht manages argument tokens.
+            </summary>
+        </member>
+        <member name="M:Vertical.CommandLine.Parsing.ParseContext.#ctor(System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Creates a new instance.
+            </summary>
+        </member>
+        <member name="P:Vertical.CommandLine.Parsing.ParseContext.Current">
+            <summary>
+            Gets the current entry.
+            </summary>
+        </member>
+        <member name="P:Vertical.CommandLine.Parsing.ParseContext.Ready">
+            <summary>
+            Gets whether an argument token is available in the context.
+            </summary>
+        </member>
+        <member name="M:Vertical.CommandLine.Parsing.ParseContext.TryTakeStringValue(Vertical.CommandLine.Parsing.Token@)">
+            <summary>
+            Evaluates the ready token in the context to be used as a string argument.
+            </summary>
+            <param name="token">When the method returns, the string token.</param>
+            <returns>True if the ready token is a string argument.</returns>
+        </member>
+        <member name="M:Vertical.CommandLine.Parsing.ParseContext.TryTakeTemplate(Vertical.CommandLine.Parsing.Template)">
+            <summary>
+            Evaluates the ready token in the context to be used as an option argument.
+            </summary>
+            <param name="template">Template to match.</param>
+            <returns>True if the ready token matches the given template.</returns>
+        </member>
+        <member name="M:Vertical.CommandLine.Parsing.ParseContext.TryTakeTemplate(Vertical.CommandLine.Parsing.Template,System.Int32)">
+            <summary>
+            Evaluates the ready token in the context to be used as an option argument.
+            </summary>
+            <param name="template">Template to match.</param>
+            <param name="index">The template index to match.</param>
+            <returns>True if the ready token matches the given template and the token is at the given index.</returns>
+        </member>
+        <member name="M:Vertical.CommandLine.Parsing.ParseContext.Reset">
+            <summary>
+            Resets the context to the first available argument token.
+            </summary>
+            <returns>Whether an argument token is available in the context.</returns>
+        </member>
+        <member name="P:Vertical.CommandLine.Parsing.ParseContext.Count">
+            <summary>
+            Gets the number of tokens in the parse context.
+            </summary>
+        </member>
+        <member name="M:Vertical.CommandLine.Parsing.ParseContext.ToString">
+            <inheritdoc />
+        </member>
+        <member name="M:Vertical.CommandLine.Parsing.ParseContext.GetEnumerator">
+            <inheritdoc />
+        </member>
+        <member name="T:Vertical.CommandLine.Parsing.ParserType">
+            <summary>
+            Serves as a sorting mechanism for argument parsers.
+            </summary>
+        </member>
+        <member name="F:Vertical.CommandLine.Parsing.ParserType.Command">
+            <summary>
+            Indicates a command parser
+            </summary>
+        </member>
+        <member name="F:Vertical.CommandLine.Parsing.ParserType.Help">
+            <summary>
+            Indicates a help option parser
+            </summary>
+        </member>
+        <member name="F:Vertical.CommandLine.Parsing.ParserType.Option">
+            <summary>
+            Indicates an option parser
+            </summary>
+        </member>
+        <member name="F:Vertical.CommandLine.Parsing.ParserType.PositionArgument">
+            <summary>
+            Indicates a position argument parser
+            </summary>
+        </member>
+        <member name="T:Vertical.CommandLine.Parsing.Parser`1">
+            <summary>
+            Represents an object that can populate an options object
+            with parsed argument values.
+            </summary>
+        </member>
+        <member name="M:Vertical.CommandLine.Parsing.Parser`1.Map(`0,System.Collections.Generic.IEnumerable{Vertical.CommandLine.Parsing.IArgumentParser{`0}},Vertical.CommandLine.Parsing.ParseContext,Vertical.CommandLine.Parsing.ParserType)">
+            <summary>
+            Maps the arguments found in the given context to the options instance using a set of
+            parsers defined in a configuration.
+            </summary>
+            <param name="options">Options type.</param>
+            <param name="parsers">Parsers used to process the context arguments.</param>
+            <param name="parseContext">Context that contains the command line arguments.</param>
+            <param name="parserType">Parser type filter.</param>
+            <returns><see cref="T:Vertical.CommandLine.Parsing.ContextResult"/></returns>
+        </member>
+        <member name="T:Vertical.CommandLine.Parsing.ParserBuilder`2">
+            <summary>
+            Represents an object used to incrementally build an argument parser.
+            </summary>
+        </member>
+        <member name="M:Vertical.CommandLine.Parsing.ParserBuilder`2.PositionArgument(System.Int32)">
+            <summary>
+            Builds a position argument parser.
+            </summary>
+            <returns><see cref="T:Vertical.CommandLine.Parsing.IArgumentParser`1"/></returns>
+        </member>
+        <member name="M:Vertical.CommandLine.Parsing.ParserBuilder`2.Option(Vertical.CommandLine.Parsing.Template)">
+            <summary>
+            Builds an option parser.
+            </summary>
+            <param name="template">Template that identifies the option.</param>
+            <returns><see cref="T:Vertical.CommandLine.Parsing.IArgumentParser`1"/></returns>
+        </member>
+        <member name="M:Vertical.CommandLine.Parsing.ParserBuilder`2.Switch(Vertical.CommandLine.Parsing.Template)">
+            <summary>
+            Builds a switch parser.
+            </summary>
+            <param name="template">Template that identifies the switch.</param>
+            <returns><see cref="T:Vertical.CommandLine.Parsing.IArgumentParser`1"/></returns>
+        </member>
+        <member name="M:Vertical.CommandLine.Parsing.ParserBuilder`2.Vertical#CommandLine#Configuration#IComponentSink{Vertical#CommandLine#Conversion#IValueConverter{TValue}}#Sink(Vertical.CommandLine.Conversion.IValueConverter{`1})">
+            <inheritdoc />
+        </member>
+        <member name="M:Vertical.CommandLine.Parsing.ParserBuilder`2.Vertical#CommandLine#Configuration#IComponentSink{Vertical#CommandLine#Validation#IValidator{TValue}}#Sink(Vertical.CommandLine.Validation.IValidator{`1})">
+            <inheritdoc />
+        </member>
+        <member name="M:Vertical.CommandLine.Parsing.ParserBuilder`2.Vertical#CommandLine#Configuration#IComponentSink{Vertical#CommandLine#Mapping#IMapper{TOptions,TValue}}#Sink(Vertical.CommandLine.Mapping.IMapper{`0,`1})">
+            <inheritdoc />
+        </member>
+        <member name="T:Vertical.CommandLine.Parsing.PositionArgumentParser`2">
+            <summary>
+            Represents a parser that handles position arguments.
+            </summary>
+            <typeparam name="TOptions">Options type.</typeparam>
+            <typeparam name="TValue">Value type.</typeparam>
+        </member>
+        <member name="M:Vertical.CommandLine.Parsing.PositionArgumentParser`2.#ctor(System.Int32,Vertical.CommandLine.Conversion.IValueConverter{`1},Vertical.CommandLine.Validation.IValidator{`1},Vertical.CommandLine.Mapping.IMapper{`0,`1})">
+            <inheritdoc />
+        </member>
+        <member name="M:Vertical.CommandLine.Parsing.PositionArgumentParser`2.ProcessContext(`0,Vertical.CommandLine.Parsing.ParseContext)">
+            <inheritdoc />
+        </member>
+        <member name="P:Vertical.CommandLine.Parsing.PositionArgumentParser`2.Context">
+            <summary>
+            Gets the context for the parser.
+            </summary>
+        </member>
+        <member name="T:Vertical.CommandLine.Parsing.SwitchParser`2">
+            <summary>
+            Represents a parser that handles an switch.
+            </summary>
+            <typeparam name="TOptions">Options type.</typeparam>
+            <typeparam name="TValue">Value type.</typeparam>
+        </member>
+        <member name="M:Vertical.CommandLine.Parsing.SwitchParser`2.#ctor(Vertical.CommandLine.Parsing.Template,Vertical.CommandLine.Conversion.IValueConverter{`1},Vertical.CommandLine.Validation.IValidator{`1},Vertical.CommandLine.Mapping.IMapper{`0,`1})">
+            <inheritdoc />
+        </member>
+        <member name="M:Vertical.CommandLine.Parsing.SwitchParser`2.ProcessContext(`0,Vertical.CommandLine.Parsing.ParseContext)">
+            <inheritdoc />
+        </member>
+        <member name="P:Vertical.CommandLine.Parsing.SwitchParser`2.Context">
+            <summary>
+            Gets the context for the parser.
+            </summary>
+        </member>
+        <member name="T:Vertical.CommandLine.Parsing.Template">
+            <summary>
+            Represents a template that describes the matching pattern for commands,
+            options and switches.
+            </summary>
+        </member>
+        <member name="P:Vertical.CommandLine.Parsing.Template.Tokens">
+            <summary>
+            Gets the template tokens.
+            </summary>
+        </member>
+        <member name="M:Vertical.CommandLine.Parsing.Template.ForOptionOrSwitch(System.String)">
+            <summary>
+            Creates a template for an option or switch.
+            </summary>
+            <param name="template">String to convert to template.</param>
+            <returns><see cref="T:Vertical.CommandLine.Parsing.Template"/></returns>
+        </member>
+        <member name="M:Vertical.CommandLine.Parsing.Template.ForCommand(System.String)">
+            <summary>
+            Creates a template for a command.
+            </summary>
+            <param name="template">String to convert to template.</param>
+            <returns><see cref="T:Vertical.CommandLine.Parsing.Template"/></returns>
+        </member>
+        <member name="M:Vertical.CommandLine.Parsing.Template.ToString">
+            <inheritdoc />
+        </member>
+        <member name="M:Vertical.CommandLine.Parsing.Template.Contains(Vertical.CommandLine.Parsing.Token)">
+            <summary>
+            Determines if the template contains the given token.
+            </summary>
+            <param name="token">Token to evaluate.</param>
+            <returns>True if the any tokens in the internal token collection match the given value.</returns>
+        </member>
+        <member name="T:Vertical.CommandLine.Parsing.TemplateSet">
+            <summary>
+            Represents a unique template set.
+            </summary>
+        </member>
+        <member name="M:Vertical.CommandLine.Parsing.TemplateSet.Add(Vertical.CommandLine.Parsing.Template)">
+            <summary>
+            Adds a template to the set.
+            </summary>
+            <param name="template">Template to add.</param>
+            <exception cref="T:System.Exception">Token is in use.</exception>
+        </member>
+        <member name="P:Vertical.CommandLine.Parsing.TemplateSet.Count">
+            <summary>
+            Gets the number of items in the collection.
+            </summary>
+        </member>
+        <member name="M:Vertical.CommandLine.Parsing.TemplateSet.ToString">
+            <inheritdoc />
+        </member>
+        <member name="T:Vertical.CommandLine.Parsing.Token">
+            <summary>
+            Represents a token of a template or command line argument.
+            </summary>
+        </member>
+        <member name="M:Vertical.CommandLine.Parsing.Token.#ctor(Vertical.CommandLine.Parsing.TokenType,System.String)">
+            <summary>
+            Creates a new instance.
+            </summary>
+            <param name="type">Token type.</param>
+            <param name="value">Value (without prefixes).</param>
+        </member>
+        <member name="P:Vertical.CommandLine.Parsing.Token.Empty">
+            <summary>
+            Defines an empty instance.
+            </summary>
+        </member>
+        <member name="P:Vertical.CommandLine.Parsing.Token.OptionsEnd">
+            <summary>
+            Defines the options end token.
+            </summary>
+        </member>
+        <member name="P:Vertical.CommandLine.Parsing.Token.True">
+            <summary>
+            Defines a token that represents boolean true.
+            </summary>
+        </member>
+        <member name="P:Vertical.CommandLine.Parsing.Token.Type">
+            <summary>
+            Gets the token type.
+            </summary>
+        </member>
+        <member name="P:Vertical.CommandLine.Parsing.Token.Value">
+            <summary>
+            Gets the token value.
+            </summary>
+        </member>
+        <member name="P:Vertical.CommandLine.Parsing.Token.Template">
+            <summary>
+            Gets the template for the token.
+            </summary>
+        </member>
+        <member name="M:Vertical.CommandLine.Parsing.Token.ToString">
+            <inheritdoc />
+        </member>
+        <member name="P:Vertical.CommandLine.Parsing.Token.DistinguishedForm">
+            <summary>
+            Gets a description of the token.
+            </summary>
+            <returns>String</returns>
+        </member>
+        <member name="M:Vertical.CommandLine.Parsing.Token.Equals(Vertical.CommandLine.Parsing.Token)">
+            <inheritdoc />
+        </member>
+        <member name="M:Vertical.CommandLine.Parsing.Token.Equals(System.Object)">
+            <inheritdoc />
+        </member>
+        <member name="M:Vertical.CommandLine.Parsing.Token.GetHashCode">
+            <inheritdoc />
+        </member>
+        <member name="T:Vertical.CommandLine.Parsing.TokenMatcher">
+            <summary>
+            Represents a matcher that produces tokens given string input.
+            </summary>
+        </member>
+        <member name="M:Vertical.CommandLine.Parsing.TokenMatcher.GetTokens(System.String)">
+            <summary>
+            Gets the tokens for the given value.
+            </summary>
+            <param name="value">Value to parse.</param>
+            <returns>Token array or null if no match was made.</returns>
+        </member>
+        <member name="P:Vertical.CommandLine.Parsing.TokenMatcher.OptionsEnd">
+            <summary>
+            Defines a matcher for double dash.
+            </summary>
+        </member>
+        <member name="P:Vertical.CommandLine.Parsing.TokenMatcher.ShortOption">
+            <summary>
+            Defines a matcher for short options.
+            </summary>
+        </member>
+        <member name="P:Vertical.CommandLine.Parsing.TokenMatcher.CompactShortOption">
+            <summary>
+            Defines a matcher for compact short options.
+            </summary>
+        </member>
+        <member name="P:Vertical.CommandLine.Parsing.TokenMatcher.LongOption">
+            <summary>
+            Defines a pattern for long options.
+            </summary>
+        </member>
+        <member name="P:Vertical.CommandLine.Parsing.TokenMatcher.Word">
+            <summary>
+            Defines a pattern for words.
+            </summary>
+        </member>
+        <member name="P:Vertical.CommandLine.Parsing.TokenMatcher.Any">
+            <summary>
+            Defines a pattern for any string.
+            </summary>
+        </member>
+        <member name="T:Vertical.CommandLine.Parsing.TokenParser">
+            <summary>
+            Represents a token parser.
+            </summary>
+        </member>
+        <member name="M:Vertical.CommandLine.Parsing.TokenParser.#ctor(Vertical.CommandLine.Parsing.ITokenMatcher[])">
+            <summary>
+            Creates a new instance.
+            </summary>
+            <param name="orderMatchers">The matchers, in order of invocation that determine
+            the valid tokens.</param>
+        </member>
+        <member name="M:Vertical.CommandLine.Parsing.TokenParser.Parse(System.String)">
+            <summary>
+            Parses the given value.
+            </summary>
+            <param name="value">The value to parse.</param>
+            <returns>One or more tokens.</returns>
+        </member>
+        <member name="T:Vertical.CommandLine.Parsing.TokenType">
+            <summary>
+            Defines the various token types.
+            </summary>
+        </member>
+        <member name="F:Vertical.CommandLine.Parsing.TokenType.ShortOption">
+            <summary>
+            Represents an argument that begins with a single dash. 
+            </summary>
+        </member>
+        <member name="F:Vertical.CommandLine.Parsing.TokenType.LongOption">
+            <summary>
+            Represents an argument that begins with a double dash.
+            </summary>
+        </member>
+        <member name="F:Vertical.CommandLine.Parsing.TokenType.OptionsEnd">
+            <summary>
+            Represents an argument that terminates the option section,
+            a sole double dash value.
+            </summary>
+        </member>
+        <member name="F:Vertical.CommandLine.Parsing.TokenType.NonTemplateValue">
+            <summary>
+            Indicates an unprefixed string value.
+            </summary>
+        </member>
+        <member name="T:Vertical.CommandLine.Provider.ConstructorProvider`1">
+            <summary>
+            Represents a provider that uses the type's default constructor.
+            </summary>
+            <typeparam name="TOptions">Options type.</typeparam>
+        </member>
+        <member name="M:Vertical.CommandLine.Provider.ConstructorProvider`1.CreateOrThrow">
+            <summary>
+            Creates an instance, or throws if it can't.
+            </summary>
+        </member>
+        <member name="M:Vertical.CommandLine.Provider.ConstructorProvider`1.ToString">
+            <inheritdoc />
+        </member>
+        <member name="T:Vertical.CommandLine.Provider.DelegateProvider`1">
+            <summary>
+            Represents a provider that uses an underlying delegate to provider the options.
+            </summary>
+            <typeparam name="TOptions">Options type.</typeparam>
+        </member>
+        <member name="M:Vertical.CommandLine.Provider.DelegateProvider`1.GetInstance">
+            <inheritdoc />
+        </member>
+        <member name="M:Vertical.CommandLine.Provider.DelegateProvider`1.ToString">
+            <inheritdoc />
+        </member>
+        <member name="T:Vertical.CommandLine.Provider.InstanceProvider`1">
+            <summary>
+            Represents an object that returns an underlying instance.
+            </summary>
+            <typeparam name="TOptions">Options type.</typeparam>
+        </member>
+        <member name="M:Vertical.CommandLine.Provider.InstanceProvider`1.GetInstance">
+            <inheritdoc />
+        </member>
+        <member name="M:Vertical.CommandLine.Provider.InstanceProvider`1.ToString">
+            <inheritdoc />
+        </member>
+        <member name="T:Vertical.CommandLine.Provider.IProvider`1">
+            <summary>
+            Defines the interface of an object that provides the options instance.
+            </summary>
+            <typeparam name="TOptions">Options type.</typeparam>
+        </member>
+        <member name="M:Vertical.CommandLine.Provider.IProvider`1.GetInstance">
+            <summary>
+            Gets the options instance.
+            </summary>
+            <returns>Options instance</returns>
+        </member>
+        <member name="T:Vertical.CommandLine.Runtime.AggregatedRuntimeCommand">
+            <summary>
+            Represents an aggregated runtime command.
+            </summary>
+        </member>
+        <member name="M:Vertical.CommandLine.Runtime.AggregatedRuntimeCommand.#ctor(Vertical.CommandLine.Parsing.ParseContext,Vertical.CommandLine.Runtime.IRuntimeCommand,System.Collections.Generic.IEnumerable{Vertical.CommandLine.Configuration.ICommandLineConfiguration})">
+            <summary>
+            Creates a new instance.
+            </summary>
+            <param name="parseContext">Parse context</param>
+            <param name="applicationCommand">Application command</param>
+            <param name="subConfigurations">Command configurations</param>
+        </member>
+        <member name="P:Vertical.CommandLine.Runtime.AggregatedRuntimeCommand.SelectedRuntime">
+            <summary>
+            Gets the selected runtime command.
+            </summary>
+        </member>
+        <member name="P:Vertical.CommandLine.Runtime.AggregatedRuntimeCommand.Template">
+            <inheritdoc />
+        </member>
+        <member name="P:Vertical.CommandLine.Runtime.AggregatedRuntimeCommand.HelpContentProvider">
+            <inheritdoc />
+        </member>
+        <member name="M:Vertical.CommandLine.Runtime.AggregatedRuntimeCommand.GetOptions">
+            <inheritdoc />
+        </member>
+        <member name="M:Vertical.CommandLine.Runtime.AggregatedRuntimeCommand.MapArguments(Vertical.CommandLine.Parsing.ParseContext,System.Object,Vertical.CommandLine.Parsing.ParserType)">
+            <inheritdoc />
+        </member>
+        <member name="M:Vertical.CommandLine.Runtime.AggregatedRuntimeCommand.Invoke(System.Object)">
+            <inheritdoc />
+        </member>
+        <member name="M:Vertical.CommandLine.Runtime.AggregatedRuntimeCommand.InvokeAsync(System.Object)">
+            <inheritdoc />
+        </member>
+        <member name="T:Vertical.CommandLine.Runtime.ClientHandler`1">
+            <summary>
+            Represents a client handler.
+            </summary>
+            <typeparam name="TOptions">Options type.</typeparam>
+        </member>
+        <member name="M:Vertical.CommandLine.Runtime.ClientHandler`1.#ctor(System.Action{`0})">
+            <summary>
+            Creates a new instance.
+            </summary>
+            <param name="handler">Client defined handler delegate.</param>
+        </member>
+        <member name="M:Vertical.CommandLine.Runtime.ClientHandler`1.#ctor(System.Func{`0,System.Threading.Tasks.Task})">
+            <summary>
+            Creates a new instance.
+            </summary>
+            <param name="handler">Client defined asynchronous handler.</param>
+        </member>
+        <member name="M:Vertical.CommandLine.Runtime.ClientHandler`1.Invoke(`0)">
+            <summary>
+            Invokes the handler synchronously.
+            </summary>
+            <param name="options">Options instance.</param>
+        </member>
+        <member name="P:Vertical.CommandLine.Runtime.ClientHandler`1.IsAsync">
+            <summary>
+            Gets whether the handler is async.
+            </summary>
+        </member>
+        <member name="M:Vertical.CommandLine.Runtime.ClientHandler`1.InvokeAsync(`0)">
+            <summary>
+            Invokes the handler asynchronously.
+            </summary>
+            <param name="options">Options instance.</param>
+            <returns>Task</returns>
+        </member>
+        <member name="M:Vertical.CommandLine.Runtime.ClientHandler`1.ToString">
+            <inheritdoc />
+        </member>
+        <member name="T:Vertical.CommandLine.Runtime.HelpProgram">
+            <summary>
+            Represents an IProgram implementation that displays help.
+            </summary>
+        </member>
+        <member name="M:Vertical.CommandLine.Runtime.HelpProgram.#ctor(Vertical.CommandLine.Help.IHelpWriter,Vertical.CommandLine.Provider.IProvider{System.Collections.Generic.IReadOnlyCollection{System.String}})">
+            <summary>
+            Creates a new instance.
+            </summary>
+            <param name="helpWriter">Help writer</param>
+            <param name="helpContentProvider">Provider for content</param>
+        </member>
+        <member name="M:Vertical.CommandLine.Runtime.HelpProgram.Invoke(System.Object)">
+            <inheritdoc />
+        </member>
+        <member name="M:Vertical.CommandLine.Runtime.HelpProgram.InvokeAsync(System.Object)">
+            <inheritdoc />
+        </member>
+        <member name="M:Vertical.CommandLine.Runtime.HelpProgram.InvokeHelp">
+            <summary>
+            Invokes the help system.
+            </summary>
+        </member>
+        <member name="M:Vertical.CommandLine.Runtime.HelpProgram.GetHelpContent">
+            <summary>
+            Resolves help content.
+            </summary>
+        </member>
+        <member name="T:Vertical.CommandLine.Runtime.IProgram">
+            <summary>
+            Defines the interface of a client program.
+            </summary>
+        </member>
+        <member name="M:Vertical.CommandLine.Runtime.IProgram.Invoke(System.Object)">
+            <summary>
+            Invokes the client handler.
+            </summary>
+            <param name="options">Options object.</param>
+        </member>
+        <member name="M:Vertical.CommandLine.Runtime.IProgram.InvokeAsync(System.Object)">
+            <summary>
+            Invokes the client handler asynchronously.
+            </summary>
+            <param name="options">Options object.</param>
+            <returns>Task.</returns>
+        </member>
+        <member name="T:Vertical.CommandLine.Runtime.IRuntimeCommand">
+            <summary>
+            Represents the interface of a configuration handler.
+            </summary>
+        </member>
+        <member name="P:Vertical.CommandLine.Runtime.IRuntimeCommand.Template">
+            <summary>
+            Gets the command template.
+            </summary>
+        </member>
+        <member name="M:Vertical.CommandLine.Runtime.IRuntimeCommand.GetOptions">
+            <summary>
+            Gets the options instance.
+            </summary>
+            <returns>Options.</returns>
+        </member>
+        <member name="M:Vertical.CommandLine.Runtime.IRuntimeCommand.MapArguments(Vertical.CommandLine.Parsing.ParseContext,System.Object,Vertical.CommandLine.Parsing.ParserType)">
+            <summary>
+            Maps the arguments in the parse context to the options object.
+            </summary>
+            <param name="context">Parse context that contains the application arguments.</param>
+            <param name="options">Options object.</param>
+            <param name="parserType">Parse type to map.</param>
+        </member>
+        <member name="P:Vertical.CommandLine.Runtime.IRuntimeCommand.HelpContentProvider">
+            <summary>
+            Gets the help content resource.
+            </summary>
+        </member>
+        <member name="T:Vertical.CommandLine.Runtime.RuntimeCommand`1">
+            <summary>
+            Handler for commands.
+            </summary>
+            <typeparam name="TOptions">Options type.</typeparam>
+        </member>
+        <member name="M:Vertical.CommandLine.Runtime.RuntimeCommand`1.#ctor(Vertical.CommandLine.Parsing.Template,System.Func{Vertical.CommandLine.Parsing.IArgumentParser{`0}[]})">
+            <summary>
+            Creates a new instance.
+            </summary>
+            <param name="template">Template to match.</param>
+            <param name="parsers">Collection of parses for the options and arguments.</param>
+        </member>
+        <member name="P:Vertical.CommandLine.Runtime.RuntimeCommand`1.Template">
+            <summary>
+            Gets or sets the command template.
+            </summary>
+        </member>
+        <member name="M:Vertical.CommandLine.Runtime.RuntimeCommand`1.GetOptions">
+            <inheritdoc />
+        </member>
+        <member name="M:Vertical.CommandLine.Runtime.RuntimeCommand`1.MapArguments(Vertical.CommandLine.Parsing.ParseContext,System.Object,Vertical.CommandLine.Parsing.ParserType)">
+            <inheritdoc />
+        </member>
+        <member name="M:Vertical.CommandLine.Runtime.RuntimeCommand`1.Invoke(System.Object)">
+            <inheritdoc />
+        </member>
+        <member name="M:Vertical.CommandLine.Runtime.RuntimeCommand`1.InvokeAsync(System.Object)">
+            <inheritdoc />
+        </member>
+        <member name="P:Vertical.CommandLine.Runtime.RuntimeCommand`1.ClientHandler">
+            <summary>
+            Gets or sets the client handler.
+            </summary>
+        </member>
+        <member name="P:Vertical.CommandLine.Runtime.RuntimeCommand`1.OptionsProvider">
+            <summary>
+            Gets or sets the options provider.
+            </summary>
+        </member>
+        <member name="P:Vertical.CommandLine.Runtime.RuntimeCommand`1.HelpContentProvider">
+            <summary>
+            Gets or sets the help content resource.
+            </summary>
+        </member>
+        <member name="T:Vertical.CommandLine.Runtime.RuntimeCommandBuilder">
+            <summary>
+            Represents a functional object used to build the runtime command.
+            </summary>
+        </member>
+        <member name="M:Vertical.CommandLine.Runtime.RuntimeCommandBuilder.CheckContextStragglers(Vertical.CommandLine.Parsing.ParseContext)">
+            <summary>
+            Checks for unmatched tokens in the parse context.
+            </summary>
+        </member>
+        <member name="T:Vertical.CommandLine.UsageException">
+            <summary>
+            Represents an error caused by user input.
+            </summary>
+        </member>
+        <member name="M:Vertical.CommandLine.UsageException.#ctor(System.String,System.Exception)">
+            <summary>
+            Creates a new instance.
+            </summary>
+            <param name="message">Message describing the error</param>
+            <param name="innerException">Inner exception</param>
+        </member>
+        <member name="T:Vertical.CommandLine.Validation.CompositeValidator`1">
+            <summary>
+            Represents a validator composed of multiple other validators.
+            </summary>
+        </member>
+        <member name="M:Vertical.CommandLine.Validation.CompositeValidator`1.#ctor(Vertical.CommandLine.Validation.IValidator{`0}[])">
+            <summary>
+            Creates a new instance.
+            </summary>
+            <param name="validators">Validators to include in the composition.</param>
+        </member>
+        <member name="M:Vertical.CommandLine.Validation.CompositeValidator`1.Validate(`0)">
+            <inheritdoc />
+        </member>
+        <member name="M:Vertical.CommandLine.Validation.CompositeValidator`1.GetError(`0)">
+            <inheritdoc />
+        </member>
+        <member name="M:Vertical.CommandLine.Validation.CompositeValidator`1.Append(Vertical.CommandLine.Validation.IValidator{`0})">
+            <summary>
+            Appends a validator.
+            </summary>
+            <param name="validator">Validator to append.</param>
+        </member>
+        <member name="T:Vertical.CommandLine.Validation.DelegateValidator`2">
+            <summary>
+            Validates values using an underlying delegate.
+            </summary>
+        </member>
+        <member name="M:Vertical.CommandLine.Validation.DelegateValidator`2.#ctor(`0,Vertical.CommandLine.Validation.Validation{`0,`1},Vertical.CommandLine.Validation.MessageFormat{`0,`1},System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:Vertical.CommandLine.Validation.DelegateValidator`2.Validate(`1)">
+            <inheritdoc />
+        </member>
+        <member name="T:Vertical.CommandLine.Validation.IValidator`1">
+            <summary>
+            Defines the interface of an object that validates option values.
+            </summary>
+        </member>
+        <member name="M:Vertical.CommandLine.Validation.IValidator`1.Validate(`0)">
+            <summary>
+            Validates the given converted value.
+            </summary>
+            <param name="value">Value to validate.</param>
+        </member>
+        <member name="M:Vertical.CommandLine.Validation.IValidator`1.GetError(`0)">
+            <summary>
+            Gets the error given the failed value.
+            </summary>
+        </member>
+        <member name="T:Vertical.CommandLine.Validation.MessageFormat`2">
+            <summary>
+            Represents a delegate that formats validation messages.
+            </summary>
+            <param name="state">Validator state value.</param>
+            <param name="value">Value that failed validation.</param>
+            <typeparam name="TState">Validator state type.</typeparam>
+            <typeparam name="TValue">Value type.</typeparam>
+        </member>
+        <member name="T:Vertical.CommandLine.Validation.Validation`2">
+            <summary>
+            Defines a delegate that returns the result of validating an argument using a state
+            value.
+            </summary>
+            <param name="state">Validator state value.</param>
+            <param name="value">Value to check.</param>
+            <typeparam name="TState">State type.</typeparam>
+            <typeparam name="TValue">Value type.</typeparam>
+        </member>
+        <member name="T:Vertical.CommandLine.Validation.ValidationException">
+            <summary>
+            Represents an error that occurs during argument processing.
+            </summary>
+        </member>
+        <member name="M:Vertical.CommandLine.Validation.ValidationException.#ctor(System.String,System.String,System.Object)">
+            <summary>
+            Creates a new instance.
+            </summary>
+            <param name="message">Exception message</param>
+            <param name="context">Context, template or position argument</param>
+            <param name="value">Value that failed</param>
+        </member>
+        <member name="P:Vertical.CommandLine.Validation.ValidationException.ArgumentValue">
+            <summary>
+            Gets the argument value.
+            </summary>
+        </member>
+        <member name="P:Vertical.CommandLine.Validation.ValidationException.Context">
+            <summary>
+            Gets the context of the validation, template or argument.
+            </summary>
+        </member>
+        <member name="T:Vertical.CommandLine.Validation.Validator">
+            <summary>
+            Exposes a combine method.
+            </summary>
+        </member>
+        <member name="M:Vertical.CommandLine.Validation.Validator.Combine``1(Vertical.CommandLine.Validation.IValidator{``0},Vertical.CommandLine.Validation.IValidator{``0})">
+            <summary>
+            Appends a validator to the current instance.
+            </summary>
+            <typeparam name="TValue">Value type.</typeparam>
+            <param name="first">The instance to append.</param>
+            <param name="second">The validator to append.</param>
+            <returns><see cref="T:Vertical.CommandLine.Validation.IValidator`1"/></returns>
+        </member>
+        <member name="M:Vertical.CommandLine.Validation.Validator.Validate``1(Vertical.CommandLine.Validation.IValidator{``0},System.String,``0)">
+            <summary>
+            Performs contextual validation.
+            </summary>
+            <typeparam name="TValue">The value type.</typeparam>
+            <param name="validator">Validator instance</param>
+            <param name="context">Context, template or position argument</param>
+            <param name="value">Value</param>
+        </member>
+        <member name="T:Vertical.CommandLine.Validation.Validator`2">
+            <summary>
+            Serves as a base type for validators.
+            </summary>
+            <typeparam name="TState">State object type.</typeparam>
+            <typeparam name="TValue">Value type.</typeparam>
+        </member>
+        <member name="M:Vertical.CommandLine.Validation.Validator`2.#ctor(`0,Vertical.CommandLine.Validation.MessageFormat{`0,`1},System.String)">
+            <summary>
+            Creates a new instance.
+            </summary>
+            <param name="state">Object used to compare values to.</param>
+            <param name="messageFormatter">Function used to format messages to display when validation
+            fails.</param>
+            <param name="description">Debug description.</param>
+        </member>
+        <member name="P:Vertical.CommandLine.Validation.Validator`2.State">
+            <summary>
+            Gets the valid state used in comparison.
+            </summary>
+        </member>
+        <member name="M:Vertical.CommandLine.Validation.Validator`2.Validate(`1)">
+            <inheritdoc />
+        </member>
+        <member name="M:Vertical.CommandLine.Validation.Validator`2.GetError(`1)">
+            <inheritdoc />
+        </member>
+        <member name="M:Vertical.CommandLine.Validation.Validator`2.ToString">
+            <inheritdoc />
+        </member>
+    </members>
+</doc>
