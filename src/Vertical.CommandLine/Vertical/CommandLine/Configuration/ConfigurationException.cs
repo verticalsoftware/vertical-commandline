@@ -19,7 +19,7 @@ namespace Vertical.CommandLine.Configuration
     /// - A converter wasn't specified, and the API didn't find an out-of-box option
     /// - An exception was thrown in mapping, conversion or validation delegate code
     /// </remarks>
-    public sealed class ConfigurationException : Exception
+    public sealed class ConfigurationException : CommandLineException
     {
         /// <inheritdoc />
         internal ConfigurationException(string message, Exception innerException = null) 

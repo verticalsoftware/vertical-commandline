@@ -32,7 +32,11 @@ namespace Vertical.CommandLine.Mapping
             {
                 mapper.MapValue(options, value);
             }
-            catch (Exception ex) when (!(ex is UsageException))
+            catch (CommandLineException) 
+            { 
+                throw; 
+            }
+            catch (Exception ex)
             {
                 throw ConfigurationExceptions.MappingFailed(context, ex);
             }
