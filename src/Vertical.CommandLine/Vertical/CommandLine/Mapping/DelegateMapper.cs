@@ -37,6 +37,10 @@ namespace Vertical.CommandLine.Mapping
             {
                 throw ConfigurationExceptions.NullReferenceInMapping<TOptions>(ex);
             }
+            catch (UsageException) 
+            { 
+                throw; 
+            }
             catch (Exception ex)
             {
                 throw ConfigurationExceptions.ErrorInDelegateMapping(ex);

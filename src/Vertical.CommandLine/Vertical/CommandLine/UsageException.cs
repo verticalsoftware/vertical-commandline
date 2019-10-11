@@ -11,7 +11,7 @@ namespace Vertical.CommandLine
     /// <summary>
     /// Represents an error caused by user input.
     /// </summary>
-    public class UsageException : Exception
+    public class UsageException : CommandLineException
     {
         /// <summary>
         /// Creates a new instance.
