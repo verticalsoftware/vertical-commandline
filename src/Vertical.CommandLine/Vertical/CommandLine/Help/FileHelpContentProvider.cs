@@ -4,7 +4,6 @@
 // MIT license. Please refer to LICENSE.txt in the root directory
 // or refer to https://opensource.org/licenses/MIT
 
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;

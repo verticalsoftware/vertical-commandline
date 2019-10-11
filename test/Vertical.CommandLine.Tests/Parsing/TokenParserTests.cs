@@ -5,13 +5,11 @@
 // or refer to https://opensource.org/licenses/MIT
 
 using System;
-using System.Collections.Generic;
+using System.Linq;
 using Moq;
 using Xunit;
 using Shouldly;
-using Vertical.CommandLine.Infrastructure;
 using Vertical.CommandLine.Parsing;
-using static Vertical.CommandLine.Tests.Macros;
 
 namespace Vertical.CommandLine.Tests.Parsing
 {
@@ -70,6 +68,14 @@ namespace Vertical.CommandLine.Tests.Parsing
         {
             var parser = new TokenParser(PositiveMatcher.Object, NegativeMatcher.Object);
             Should.Throw<ArgumentException>(() => parser.Parse("no-match"));
+        }
+
+        [Fact]
+        public void ParseWithEmptyStringReturnsEmptyEnumerable()
+        {
+            // Verifies https://github.com/verticalsoftware/vertical-commandline/issues/18
+            var parser = new TokenParser(PositiveMatcher.Object, NegativeMatcher.Object);
+            parser.Parse("").ShouldBe(Enumerable.Empty<Token>());
         }
     }
 }
