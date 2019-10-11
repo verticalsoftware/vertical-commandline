@@ -15,16 +15,16 @@ namespace Vertical.CommandLine.Parsing
     /// </summary>
     internal sealed class TokenParser
     {
-        private readonly ITokenMatcher[] _orderMatchers;
+        private readonly ITokenMatcher[] _orderedMatchers;
 
         /// <summary>
         /// Creates a new instance.
         /// </summary>
-        /// <param name="orderMatchers">The matchers, in order of invocation that determine
+        /// <param name="orderedMatchers">The matchers, in order of invocation that determine
         /// the valid tokens.</param>
-        internal TokenParser(params ITokenMatcher[] orderMatchers)
+        internal TokenParser(params ITokenMatcher[] orderedMatchers)
         {
-            _orderMatchers = orderMatchers;
+            _orderedMatchers = orderedMatchers;
         }
 
         /// <summary>
@@ -34,11 +34,14 @@ namespace Vertical.CommandLine.Parsing
         /// <returns>One or more tokens.</returns>
         internal IEnumerable<Token> Parse(string value)
         {
-            var tokens = _orderMatchers
+            if (string.IsNullOrWhiteSpace(value))
+                return Enumerable.Empty<Token>();
+
+            var tokens = _orderedMatchers
                 .Select(matcher => matcher.GetTokens(value))
                 .FirstOrDefault(result => result.Any());
 
-            return tokens ?? throw new ArgumentException();
+            return tokens ?? throw new ArgumentException("One or more invalid tokens");
         }
     }
 }
