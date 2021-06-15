@@ -4,7 +4,7 @@
     <TargetFramework>net5.0</TargetFramework>
     <IsPackable>false</IsPackable>
     <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>..\..\assets\Vertical.CommandLine.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>..\assets\Vertical.CommandLine.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
 
   <ItemGroup>
