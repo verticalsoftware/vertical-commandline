@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Vertical.CommandLine\Vertical.CommandLine.csproj" />
+    <ProjectReference Include="..\..\src\Vertical.CommandLine.csproj" />
     <ProjectReference Include="..\CommandPattern\CommandPattern.csproj" />
   </ItemGroup>
 

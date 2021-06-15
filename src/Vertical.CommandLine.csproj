@@ -4,7 +4,7 @@
     <RootNamespace />    
     <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
     <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>..\..\assets\Vertical.CommandLine.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>..\assets\Vertical.CommandLine.snk</AssemblyOriginatorKeyFile>
     <PublicSign Condition="'$(OS)' != 'Windows_NT'">true</PublicSign>
     <Description>Simple command line argument mapping</Description>
     <Authors>Vertical Software contributors</Authors>
@@ -25,6 +25,6 @@
   </PropertyGroup>
   
   <ItemGroup>
-    <None Include="../../assets/package-logo.png" Pack="true" Visible="false" PackagePath="" />
+    <None Include="../assets/package-logo.png" Pack="true" Visible="false" PackagePath="" />
   </ItemGroup>
 </Project>
