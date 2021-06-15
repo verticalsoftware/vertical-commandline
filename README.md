@@ -1,8 +1,10 @@
 # vertical-commandline
 [![Dev](https://github.com/verticalsoftware/vertical-commandline/actions/workflows/dev-build.yml/badge.svg?branch=Dev)](https://github.com/verticalsoftware/vertical-commandline/actions/workflows/dev-build.yml)
 [![codecov (dev)](https://codecov.io/gh/verticalsoftware/vertical-commandline/branch/Dev/graph/badge.svg?token=U9GBSP77J9)](https://codecov.io/gh/verticalsoftware/vertical-commandline)
+![Package info](https://img.shields.io/nuget/vpre/vertical-commandline.svg)
 ![Package info](https://img.shields.io/nuget/v/vertical-commandline.svg)
-
+![GitHub](https://img.shields.io/github/license/verticalsoftware/vertical-commandline)
+![.net](https://img.shields.io/badge/Frameworks-.netstandard21+net50-purple)
 
 An easily configured command line arguments parser that makes short work of turning those pesky `string[] args` into a strongly-typed configuration object.
 

@@ -62,7 +62,7 @@ namespace Vertical.CommandLine.Tests.Parsing
         [Fact]
         public void ProcessContextNoOperandThrows()
         {
-            Should.Throw<ArgumentException>(() => _instanceUnderTest.ProcessContext(_options,
+            Should.Throw<UsageException>(() => _instanceUnderTest.ProcessContext(_options,
                 new ParseContext(new[] {"--option"})));
         }
     }
