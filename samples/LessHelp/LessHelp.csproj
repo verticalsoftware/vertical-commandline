@@ -2,7 +2,8 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>
+    <IsPackable>false</IsPackable>
   </PropertyGroup>
 
   <ItemGroup>
@@ -16,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Vertical.CommandLine\Vertical.CommandLine.csproj" />
+    <ProjectReference Include="..\..\src\Vertical.CommandLine.csproj" />
     <ProjectReference Include="..\CommandPattern\CommandPattern.csproj" />
   </ItemGroup>
 

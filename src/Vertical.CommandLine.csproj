@@ -1,0 +1,31 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>netstandard2.1;net5.0</TargetFrameworks>
+    <RootNamespace />    
+    <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\assets\Vertical.CommandLine.snk</AssemblyOriginatorKeyFile>
+    <PublicSign Condition="'$(OS)' != 'Windows_NT'">true</PublicSign>
+    <Description>Simple command line argument mapping</Description>
+    <Authors>Vertical Software contributors</Authors>
+    <VersionPrefix>2.0.1</VersionPrefix>
+    <PackageId>vertical-commandline</PackageId>
+    <PackageTags>commandline;utilities</PackageTags>
+    <PackageProjectUrl>https://github.com/verticalsoftware/vertical-commandline</PackageProjectUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageIcon>package-logo.png</PackageIcon>
+    <RepositoryType>git</RepositoryType>
+    <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
+    <Title>vertical-commandline</Title>
+    <Copyright>Copyright (C) 2018 Vertical Software</Copyright>
+    <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolsPackageFormat>snupkg</SymbolsPackageFormat>
+    <IsPackable>true</IsPackable>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+  
+  <ItemGroup>
+    <None Include="../assets/package-logo.png" Pack="true" Visible="false" PackagePath="" />
+  </ItemGroup>
+</Project>

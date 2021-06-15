@@ -1,14 +1,19 @@
 # vertical-commandline
-[![Master status](https://ci.appveyor.com/api/projects/status/gbmvafn7v40i4t09/branch/master?svg=true&passingText=master%20-%20OK)](https://ci.appveyor.com/project/daningalla/vertical-commandline)
-[![Dev status](https://ci.appveyor.com/api/projects/status/gbmvafn7v40i4t09/branch/dev?svg=true&passingText=dev%20-%20OK)](https://ci.appveyor.com/project/daningalla/vertical-commandline)
-[![Coverage Status](https://coveralls.io/repos/github/verticalsoftware/vertical-commandline/badge.svg?branch=master)](https://coveralls.io/github/verticalsoftware/vertical-commandline?branch=master)
-![Package info](https://img.shields.io/nuget/v/vertical-commandline.svg)
-
 
 An easily configured command line arguments parser that makes short work of turning those pesky `string[] args` into a strongly-typed configuration object.
 
+![.net](https://img.shields.io/badge/Frameworks-.netstandard21+net50-purple)
+![GitHub](https://img.shields.io/github/license/verticalsoftware/vertical-commandline)
+![Package info](https://img.shields.io/nuget/vpre/vertical-commandline.svg)
+![Package info](https://img.shields.io/nuget/v/vertical-commandline.svg)
+
+[![Dev](https://github.com/verticalsoftware/vertical-commandline/actions/workflows/dev-build.yml/badge.svg?branch=Dev)](https://github.com/verticalsoftware/vertical-commandline/actions/workflows/dev-build.yml)
+[![Pre release build and publish](https://github.com/verticalsoftware/vertical-commandline/actions/workflows/pre-release.yml/badge.svg)](https://github.com/verticalsoftware/vertical-commandline/actions/workflows/pre-release.yml)
+[![Release](https://github.com/verticalsoftware/vertical-commandline/actions/workflows/release.yml/badge.svg?branch=Dev)](https://github.com/verticalsoftware/vertical-commandline/actions/workflows/release.yml)
+[![codecov (dev)](https://codecov.io/gh/verticalsoftware/vertical-commandline/branch/Dev/graph/badge.svg?token=U9GBSP77J9)](https://codecov.io/gh/verticalsoftware/vertical-commandline)
+
 ## At a glance
-- No dependencies, targets netstandard20
+- No dependencies, targets netstandard2.1 and net5
 - Declarative mapping without attributes
 - Simple, concise configuration API
 - Command verb support
