@@ -1,7 +1,6 @@
 # vertical-commandline
-[![Master status](https://ci.appveyor.com/api/projects/status/gbmvafn7v40i4t09/branch/master?svg=true&passingText=master%20-%20OK)](https://ci.appveyor.com/project/daningalla/vertical-commandline)
-[![Dev status](https://ci.appveyor.com/api/projects/status/gbmvafn7v40i4t09/branch/dev?svg=true&passingText=dev%20-%20OK)](https://ci.appveyor.com/project/daningalla/vertical-commandline)
-[![Coverage Status](https://coveralls.io/repos/github/verticalsoftware/vertical-commandline/badge.svg?branch=master)](https://coveralls.io/github/verticalsoftware/vertical-commandline?branch=master)
+[![Dev](https://github.com/verticalsoftware/vertical-commandline/actions/workflows/dev-build.yml/badge.svg?branch=Dev)](https://github.com/verticalsoftware/vertical-commandline/actions/workflows/dev-build.yml)
+[![codecov (dev)](https://codecov.io/gh/verticalsoftware/vertical-commandline/branch/Dev/graph/badge.svg?token=U9GBSP77J9)](https://codecov.io/gh/verticalsoftware/vertical-commandline)
 ![Package info](https://img.shields.io/nuget/v/vertical-commandline.svg)
 
 
