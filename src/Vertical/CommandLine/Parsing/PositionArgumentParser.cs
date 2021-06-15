@@ -24,7 +24,7 @@ namespace Vertical.CommandLine.Parsing
         /// <inheritdoc />
         internal PositionArgumentParser(int argumentIndex,
             IValueConverter<TValue> converter,
-            IValidator<TValue> validator,
+            IValidator<TValue>? validator,
             IMapper<TOptions, TValue> mapper) :
             base(ParserType.PositionArgument, converter, validator, mapper)
         {

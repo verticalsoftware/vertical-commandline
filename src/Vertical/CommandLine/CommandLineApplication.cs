@@ -4,6 +4,7 @@
 // MIT license. Please refer to LICENSE.txt in the root directory
 // or refer to https://opensource.org/licenses/MIT
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -67,11 +68,11 @@ namespace Vertical.CommandLine
         /// <param name="command">The help context - if showing help for the root application,
         /// leave as null.</param>
         public static void ShowHelp(ICommandLineConfiguration configuration,
-            string command = null)
+            string? command = null)
         {
             if (configuration.HelpTemplate == null) throw ConfigurationExceptions.NoHelpOptionDefined();
 
-            var helpToken = configuration.HelpTemplate.Tokens.First().DistinguishedForm;
+            var helpToken = configuration.HelpTemplate.Tokens.First().DistinguishedForm!;
 
             var args = string.IsNullOrWhiteSpace(command)
                 ? new[] {helpToken}

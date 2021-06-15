@@ -43,7 +43,7 @@ namespace Vertical.CommandLine.Configuration
             }
             catch (Exception ex)
             {
-                throw ConfigurationExceptions.InvalidParserConfiguration(context.ToString(), ex);
+                throw ConfigurationExceptions.InvalidParserConfiguration(context.ToString()!, ex);
             }
         }
 

@@ -28,6 +28,6 @@ namespace Vertical.CommandLine.Provider
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
-        public override string ToString() => _instance.ToString();
+        public override string ToString() => _instance.ToString()!;
     }
 }

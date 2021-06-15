@@ -33,6 +33,6 @@ namespace Vertical.CommandLine.Help
         /// <summary>
         /// Gets the source string.
         /// </summary>
-        string Source { get; }
+        string? Source { get; }
     }
 }

@@ -22,19 +22,22 @@ namespace Vertical.CommandLine.Validation
         /// <param name="first">The instance to append.</param>
         /// <param name="second">The validator to append.</param>
         /// <returns><see cref="IValidator{TValue}"/></returns>
-        internal static IValidator<TValue> Combine<TValue>(IValidator<TValue> first, IValidator<TValue> second)
+        internal static IValidator<TValue> Combine<TValue>(IValidator<TValue>? first, IValidator<TValue>? second)
         {
             // Both can't be null
             Check.NotNull(first ?? second, nameof(first));
 
             // If one is null return first non-null
-            if ((first == null) != (second == null)) return first ?? second;
+            if ((first == null) != (second == null))
+                return (first ?? second)!;
 
             // If first is composite then append
             if (!(first is CompositeValidator<TValue> composite))
-                return new CompositeValidator<TValue>(first, second);
+            {
+                return new CompositeValidator<TValue>(first!, second!);
+            }
 
-            composite.Append(second);
+            composite.Append(second!);
 
             return composite;
         }
@@ -46,7 +49,7 @@ namespace Vertical.CommandLine.Validation
         /// <param name="validator">Validator instance</param>
         /// <param name="context">Context, template or position argument</param>
         /// <param name="value">Value</param>
-        internal static void Validate<TValue>(IValidator<TValue> validator, string context, TValue value)
+        internal static void Validate<TValue>(IValidator<TValue>? validator, string context, TValue value)
         {
             if (validator == null) return;
 
@@ -86,10 +89,10 @@ namespace Vertical.CommandLine.Validation
         /// <param name="messageFormatter">Function used to format messages to display when validation
         /// fails.</param>
         /// <param name="description">Debug description.</param>
-        internal Validator(TState state, MessageFormat<TState, TValue> messageFormatter, string description)
+        internal Validator(TState state, MessageFormat<TState, TValue>? messageFormatter, string description)
         {
             State = state;
-            _messageFormatter = messageFormatter ?? ((_, value) => Exceptions.DefaultValidationMessage(value));
+            _messageFormatter = messageFormatter ?? ((_, value) => Exceptions.DefaultValidationMessage(value!));
             _description = description;
         }
 

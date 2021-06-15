@@ -26,7 +26,7 @@ namespace Vertical.CommandLine.Infrastructure
         /// <summary>
         /// Verifies a reference is not null.
         /// </summary>
-        internal static void NotNull(object obj, string param)
+        internal static void NotNull(object? obj, string param)
         {
             if (!ReferenceEquals(obj, null)) return;
 
@@ -36,7 +36,7 @@ namespace Vertical.CommandLine.Infrastructure
         /// <summary>
         /// Verifies a string is not null or whitespace.
         /// </summary>
-        internal static void NotNullOrWhiteSpace(string str, string param)
+        internal static void NotNullOrWhiteSpace(string? str, string param)
         {
             if (!string.IsNullOrWhiteSpace(str)) return;
 

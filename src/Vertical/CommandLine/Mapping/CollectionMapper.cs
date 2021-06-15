@@ -62,10 +62,10 @@ namespace Vertical.CommandLine.Mapping
         internal static IMapper<TOptions, TValue> Create(Expression<Func<TOptions, ICollection<TValue>>> expression)
         {
             var addMethodInfo = typeof(ICollection<TValue>).GetKnownMethodInfo(nameof(ICollection<TValue>.Add),
-                new[] { typeof(TValue) }, typeof(void));
+                new[] {typeof(TValue)}, typeof(void));
 
             var action = ExpressionHelpers.CreateCollectionWriter<TOptions, ICollection<TValue>, TValue>(
-                expression, addMethodInfo, out var propertyName);
+                expression, addMethodInfo!, out var propertyName);
 
             return new CollectionMapper<TOptions, TValue>(action, propertyName);
         }

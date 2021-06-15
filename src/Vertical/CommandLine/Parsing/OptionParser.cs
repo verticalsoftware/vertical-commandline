@@ -22,7 +22,7 @@ namespace Vertical.CommandLine.Parsing
         /// <inheritdoc />
         public OptionParser(Template template,
             IValueConverter<TValue> converter,
-            IValidator<TValue> validator,
+            IValidator<TValue>? validator,
             IMapper<TOptions, TValue> mapper) :
             base(template, ParserType.Option, converter, validator, mapper)
         {
@@ -30,16 +30,16 @@ namespace Vertical.CommandLine.Parsing
         }
 
         /// <inheritdoc />
-        protected override string Context => Common.FormatOptionContext(Template);
+        protected override string Context => Common.FormatOptionContext(Template!);
 
         /// <inheritdoc />
         public override ContextResult ProcessContext(TOptions options, ParseContext parseContext)
         {
-            if (!parseContext.TryTakeTemplate(Template))
+            if (!parseContext.TryTakeTemplate(Template!))
                 return ContextResult.NoMatch;
 
             if (!parseContext.TryTakeStringValue(out var operandToken))
-                throw Exceptions.OperandMissing(Template);
+                throw Exceptions.OperandMissing(Template!);
             
             AcceptArgumentValue(options, operandToken);
             

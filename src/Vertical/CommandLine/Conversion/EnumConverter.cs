@@ -23,7 +23,7 @@ namespace Vertical.CommandLine.Conversion
         /// <summary>
         /// Tries to create a new instance.
         /// </summary>
-        internal static bool TryCreate(out IValueConverter<TValue> converter)
+        internal static bool TryCreate(out IValueConverter<TValue>? converter)
         {
             converter = typeof(TValue).IsEnum ? new EnumConverter<TValue>() : null;
             return converter != null;

@@ -22,7 +22,7 @@ namespace Vertical.CommandLine.Configuration
     public sealed class ConfigurationException : CommandLineException
     {
         /// <inheritdoc />
-        internal ConfigurationException(string message, Exception innerException = null) 
+        internal ConfigurationException(string message, Exception? innerException = null) 
             : base(message, innerException)
         {
         }

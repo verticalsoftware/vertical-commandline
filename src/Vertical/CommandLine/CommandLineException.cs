@@ -14,7 +14,7 @@ namespace Vertical.CommandLine
         /// </summary>
         /// <param name="message">Message</param>
         /// <param name="innerException">Inner exception or null reference.</param>
-        protected CommandLineException(string message, Exception innerException = null)
+        protected CommandLineException(string message, Exception? innerException = null)
             : base(message, innerException)
         {
         }

@@ -24,7 +24,7 @@ namespace Vertical.CommandLine.Conversion
         /// <summary>
         /// Tries to create an instance.
         /// </summary>
-        internal static bool TryCreate(out IValueConverter<TValue> converter)
+        internal static bool TryCreate(out IValueConverter<TValue>? converter)
         {
             converter = null;
             var valueType = typeof(TValue);
@@ -33,7 +33,7 @@ namespace Vertical.CommandLine.Conversion
                 return false;
 
             var strParamExpr = Expression.Parameter(typeof(string));
-            var newExpr = Expression.New(constructor, strParamExpr);
+            var newExpr = Expression.New(constructor!, strParamExpr);
             var lambdaExpr = Expression.Lambda<Func<string, TValue>>(newExpr, strParamExpr);
             var function = lambdaExpr.Compile();
 

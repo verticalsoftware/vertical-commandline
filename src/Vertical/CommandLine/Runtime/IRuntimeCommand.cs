@@ -18,7 +18,7 @@ namespace Vertical.CommandLine.Runtime
         /// <summary>
         /// Gets the command template.
         /// </summary>
-        Template Template { get; }
+        Template? Template { get; }
         
         /// <summary>
         /// Gets the options instance.
@@ -37,6 +37,6 @@ namespace Vertical.CommandLine.Runtime
         /// <summary>
         /// Gets the help content resource.
         /// </summary>
-        IProvider<IReadOnlyCollection<string>> HelpContentProvider { get; }
+        IProvider<IReadOnlyCollection<string>>? HelpContentProvider { get; }
     }
 }

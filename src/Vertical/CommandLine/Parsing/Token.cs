@@ -21,13 +21,15 @@ namespace Vertical.CommandLine.Parsing
         /// </summary>
         /// <param name="type">Token type.</param>
         /// <param name="value">Value (without prefixes).</param>
-        internal Token(TokenType type, string value)
+        internal Token(TokenType type, string? value)
         {
             Type = type;
             Value = value;
 
             if (type != TokenType.OptionsEnd)
+            {
                 Check.NotNullOrWhiteSpace(value, nameof(value));
+            }
         }
 
         /// <summary>
@@ -53,17 +55,17 @@ namespace Vertical.CommandLine.Parsing
         /// <summary>
         /// Gets the token value.
         /// </summary>
-        public string Value { get; }
+        public string? Value { get; }
         
         /// <inheritdoc />
-        public override string ToString() => $"Type={Type}, Value={Formatting.Quote(Value)}";
+        public override string ToString() => $"Type={Type}, Value={Formatting.Quote(Value ?? string.Empty)}";
 
         /// <summary>
         /// Gets a description of the token.
         /// </summary>
         /// <returns>String</returns>
         [ExcludeFromCodeCoverage]
-        public string DistinguishedForm
+        public string? DistinguishedForm
         {
             get
             {
@@ -84,7 +86,7 @@ namespace Vertical.CommandLine.Parsing
         }
 
         /// <inheritdoc />
-        public override bool Equals(object obj) => obj is Token other && Equals(other);
+        public override bool Equals(object? obj) => obj is Token other && Equals(other);
 
         /// <inheritdoc />
         public override int GetHashCode() => HashCode.Combine(Type.GetHashCode(), 

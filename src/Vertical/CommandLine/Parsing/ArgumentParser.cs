@@ -21,7 +21,7 @@ namespace Vertical.CommandLine.Parsing
         where TOptions : class
     {
         private readonly IValueConverter<TValue> _converter;
-        private readonly IValidator<TValue> _validator;
+        private readonly IValidator<TValue>? _validator;
         private readonly IMapper<TOptions, TValue> _mapper;
 
         /// <summary>
@@ -33,7 +33,7 @@ namespace Vertical.CommandLine.Parsing
         /// <param name="mapper">Mapper instance.</param>
         protected ArgumentParser(ParserType order,
             IValueConverter<TValue> converter,
-            IValidator<TValue> validator,
+            IValidator<TValue>? validator,
             IMapper<TOptions, TValue> mapper
             ) : this(null, order, converter, validator, mapper)
         {
@@ -47,10 +47,10 @@ namespace Vertical.CommandLine.Parsing
         /// <param name="converter">Converter instance.</param>
         /// <param name="validator">Validator chain.</param>
         /// <param name="mapper">Mapper instance.</param>
-        protected ArgumentParser(Template template,
+        protected ArgumentParser(Template? template,
             ParserType parserType,
             IValueConverter<TValue> converter,
-            IValidator<TValue> validator,
+            IValidator<TValue>? validator,
             IMapper<TOptions, TValue> mapper)
         {
             _converter = converter ?? throw new ArgumentNullException();
@@ -72,7 +72,7 @@ namespace Vertical.CommandLine.Parsing
         /// <summary>
         /// Gets the template value.
         /// </summary>
-        protected Template Template { get; }
+        protected Template? Template { get; }
         
         /// <summary>
         /// Maps the given argument value.
@@ -82,7 +82,7 @@ namespace Vertical.CommandLine.Parsing
         protected void AcceptArgumentValue(TOptions options, Token token)
         {
             // Convert
-            var convertedValue = ValueConverter.Convert(_converter, Context, token.Value);
+            var convertedValue = ValueConverter.Convert(_converter, Context, token.Value!);
 
             // Validate
             Validator.Validate(_validator, Context, convertedValue);

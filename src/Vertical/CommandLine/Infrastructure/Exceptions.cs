@@ -60,5 +60,11 @@ namespace Vertical.CommandLine.Infrastructure
         {
             return $"invalid value {Quote(value)}";
         }
+
+        internal static Exception InvalidHelpWriter() => new InvalidOperationException(
+            "Using the help feature requires a register IHelpWriter");
+
+        internal static Exception InvalidHelpContentProvider() => new InvalidOperationException(
+            "Using the help feature requires a content provider");
     }
 }

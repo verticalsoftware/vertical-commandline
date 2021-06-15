@@ -35,7 +35,7 @@ namespace Vertical.CommandLine.Mapping
         internal static IMapper<TOptions, TValue> Create(Expression<Func<TOptions, Stack<TValue>>> expression)
         {
             var pushMethodInfo = typeof(Stack<TValue>).GetKnownMethodInfo(nameof(Stack<TValue>.Push),
-                new[] {typeof(TValue)}, typeof(void));
+                new[] {typeof(TValue)}, typeof(void))!;
 
             var action = ExpressionHelpers.CreateCollectionWriter<TOptions, Stack<TValue>, TValue>(
                 expression, pushMethodInfo, out var propertyName);
