@@ -7,13 +7,14 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using Vertical.CommandLine.Infrastructure;
+using HashCode = System.HashCode;
 
 namespace Vertical.CommandLine.Parsing
 {
     /// <summary>
     /// Represents a token of a template or command line argument.
     /// </summary>
-    public struct Token : IEquatable<Token>
+    public readonly struct Token : IEquatable<Token>
     {
         /// <summary>
         /// Creates a new instance.

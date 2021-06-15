@@ -6,13 +6,14 @@
 
 using System;
 using Vertical.CommandLine.Infrastructure;
+using HashCode = System.HashCode;
 
 namespace Vertical.CommandLine.Help
 {
     /// <summary>
     /// Represents a span that consists of a start index and a length.
     /// </summary>
-    public struct Span : IEquatable<Span>
+    public readonly struct Span : IEquatable<Span>
     {
         /// <summary>
         /// Creates a new instance.
