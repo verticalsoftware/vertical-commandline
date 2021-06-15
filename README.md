@@ -4,11 +4,12 @@ An easily configured command line arguments parser that makes short work of turn
 
 ![.net](https://img.shields.io/badge/Frameworks-.netstandard21+net50-purple)
 ![GitHub](https://img.shields.io/github/license/verticalsoftware/vertical-commandline)
-
-[![Dev](https://github.com/verticalsoftware/vertical-commandline/actions/workflows/dev-build.yml/badge.svg?branch=Dev)](https://github.com/verticalsoftware/vertical-commandline/actions/workflows/dev-build.yml)
-[![codecov (dev)](https://codecov.io/gh/verticalsoftware/vertical-commandline/branch/Dev/graph/badge.svg?token=U9GBSP77J9)](https://codecov.io/gh/verticalsoftware/vertical-commandline)
 ![Package info](https://img.shields.io/nuget/vpre/vertical-commandline.svg)
 ![Package info](https://img.shields.io/nuget/v/vertical-commandline.svg)
+
+[![Dev](https://github.com/verticalsoftware/vertical-commandline/actions/workflows/dev-build.yml/badge.svg?branch=Dev)](https://github.com/verticalsoftware/vertical-commandline/actions/workflows/dev-build.yml)
+[![Pre release build and publish](https://github.com/verticalsoftware/vertical-commandline/actions/workflows/pre-release.yml/badge.svg)](https://github.com/verticalsoftware/vertical-commandline/actions/workflows/pre-release.yml)
+[![codecov (dev)](https://codecov.io/gh/verticalsoftware/vertical-commandline/branch/Dev/graph/badge.svg?token=U9GBSP77J9)](https://codecov.io/gh/verticalsoftware/vertical-commandline)
 
 ## At a glance
 - No dependencies, targets netstandard2.1 and net5
