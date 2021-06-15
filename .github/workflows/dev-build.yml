@@ -24,7 +24,7 @@ jobs:
         run: dotnet build -c Release --no-restore
       - name: Test
         run: dotnet test --no-restore --collect:"XPlat Code Coverage"
-      - uses: codecov/codecov-action@v1
+      - uses: codecov/vertical-commandline@v1
         with:
           files: "**/coverage.cobertura.xml"
           flags: unittests
