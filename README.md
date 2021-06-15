@@ -11,7 +11,7 @@ An easily configured command line arguments parser that makes short work of turn
 ![Package info](https://img.shields.io/nuget/v/vertical-commandline.svg)
 
 ## At a glance
-- No dependencies, targets netstandard20
+- No dependencies, targets netstandard2.1 and net5
 - Declarative mapping without attributes
 - Simple, concise configuration API
 - Command verb support
