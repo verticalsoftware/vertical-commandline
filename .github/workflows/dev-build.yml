@@ -23,10 +23,10 @@ jobs:
       - name: Build
         run: dotnet build -c Release --no-restore
       - name: Test
-        run: dotnet test --no-restore --verbosity normal --collect:"XPlat Code Coverage"
+        run: dotnet test --no-restore --collect:"XPlat Code Coverage"
       - uses: codecov/codecov-action@v1
         with:
-          files: test/TestResults
+          files: "**/coverage.cobertura.xml"
           flags: unittests
           name: vertical-commandline-codecov
       - name: Set build label
