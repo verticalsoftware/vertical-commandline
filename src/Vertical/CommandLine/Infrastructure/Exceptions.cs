@@ -24,8 +24,7 @@ namespace Vertical.CommandLine.Infrastructure
 
         internal static Exception OperandMissing(Template template)
         {
-            return new ArgumentException(
-                $"Option {Quote(template.ToString())} requires an operand value.");
+            return new UsageException($"Option {Quote(template.ToString())} requires an operand value.");
         }
 
         internal static Exception InvalidArgumentValue<TValue>(TValue value, string message)
