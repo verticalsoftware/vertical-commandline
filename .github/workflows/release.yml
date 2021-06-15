@@ -1,9 +1,9 @@
-name: Pre release
+﻿name: Release
 
 on:
   push:
     branches:
-      - PreRelease
+      - master
 
 jobs:
   build:
@@ -24,9 +24,7 @@ jobs:
         run: dotnet build -c Release --no-restore
       - name: Test
         run: dotnet test --no-restore
-      - name: Set build label
-        run: echo "DEVLABEL=$(date +'%Y%m%d')" >> $GITHUB_ENV
       - name: Build pre-release packages
-        run: dotnet pack -c Release --no-restore -p:VersionSuffix=dev.${{ env.DEVLABEL }}.${{ github.run_number }} -o ./pack
+        run: dotnet pack -c Release --no-restore -o ./pack
       - name: Publish packages to NuGet
         run: dotnet nuget push ./pack/*[^.symbols].nupkg -s https://api.nuget.org/v3/index.json -k ${{ secrets.NUGET_ORG_PUSH_KEY }}
