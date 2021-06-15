@@ -43,7 +43,7 @@ namespace Vertical.CommandLine.Infrastructure
         // Read-only property
         internal static Exception NotWriteableProperty(PropertyInfo propertyInfo)
         {
-            return new ConfigurationException($"Property {FriendlyName(propertyInfo.DeclaringType)}.{propertyInfo.Name}" +
+            return new ConfigurationException($"Property {FriendlyName(propertyInfo.DeclaringType!)}.{propertyInfo.Name}" +
                                               "is read-only and cannot be used in a property mapper. Either use a different " +
                                               "property or add a set accessor.");
         }
@@ -169,7 +169,7 @@ namespace Vertical.CommandLine.Infrastructure
             return new ConfigurationException($"Options provider threw an exception when asking for a {FriendlyName(optionsType)} instance.");
         }
 
-        internal static Exception OptionsProviderFailed(Type optionsType, Exception innerException = null)
+        internal static Exception OptionsProviderFailed(Type optionsType, Exception? innerException = null)
         {
             return new ConfigurationException(
                 $"Options provider failed when asking for a {FriendlyName(optionsType)} instance.",

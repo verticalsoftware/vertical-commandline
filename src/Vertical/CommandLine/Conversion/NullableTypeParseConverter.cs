@@ -25,7 +25,7 @@ namespace Vertical.CommandLine.Conversion
         /// <summary>
         /// Tries to create a new instance.
         /// </summary>
-        internal static bool TryCreate(out IValueConverter<TValue> converter)
+        internal static bool TryCreate(out IValueConverter<TValue>? converter)
         {
             converter = null;
             
@@ -38,7 +38,7 @@ namespace Vertical.CommandLine.Conversion
                 return false;
             
             var strParamExpr = Expression.Parameter(typeof(string));
-            var callParseExpr = Expression.Call(parseMethodInfo, strParamExpr);
+            var callParseExpr = Expression.Call(parseMethodInfo!, strParamExpr);
             var convertParseExpr = Expression.Convert(callParseExpr, nullableType);
             var callIsNullOrWsExpr = Expression.Call(TypeHelpers.StringIsNullOrWhiteSpaceMethodInfo, strParamExpr);
             var defaultTValueExpr = Expression.Default(nullableType);

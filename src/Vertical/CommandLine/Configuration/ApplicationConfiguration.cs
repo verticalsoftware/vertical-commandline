@@ -24,7 +24,7 @@ namespace Vertical.CommandLine.Configuration
         private readonly ICollection<ICommandLineConfiguration> _subConfigurations = 
             new List<ICommandLineConfiguration>();
 
-        private IHelpWriter _helpWriter;
+        private IHelpWriter? _helpWriter;
 
         /// <inheritdoc />
         public override IHelpWriter HelpWriter => _helpWriter ?? ConsoleHelpWriter.Default;
@@ -78,7 +78,7 @@ namespace Vertical.CommandLine.Configuration
         /// <param name="helpWriter">Help writer instance to use. If not specified, the default console
         /// writer is used.</param>
         /// <returns>Configuration.</returns>
-        public ApplicationConfiguration<TOptions> HelpOption(string template, IHelpWriter helpWriter = null)
+        public ApplicationConfiguration<TOptions> HelpOption(string template, IHelpWriter? helpWriter = null)
         {
             HelpTemplate = Template.ForOptionOrSwitch(template);
 

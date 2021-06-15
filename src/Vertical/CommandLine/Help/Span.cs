@@ -5,7 +5,6 @@
 // or refer to https://opensource.org/licenses/MIT
 
 using System;
-using Vertical.CommandLine.Infrastructure;
 using HashCode = System.HashCode;
 
 namespace Vertical.CommandLine.Help
@@ -61,7 +60,7 @@ namespace Vertical.CommandLine.Help
         public static bool operator !=(Span x, Span y) => !x.Equals(y);
 
         /// <inheritdoc />
-        public override bool Equals(object obj) => obj is Span other && Equals(other);
+        public override bool Equals(object? obj) => obj is Span other && Equals(other);
 
         /// <inheritdoc />
         public override int GetHashCode() => HashCode.Combine(Start.GetHashCode(), Length.GetHashCode());

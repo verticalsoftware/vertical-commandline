@@ -17,7 +17,7 @@ namespace Vertical.CommandLine.Validation
         /// <param name="message">Exception message</param>
         /// <param name="context">Context, template or position argument</param>
         /// <param name="value">Value that failed</param>
-        internal ValidationException(string message, string context, object value) :
+        internal ValidationException(string message, string context, object? value) :
             base(message)
         {
             ArgumentValue = value;
@@ -27,7 +27,7 @@ namespace Vertical.CommandLine.Validation
         /// <summary>
         /// Gets the argument value.
         /// </summary>
-        public object ArgumentValue { get; }
+        public object? ArgumentValue { get; }
 
         /// <summary>
         /// Gets the context of the validation, template or argument.

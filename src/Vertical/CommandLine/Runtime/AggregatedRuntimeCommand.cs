@@ -36,13 +36,13 @@ namespace Vertical.CommandLine.Runtime
         /// <param name="subConfigurations">Command configurations</param>
         internal AggregatedRuntimeCommand(ParseContext parseContext,
             IRuntimeCommand applicationCommand,
-            IEnumerable<ICommandLineConfiguration> subConfigurations)
+            IEnumerable<ICommandLineConfiguration>? subConfigurations)
         {
             // Get the matched sub configuration
-            var command = subConfigurations
+            var command = subConfigurations?
                 .TakeWhile(_ => parseContext.Reset())
                 .Select(config => config.GetRuntimeCommand())
-                .FirstOrDefault(runtimeCommand => parseContext.TryTakeTemplate(runtimeCommand.Template, 0));
+                .FirstOrDefault(runtimeCommand => parseContext.TryTakeTemplate(runtimeCommand.Template!, 0));
 
             if (command != null) _runtimeCommands.Add(command);
 
@@ -55,10 +55,10 @@ namespace Vertical.CommandLine.Runtime
         public IRuntimeCommand SelectedRuntime => _runtimeCommands.First();
 
         /// <inheritdoc />
-        public Template Template => SelectedRuntime.Template;
+        public Template? Template => SelectedRuntime.Template;
 
         /// <inheritdoc />
-        public IProvider<IReadOnlyCollection<string>> HelpContentProvider => _runtimeCommands
+        public IProvider<IReadOnlyCollection<string>>? HelpContentProvider => _runtimeCommands
             .FirstOrDefault(cmd => cmd.HelpContentProvider != null)?.HelpContentProvider;
 
         /// <inheritdoc />

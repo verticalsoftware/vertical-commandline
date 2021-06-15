@@ -17,8 +17,8 @@ namespace Vertical.CommandLine.Runtime
     /// <typeparam name="TOptions">Options type.</typeparam>
     internal sealed class ClientHandler<TOptions> where TOptions : class
     {
-        private readonly Action<TOptions> _syncHandler;
-        private readonly Func<TOptions, Task> _asyncHandler;
+        private readonly Action<TOptions>? _syncHandler;
+        private readonly Func<TOptions, Task>? _asyncHandler;
 
         /// <summary>
         /// Creates a new instance.
@@ -42,7 +42,7 @@ namespace Vertical.CommandLine.Runtime
         {
             if (_syncHandler == null)
             {
-                _asyncHandler(options).GetAwaiter().GetResult();
+                _asyncHandler!(options).GetAwaiter().GetResult();
                 return;
             }
 
@@ -63,7 +63,7 @@ namespace Vertical.CommandLine.Runtime
         {
             if (_asyncHandler == null)
             {
-                _syncHandler(options);
+                _syncHandler!(options);
                 return Task.CompletedTask;
             }
 

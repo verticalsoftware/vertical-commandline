@@ -30,7 +30,7 @@ namespace Vertical.CommandLine.Runtime
         /// </summary>
         /// <param name="template">Template to match.</param>
         /// <param name="parsers">Collection of parses for the options and arguments.</param>
-        internal RuntimeCommand(Template template, Func<IArgumentParser<TOptions>[]> parsers)
+        internal RuntimeCommand(Template? template, Func<IArgumentParser<TOptions>[]> parsers)
         {
             Template = template;
             _parsers = parsers;
@@ -39,7 +39,7 @@ namespace Vertical.CommandLine.Runtime
         /// <summary>
         /// Gets or sets the command template.
         /// </summary>
-        public Template Template { get; }
+        public Template? Template { get; }
 
         /// <inheritdoc />
         public object GetOptions()
@@ -74,17 +74,17 @@ namespace Vertical.CommandLine.Runtime
         /// <summary>
         /// Gets or sets the client handler.
         /// </summary>
-        public ClientHandler<TOptions> ClientHandler { get; set; }
+        public ClientHandler<TOptions>? ClientHandler { get; set; }
         
         /// <summary>
         /// Gets or sets the options provider.
         /// </summary>
-        public IProvider<TOptions> OptionsProvider { get; set; }
+        public IProvider<TOptions>? OptionsProvider { get; set; }
 
         /// <summary>
         /// Gets or sets the help content resource.
         /// </summary>
-        public IProvider<IReadOnlyCollection<string>> HelpContentProvider { get; private set; }
+        public IProvider<IReadOnlyCollection<string>>? HelpContentProvider { get; private set; }
 
         // Ensures the client handler was defined.
         private ClientHandler<TOptions> GetClientHandlerOrThrow()

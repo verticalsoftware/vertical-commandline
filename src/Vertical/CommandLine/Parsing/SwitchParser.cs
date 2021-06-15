@@ -22,7 +22,7 @@ namespace Vertical.CommandLine.Parsing
         /// <inheritdoc />
         public SwitchParser(Template template,
             IValueConverter<TValue> converter,
-            IValidator<TValue> validator,
+            IValidator<TValue>? validator,
             IMapper<TOptions, TValue> mapper) : 
             base(template, ParserType.Option, converter, validator, mapper)
         {
@@ -32,7 +32,7 @@ namespace Vertical.CommandLine.Parsing
         /// <inheritdoc />
         public override ContextResult ProcessContext(TOptions options, ParseContext parseContext)
         {
-            if (!parseContext.TryTakeTemplate(Template))
+            if (!parseContext.TryTakeTemplate(Template!))
                 return ContextResult.NoMatch;
             
             AcceptArgumentValue(options, Token.True);
@@ -42,6 +42,6 @@ namespace Vertical.CommandLine.Parsing
         /// <summary>
         /// Gets the context for the parser.
         /// </summary>
-        protected override string Context => Common.FormatSwitchContext(Template);
+        protected override string Context => Common.FormatSwitchContext(Template!);
     }
 }

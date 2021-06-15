@@ -41,7 +41,10 @@ namespace Vertical.CommandLine.Runtime
             // Show help?
             if ((result & ContextResult.Help) == ContextResult.Help)
             {
-                return new HelpProgram(configuration.HelpWriter, aggregatedRuntime.HelpContentProvider);
+                return new HelpProgram(
+                    // Will throw ConfigurationException
+                    configuration.HelpWriter!,
+                    aggregatedRuntime.HelpContentProvider!);
             }
 
             CheckContextStragglers(parseContext);
@@ -56,7 +59,7 @@ namespace Vertical.CommandLine.Runtime
         {
             if (!parseContext.Reset()) return;
 
-            throw Exceptions.InvalidCommandLineArgument(parseContext.Current.DistinguishedForm);
+            throw Exceptions.InvalidCommandLineArgument(parseContext.Current.DistinguishedForm!);
         }
     }
 }

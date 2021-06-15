@@ -19,12 +19,12 @@ namespace Vertical.CommandLine.Configuration
         /// <summary>
         /// Gets the sub configurations for this instance.
         /// </summary>
-        IEnumerable<ICommandLineConfiguration> SubConfigurations { get; }
+        IEnumerable<ICommandLineConfiguration>? SubConfigurations { get; }
 
         /// <summary>
         /// Gets the help writer instance.
         /// </summary>
-        IHelpWriter HelpWriter { get; }
+        IHelpWriter? HelpWriter { get; }
 
         /// <summary>
         /// Gets the runtime command for the configuration.
@@ -35,6 +35,6 @@ namespace Vertical.CommandLine.Configuration
         /// <summary>
         /// Gets the template that identifies the help option.
         /// </summary>
-        Template HelpTemplate { get; }
+        Template? HelpTemplate { get; }
     }
 }

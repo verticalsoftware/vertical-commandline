@@ -37,9 +37,9 @@ namespace Vertical.CommandLine.Configuration
         /// <param name="messageFormat">A function that formats the error to display if validation fails.</param>
         /// <returns>Configuration.</returns>
         public ArgumentConfiguration<TOptions, TValue> Using(Predicate<TValue> predicate,
-            Func<TValue, string> messageFormat = null)
+            Func<TValue, string>? messageFormat = null)
         {
-            return Using(new DelegateValidator<object, TValue>(null, (_, arg) => predicate(arg),
+            return Using(new DelegateValidator<object, TValue>(null!, (_, arg) => predicate(arg),
                 (_, arg) => messageFormat?.Invoke(arg) ?? Common.InvalidValue,
                 $"Predicate<{Formatting.FriendlyName(typeof(TValue))}>"));
         }
@@ -53,7 +53,7 @@ namespace Vertical.CommandLine.Configuration
         /// <returns>Configuration.</returns>
         public ArgumentConfiguration<TOptions, TValue> Using<TState>(TState state,
             Validation<TState, TValue> predicate,
-            MessageFormat<TState, TValue> messageFormat = null)
+            MessageFormat<TState, TValue>? messageFormat = null)
         {
             return Using(new DelegateValidator<TState, TValue>(state, predicate,
                 messageFormat ?? ((_,__) => Common.InvalidValue),
@@ -68,8 +68,8 @@ namespace Vertical.CommandLine.Configuration
         /// <param name="messageFormat">A function that formats the error to display if validation fails.</param>
         /// <returns>Configuration.</returns>
         public ArgumentConfiguration<TOptions, TValue> Less(TValue value,
-            IComparer<TValue> comparer = null,
-            MessageFormat<TValue, TValue> messageFormat = null)
+            IComparer<TValue>? comparer = null,
+            MessageFormat<TValue, TValue>? messageFormat = null)
         {
             return Using(new DelegateValidator<TValue, TValue>(value,
                 (state, arg) => (comparer ?? Comparer<TValue>.Default).Compare(state, arg) > 0,
@@ -85,8 +85,8 @@ namespace Vertical.CommandLine.Configuration
         /// <param name="messageFormat">A function that formats the error to display if validation fails.</param>
         /// <returns>Configuration.</returns>
         public ArgumentConfiguration<TOptions, TValue> LessOrEqual(TValue value,
-            IComparer<TValue> comparer = null,
-            MessageFormat<TValue, TValue> messageFormat = null)
+            IComparer<TValue>? comparer = null,
+            MessageFormat<TValue, TValue>? messageFormat = null)
         {
             return Using(new DelegateValidator<TValue, TValue>(value,
                 (state, arg) => (comparer ?? Comparer<TValue>.Default).Compare(state, arg) >= 0,
@@ -102,8 +102,8 @@ namespace Vertical.CommandLine.Configuration
         /// <param name="messageFormat">A function that formats the error to display if validation fails.</param>
         /// <returns>Configuration.</returns>
         public ArgumentConfiguration<TOptions, TValue> Greater(TValue value,
-            IComparer<TValue> comparer = null,
-            MessageFormat<TValue, TValue> messageFormat = null)
+            IComparer<TValue>? comparer = null,
+            MessageFormat<TValue, TValue>? messageFormat = null)
         {
             return Using(new DelegateValidator<TValue, TValue>(value,
                 (state, arg) => (comparer ?? Comparer<TValue>.Default).Compare(state, arg) < 0,
@@ -119,8 +119,8 @@ namespace Vertical.CommandLine.Configuration
         /// <param name="messageFormat">A function that formats the error to display if validation fails.</param>
         /// <returns>Configuration.</returns>
         public ArgumentConfiguration<TOptions, TValue> GreaterOrEqual(TValue value,
-            IComparer<TValue> comparer = null,
-            MessageFormat<TValue, TValue> messageFormat = null)
+            IComparer<TValue>? comparer = null,
+            MessageFormat<TValue, TValue>? messageFormat = null)
         {
             return Using(new DelegateValidator<TValue, TValue>(value,
                 (state, arg) => (comparer ?? Comparer<TValue>.Default).Compare(state, arg) <= 0,
@@ -137,8 +137,8 @@ namespace Vertical.CommandLine.Configuration
         /// <param name="messageFormat">A function that formats the error to display if validation fails.</param>
         /// <returns>Configuration.</returns>
         public ArgumentConfiguration<TOptions, TValue> Between(TValue min, TValue max,
-            IComparer<TValue> comparer = null,
-            MessageFormat<TValue, TValue> messageFormat = null)
+            IComparer<TValue>? comparer = null,
+            MessageFormat<TValue, TValue>? messageFormat = null)
         {
             GreaterOrEqual(min, comparer, messageFormat);
             return LessOrEqual(max, comparer, messageFormat);
@@ -153,8 +153,8 @@ namespace Vertical.CommandLine.Configuration
         /// <returns>Configuration.</returns>
         [SuppressMessage("ReSharper", "PossibleMultipleEnumeration")]
         public ArgumentConfiguration<TOptions, TValue> In(IEnumerable<TValue> values,
-            IEqualityComparer<TValue> comparer = null,
-            MessageFormat<ISet<TValue>, TValue> messageFormat = null)
+            IEqualityComparer<TValue>? comparer = null,
+            MessageFormat<ISet<TValue>, TValue>? messageFormat = null)
         {
             return Using(new DelegateValidator<ISet<TValue>, TValue>(new HashSet<TValue>(values,
                     comparer ?? EqualityComparer<TValue>.Default),
@@ -170,7 +170,7 @@ namespace Vertical.CommandLine.Configuration
         /// <param name="messageFormat">A function that formats the error to display if validation fails.</param>
         /// <returns>Configuration.</returns>
         public ArgumentConfiguration<TOptions, TValue> Matches(string pattern,
-            MessageFormat<Regex, TValue> messageFormat = null)
+            MessageFormat<Regex, TValue>? messageFormat = null)
         {
             return Using(new DelegateValidator<Regex, TValue>(new Regex(pattern),
                 (state, arg) => state.IsMatch(arg?.ToString() ?? string.Empty),

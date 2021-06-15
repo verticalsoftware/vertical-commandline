@@ -18,9 +18,9 @@ namespace Vertical.CommandLine.Parsing
     public sealed class ParserBuilder<TOptions, TValue> : IParserBuilder<TOptions, TValue>
         where TOptions : class
     {
-        private IValidator<TValue> _validator;
-        private IValueConverter<TValue> _converter;
-        private IMapper<TOptions, TValue> _mapper;
+        private IValidator<TValue>? _validator;
+        private IValueConverter<TValue>? _converter;
+        private IMapper<TOptions, TValue>? _mapper;
         
         /// <summary>
         /// Builds a position argument parser.

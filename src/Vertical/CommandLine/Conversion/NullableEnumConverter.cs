@@ -24,7 +24,7 @@ namespace Vertical.CommandLine.Conversion
         /// <summary>
         /// Tries to create an instance.
         /// </summary>
-        internal static bool TryCreate(out IValueConverter<TValue> converter)
+        internal static bool TryCreate(out IValueConverter<TValue>? converter)
         {
             converter = null;
 

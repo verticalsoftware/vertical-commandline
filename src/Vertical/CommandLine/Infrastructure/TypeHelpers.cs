@@ -15,13 +15,16 @@ namespace Vertical.CommandLine.Infrastructure
     /// </summary>
     internal static class TypeHelpers
     {
+        private static readonly Type[] EnumParameterTypes = {typeof(Type), typeof(string), typeof(bool)};
+        private static readonly Type[] ParseParameterTypes = {typeof(string)};
+
         /// <summary>
         /// Defines the string IsNullOrWhiteSpace method
         /// </summary>
         internal static MethodInfo StringIsNullOrWhiteSpaceMethodInfo { get; } =
             typeof(string).GetKnownMethodInfo(nameof(string.IsNullOrWhiteSpace),
                 new[] {typeof(string)},
-                typeof(bool));
+                typeof(bool))!;
         
         /// <summary>
         /// Determines if a type is nullable.
@@ -37,7 +40,7 @@ namespace Vertical.CommandLine.Infrastructure
         /// <summary>
         /// Gets the underlying type of a Nullable{T}
         /// </summary>
-        internal static Type GetNullableUnderlyingType(this Type type) => type.IsNullableType() 
+        internal static Type? GetNullableUnderlyingType(this Type type) => type.IsNullableType() 
             ? type.GetGenericArguments().Single() 
             : null;
 
@@ -45,21 +48,21 @@ namespace Vertical.CommandLine.Infrastructure
         /// Defines the Enum.Parse method.
         /// </summary>
         internal static MethodInfo GetEnumParseMethodInfo() => GetKnownMethodInfo(
-            typeof(Enum), nameof(Enum.Parse), new[] {typeof(Type), typeof(string), typeof(bool)}, typeof(object));
+            typeof(Enum), nameof(Enum.Parse), EnumParameterTypes, typeof(object))!;
 
         /// <summary>
         /// Gets the Parse method for a type.
         /// </summary>
-        internal static bool TryGetParseMethodInfo(Type type, out MethodInfo methodInfo)
+        internal static bool TryGetParseMethodInfo(Type type, out MethodInfo? methodInfo)
         {
-            methodInfo = GetMethodInfo(type, nameof(int.Parse), new[] {typeof(string)}, type, null);
+            methodInfo = GetMethodInfo(type, nameof(int.Parse), ParseParameterTypes, type);
             return methodInfo != null;
         }
 
         /// <summary>
         /// Gets a constructor that accepts a string parameter.
         /// </summary>
-        internal static bool TryGetStringConstructor(Type type, out ConstructorInfo constructorInfo)
+        internal static bool TryGetStringConstructor(Type type, out ConstructorInfo? constructorInfo)
         {
             constructorInfo = type.GetConstructor(new[] {typeof(string)});
             return constructorInfo != null;
@@ -68,7 +71,7 @@ namespace Vertical.CommandLine.Infrastructure
         /// <summary>
         /// Gets a known API method
         /// </summary>
-        internal static MethodInfo GetKnownMethodInfo(this Type type, string methodName, 
+        internal static MethodInfo? GetKnownMethodInfo(this Type type, string methodName, 
             Type[] parameterTypes,
             Type returnType)
         {
@@ -77,10 +80,10 @@ namespace Vertical.CommandLine.Infrastructure
         }
 
         // Gets method info matching parameters and return type
-        private static MethodInfo GetMethodInfo(Type type, string methodName, 
+        private static MethodInfo? GetMethodInfo(Type type, string methodName, 
             Type[] parameterTypes,
             Type returnType,
-            Action error)
+            Action? error = null)
         {
             var methodInfo = type.GetMethod(methodName, parameterTypes);
 

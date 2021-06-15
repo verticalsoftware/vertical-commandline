@@ -27,7 +27,7 @@ namespace Vertical.CommandLine.Conversion
                 ConstructorConverter<TValue>.TryCreate(out converter) ||
                 CastConverter<TValue>.TryCreate(out converter);
 
-            if (created) return converter;
+            if (created) return converter!;
 
             throw ConfigurationExceptions.NoDefaultConverter<TValue>();
         }

@@ -59,7 +59,7 @@ namespace Vertical.CommandLine.Configuration
         /// <param name="keyComparer">Key comparer.</param>
         /// <returns>Configuration.</returns>
         public ArgumentConfiguration<TOptions, TValue> UsingValues(IEnumerable<KeyValuePair<string, TValue>> values,
-            IEqualityComparer<string> keyComparer = null) =>
+            IEqualityComparer<string>? keyComparer = null) =>
             Using(new DictionaryConverter<TValue>(values, keyComparer ?? EqualityComparer<string>.Default));
     }
 }

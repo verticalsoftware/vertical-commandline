@@ -42,7 +42,7 @@ namespace Vertical.CommandLine.Configuration
         /// </summary>
         /// <param name="template">The template that identifies the command - null if this is an application
         /// configuration.</param>
-        internal CommandConfiguration(Template template)
+        internal CommandConfiguration(Template? template)
         {
             RuntimeCommand = new RuntimeCommand<TOptions>(template, () => ParserConfig.ArgumentParsers);
         }
@@ -53,7 +53,7 @@ namespace Vertical.CommandLine.Configuration
         internal RuntimeCommand<TOptions> RuntimeCommand { get; }
 
         /// <inheritdoc />
-        public virtual Template HelpTemplate { get; protected set; }
+        public virtual Template? HelpTemplate { get; protected set; }
         
         /// <summary>
         /// Adds a position argument to the configuration.
@@ -157,10 +157,10 @@ namespace Vertical.CommandLine.Configuration
         public HelpConfiguration<TOptions> Help => new HelpConfiguration<TOptions>(this, RuntimeCommand);
 
         /// <inheritdoc />
-        public virtual IEnumerable<ICommandLineConfiguration> SubConfigurations => null;
+        public virtual IEnumerable<ICommandLineConfiguration>? SubConfigurations => null;
 
         /// <inheritdoc />
-        public virtual IHelpWriter HelpWriter => null;
+        public virtual IHelpWriter? HelpWriter => null;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]

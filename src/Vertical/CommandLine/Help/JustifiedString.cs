@@ -22,7 +22,7 @@ namespace Vertical.CommandLine.Help
         /// Creates a new instance.
         /// </summary>
         /// <param name="source">The source string.</param>
-        internal JustifiedString(string source)
+        internal JustifiedString(string? source)
         {
             if (source == null) return;
 
@@ -56,6 +56,9 @@ namespace Vertical.CommandLine.Help
         /// <returns><see cref="IEnumerable{T}"/></returns>
         public IEnumerable<Span> SplitToWidth(int width)
         {
+            if (Source == null)
+                yield break;
+            
             var wordBreak = -1;
             var spanStart = StartIndex;
 
@@ -85,10 +88,10 @@ namespace Vertical.CommandLine.Help
         /// <summary>
         /// Gets the source string.
         /// </summary>
-        public string Source { get; }
+        public string? Source { get; }
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
-        public override string ToString() => Source;
+        public override string ToString() => Source ?? string.Empty;
     }
 }

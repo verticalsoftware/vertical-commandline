@@ -38,15 +38,14 @@ namespace Vertical.CommandLine.Help
         public IReadOnlyCollection<string> GetInstance()
         {
             var contentList = new List<string>(DefaultContentCapacity);
-            
-            using(var reader = new StreamReader(ResolveContentPath(_path)))
-            {
-                string content;
 
-                while((content = reader.ReadLine()) != null)
-                {
-                    contentList.Add(content);
-                }
+            using var reader = new StreamReader(ResolveContentPath(_path));
+            
+            string? content;
+
+            while((content = reader.ReadLine()) != null)
+            {
+                contentList.Add(content);
             }
 
             return contentList.AsReadOnly();

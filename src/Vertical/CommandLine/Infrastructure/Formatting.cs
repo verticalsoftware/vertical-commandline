@@ -14,7 +14,7 @@ namespace Vertical.CommandLine.Infrastructure
     /// </summary>
     internal static class Formatting
     {
-        internal static string Quote(object obj) => obj != null ? $"\"{obj}\"" : string.Empty;
+        internal static string Quote(object? obj) => obj != null ? $"\"{obj}\"" : string.Empty;
         
         /// <summary>
         /// Used for debugging mostly in ToString methods.
@@ -25,18 +25,18 @@ namespace Vertical.CommandLine.Infrastructure
             
             switch (type)
             {
-                case Type t when type.IsNullableType():
+                case { } when type.IsNullableType():
                     return $"{FriendlyName(type.GetGenericArguments()[0])}?";
                 
-                case Type t when t.IsGenericType:
+                case {IsGenericType: true} t:
                     var genericTypes = string.Join(", ", t.GenericTypeArguments.Select(FriendlyName));
-                    return $"{TypeHelpers.GetGenericTypeName(simplifiedName)}<{genericTypes}>";
+                    return $"{TypeHelpers.GetGenericTypeName(simplifiedName!)}<{genericTypes}>";
 
-                case Type t when t.DeclaringType != null:
-                    return simplifiedName.Replace('+', '.');
+                case {DeclaringType: { }}:
+                    return simplifiedName!.Replace('+', '.');
 
                 default:
-                    return simplifiedName;
+                    return simplifiedName!;
             }
         }
     }
