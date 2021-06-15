@@ -160,7 +160,8 @@ namespace Vertical.CommandLine.Infrastructure
 
         internal static Exception HelpProviderFailed(Type providerType, Exception innerException)
         {
-            return new ConfigurationException($"Content provider {FriendlyName(providerType)} threw an exception.",
+            return new ConfigurationException(
+                $"Content provider {FriendlyName(providerType)} threw an exception: {innerException.Message}",
                 innerException);
         }
 
