@@ -19,6 +19,7 @@ namespace Vertical.CommandLine.Parsing
         private const char TokenSeparator = '|';
 
         private static readonly TokenParser TemplateParser = new TokenParser(
+            TokenMatcher.CompositeOption,
             TokenMatcher.ShortOption,
             TokenMatcher.LongOption);
 

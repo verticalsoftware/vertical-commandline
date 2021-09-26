@@ -18,7 +18,7 @@ namespace Vertical.CommandLine.Parsing
     public sealed class ParseContext : IEnumerable<Token>
     {
         // Used to track original argument order
-        private struct TokenEntry
+        private readonly struct TokenEntry
         {
             internal TokenEntry(int parsedIndex, Token token)
             {
@@ -35,6 +35,7 @@ namespace Vertical.CommandLine.Parsing
         
         private static readonly TokenParser Parser = new TokenParser(
             TokenMatcher.OptionsEnd,
+            TokenMatcher.CompositeOption,
             TokenMatcher.ShortOption,
             TokenMatcher.CompactShortOption,
             TokenMatcher.LongOption,

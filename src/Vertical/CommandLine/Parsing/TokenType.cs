@@ -30,6 +30,11 @@ namespace Vertical.CommandLine.Parsing
         /// <summary>
         /// Indicates an unprefixed string value.
         /// </summary>
-        NonTemplateValue
+        NonTemplateValue,
+        
+        /// <summary>
+        /// Represents a dashed argument whose value is combined with = or :.
+        /// </summary>
+        CompositeOption
     }
 }

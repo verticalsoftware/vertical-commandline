@@ -104,6 +104,7 @@ namespace Vertical.CommandLine.Tests
 
             config
                 .Option("--option", arg => arg.Map.Using((options, value) => options["option"] = value))
+                .Option("--mode=", arg => arg.Map.Using((options, value) => options["mode"] = value))
                 .Switch("--switch", arg => arg.Map.Using((options, _) => options["switch"] = "true"))
                 .PositionArgument(arg => arg.MapMany.Using((options, value) => options[$"{++counter}"] = value))
                 .Options.UseInstance(new Dictionary<string, string>());
@@ -112,14 +113,41 @@ namespace Vertical.CommandLine.Tests
             {
                 "--option", "test-option",
                 "--switch",
+                "--mode=test",
                 "value1",
                 "value2"
             });
 
             result["option"].ShouldBe("test-option");
             result["switch"].ShouldBe("true");
+            result["mode"].ShouldBe("test");
             result["1"].ShouldBe("value1");
             result["2"].ShouldBe("value2");
+        }
+
+        [Fact]
+        public void ParseArgs2()
+        {
+            var config = new ApplicationConfiguration<IDictionary<string, string>>();
+
+            config
+                .Option("--option=", arg => arg.MapMany.Using((options, value) =>
+                {
+                    if (options.TryGetValue("multi", out var existing))
+                        options["multi"] = $"{existing}+{value}";
+                    else
+                        options["multi"] = value;
+                }))
+                .Options.UseFactory(() => new Dictionary<string, string>());
+
+            var result = CommandLineApplication.ParseArguments<IDictionary<string, string>>(config, new[]
+            {
+                "--option=red",
+                "--option=green",
+                "--option=blue"
+            });
+            
+            result["multi"].ShouldBe("red+green+blue");
         }
     }
 }
