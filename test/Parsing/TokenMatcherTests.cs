@@ -33,7 +33,11 @@ namespace Vertical.CommandLine.Tests.Parsing
             Scenario(TokenMatcher.LongOption, "--l0ng", new[]{ new Token(TokenType.LongOption, "l0ng") }),
             Scenario(TokenMatcher.Word, "word", new[]{ new Token(TokenType.NonTemplateValue, "word") }),
             Scenario(TokenMatcher.Word, "w0rd", new[]{ new Token(TokenType.NonTemplateValue, "w0rd") }),
-            Scenario(TokenMatcher.Any, "$", new[]{ new Token(TokenType.NonTemplateValue, "$")})
+            Scenario(TokenMatcher.Any, "$", new[]{ new Token(TokenType.NonTemplateValue, "$")}),
+            Scenario(TokenMatcher.CompositeOption, "-a:", new[]{ new Token(TokenType.CompositeOption, "a")}),
+            Scenario(TokenMatcher.CompositeOption, "-a=", new[]{ new Token(TokenType.CompositeOption, "a")}),
+            Scenario(TokenMatcher.CompositeOption, "--long=", new[]{ new Token(TokenType.CompositeOption, "long")}),
+            Scenario(TokenMatcher.CompositeOption, "--long:", new[]{ new Token(TokenType.CompositeOption, "long")})
         );
 
         [Theory, MemberData(nameof(NegativeTheories))]
@@ -76,7 +80,14 @@ namespace Vertical.CommandLine.Tests.Parsing
             Scenario(TokenMatcher.Word, "-1"),
             Scenario(TokenMatcher.Word, "-12"),
             Scenario(TokenMatcher.Word, "--long"),
-            Scenario(TokenMatcher.Word, "$any")
+            Scenario(TokenMatcher.Word, "$any"),
+            Scenario(TokenMatcher.CompositeOption, "-a"),
+            Scenario(TokenMatcher.CompositeOption, "-ab"),
+            Scenario(TokenMatcher.CompositeOption, "--long"),
+            Scenario(TokenMatcher.CompositeOption, "$any"),
+            Scenario(TokenMatcher.CompositeOption, "--"),
+            Scenario(TokenMatcher.CompositeOption, "-1"),
+            Scenario(TokenMatcher.CompositeOption, "-12")
         );
     }
 }

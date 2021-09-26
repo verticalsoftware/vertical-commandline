@@ -24,6 +24,7 @@ namespace Vertical.CommandLine.Parsing
         private static readonly string CompactShortOptionPattern = $"^-(?<{ValueGroup}>[0-9a-zA-Z]+)$";
         private static readonly string LongOptionPattern = $"^--(?<{ValueGroup}>[\\w-]+)$";
         private static readonly string WordPattern = $"^(?![\\W])(?<{ValueGroup}>[0-9a-zA-Z-]+)$";
+        private static readonly string CompositeOptionPattern = $"^--?(?<{ValueGroup}>[0-9a-zA-Z]+)[=:]$";
         private const string OptionsEndPattern = "^--$";
         private const string AnyPattern = ".+";
 
@@ -73,6 +74,13 @@ namespace Vertical.CommandLine.Parsing
             LongOptionPattern,
             match => new[] { new Token(TokenType.LongOption, match.Groups[ValueGroup].Value) });
 
+        /// <summary>
+        /// Defines a pattern for composite options.
+        /// </summary>
+        public static TokenMatcher CompositeOption { get; } = new TokenMatcher(
+            CompositeOptionPattern,
+            match => new[] { new Token(TokenType.CompositeOption, match.Groups[ValueGroup].Value) });
+        
         /// <summary>
         /// Defines a pattern for words.
         /// </summary>
