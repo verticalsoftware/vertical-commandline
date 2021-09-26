@@ -15,16 +15,18 @@ namespace Vertical.CommandLine.Parsing
     /// </summary>
     public sealed class TokenMatcher : ITokenMatcher
     {
-        private const string ValueGroup = "value";
+        //private const string TemplateIdGroup = "value";
+        private const string TemplateIdGroup = "id";
+        private const string OperandGroup = "operand";
         private readonly string _pattern;
         private readonly Func<Match, Token[]> _tokenFactory;
 
         // Patterns used by the matchers
-        private static readonly string ShortOptionPattern = $"^-(?<{ValueGroup}>[0-9a-zA-Z])$";
-        private static readonly string CompactShortOptionPattern = $"^-(?<{ValueGroup}>[0-9a-zA-Z]+)$";
-        private static readonly string LongOptionPattern = $"^--(?<{ValueGroup}>[\\w-]+)$";
-        private static readonly string WordPattern = $"^(?![\\W])(?<{ValueGroup}>[0-9a-zA-Z-]+)$";
-        private static readonly string CompositeOptionPattern = $"^--?(?<{ValueGroup}>[0-9a-zA-Z]+)[=:]$";
+        private static readonly string ShortOptionPattern = $"^-(?<{TemplateIdGroup}>[0-9a-zA-Z])$";
+        private static readonly string CompactShortOptionPattern = $"^-(?<{TemplateIdGroup}>[0-9a-zA-Z]+)$";
+        private static readonly string LongOptionPattern = $"^--(?<{TemplateIdGroup}>[\\w-]+)$";
+        private static readonly string WordPattern = $"^(?![\\W])(?<{TemplateIdGroup}>[0-9a-zA-Z-]+)$";
+        private static readonly string CompositeOptionPattern = $"^--?(?<{TemplateIdGroup}>[0-9a-zA-Z]+)[=:](?<{OperandGroup}>.+)?$";
         private const string OptionsEndPattern = "^--$";
         private const string AnyPattern = ".+";
 
@@ -56,14 +58,14 @@ namespace Vertical.CommandLine.Parsing
         /// </summary>
         public static TokenMatcher ShortOption { get; } = new TokenMatcher(
             ShortOptionPattern, 
-            match => new []{new Token(TokenType.ShortOption, match.Groups[ValueGroup].Value) });
+            match => new []{new Token(TokenType.ShortOption, match.Groups[TemplateIdGroup].Value) });
 
         /// <summary>
         /// Defines a matcher for compact short options.
         /// </summary>
         public static TokenMatcher CompactShortOption { get; } = new TokenMatcher(
             CompactShortOptionPattern,
-            match => match.Groups[ValueGroup].Value
+            match => match.Groups[TemplateIdGroup].Value
                 .Select(ch => new Token(TokenType.ShortOption, ch.ToString()))
                 .ToArray());
 
@@ -72,21 +74,36 @@ namespace Vertical.CommandLine.Parsing
         /// </summary>
         public static TokenMatcher LongOption { get; } = new TokenMatcher(
             LongOptionPattern,
-            match => new[] { new Token(TokenType.LongOption, match.Groups[ValueGroup].Value) });
+            match => new[] { new Token(TokenType.LongOption, match.Groups[TemplateIdGroup].Value) });
 
         /// <summary>
         /// Defines a pattern for composite options.
         /// </summary>
         public static TokenMatcher CompositeOption { get; } = new TokenMatcher(
             CompositeOptionPattern,
-            match => new[] { new Token(TokenType.CompositeOption, match.Groups[ValueGroup].Value) });
+            match =>
+            {
+                var attachedOperand = match.Groups[OperandGroup].Value;
+                var templateId = match.Groups[TemplateIdGroup].Value;
+
+                return attachedOperand.Length > 0
+                    ? new[]
+                    {
+                        new Token(TokenType.CompositeOption, templateId),
+                        new Token(TokenType.NonTemplateValue, attachedOperand)
+                    }
+                    : new[]
+                    {
+                        new Token(TokenType.CompositeOption, templateId)
+                    };
+            });
         
         /// <summary>
         /// Defines a pattern for words.
         /// </summary>
         public static TokenMatcher Word { get; } = new TokenMatcher(
             WordPattern,
-            match => new[] { new Token(TokenType.NonTemplateValue, match.Groups[ValueGroup].Value) });
+            match => new[] { new Token(TokenType.NonTemplateValue, match.Groups[TemplateIdGroup].Value) });
 
         /// <summary>
         /// Defines a pattern for any string.

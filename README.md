@@ -4,7 +4,6 @@ An easily configured command line arguments parser that makes short work of turn
 
 ![.net](https://img.shields.io/badge/Frameworks-.netstandard21+net50-purple)
 ![GitHub](https://img.shields.io/github/license/verticalsoftware/vertical-commandline)
-![Package info](https://img.shields.io/nuget/vpre/vertical-commandline.svg)
 ![Package info](https://img.shields.io/nuget/v/vertical-commandline.svg)
 
 [![Dev](https://github.com/verticalsoftware/vertical-commandline/actions/workflows/dev-build.yml/badge.svg?branch=Dev)](https://github.com/verticalsoftware/vertical-commandline/actions/workflows/dev-build.yml)
@@ -63,7 +62,7 @@ class Program
 ## Lexicon
 In general, the API understands command line arguments as you would expect. For clarity, the lexicon is defined below.
 - An _option_ or a _switch_ is defined using a single or a double dash and then an identifier. Short form identifiers are composed as a single dash followed by a single character (e.g. -a, -b). Long form options are composed as a double dash followed by a one or more characters (e.g. --help, --help-me). Note that short form identifiers can be combined from the command line (e.g. -abc is treated as -a -b -c).
-- An option requires an operand that must immediately follow the identifier, and unlike GNU and most Unix command line utilities, there must be a space in between (good: --size 100MB, bad: --size100MB).
+- An option requires an operand that must immediately follow the identifier. The operand can be separated by a space, `=`, or `:` (Good: --size 100MB, --size=100MB or --size:100MG. Bad: --size100MB).
 - An option can be configured to accept multiple values provided the identifier precedes each operand (e.g. --source IContract.cs --source Contract.cs ...)
 - A switch is a boolean indication only and will not accept an operand.
 - A command verb is a word that is not prefixed with dashes, and is only recognized if it is the very first argument.
