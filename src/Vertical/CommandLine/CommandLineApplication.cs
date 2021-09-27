@@ -94,7 +94,7 @@ namespace Vertical.CommandLine
                 ? new[] {helpToken}
                 : new[] {command, helpToken};
 
-            Run(configuration, args);
+            Run(configuration, args!);
         }
     }
 }
