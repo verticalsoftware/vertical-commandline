@@ -13,6 +13,7 @@ using Vertical.CommandLine.Configuration;
 using Vertical.CommandLine.Runtime;
 using Vertical.CommandLine.Parsing;
 using System.Linq;
+using System.Threading;
 using Vertical.CommandLine.Provider;
 using System.Threading.Tasks;
 
@@ -158,15 +159,15 @@ namespace Vertical.CommandLine.Tests.Runtime
             var cmd = MockSubConfiguration("test", runtimeCmdConfig: m =>
             {
                 cmdMock = m;
-                m.Setup(c => c.InvokeAsync(It.IsAny<object>()))
+                m.Setup(c => c.InvokeAsync(It.IsAny<object>(), It.IsAny<CancellationToken>()))
                     .Returns(Task.CompletedTask)
                     .Verifiable();
             });
             var testInstance = new AggregatedRuntimeCommand(new ParseContext(new[] { "test" }),
                 new Mock<IRuntimeCommand>().Object,
                 new[] { cmd });
-            await testInstance.InvokeAsync(new object());
-            cmdMock.Verify(c => c.InvokeAsync(It.IsAny<object>()), Times.Once);
+            await testInstance.InvokeAsync(new object(), CancellationToken.None);
+            cmdMock.Verify(c => c.InvokeAsync(It.IsAny<object>(), It.IsAny<CancellationToken>()), Times.Once);
         }
 
         [Fact]
@@ -176,18 +177,42 @@ namespace Vertical.CommandLine.Tests.Runtime
             var cmd = MockSubConfiguration("test", runtimeCmdConfig: m =>
             {
                 cmdMock = m;
-                m.Setup(c => c.InvokeAsync(It.IsAny<object>()))
+                m.Setup(c => c.InvokeAsync(It.IsAny<object>(), It.IsAny<CancellationToken>()))
                     .Returns(Task.CompletedTask)
                     .Verifiable();
             });
             var appMock = new Mock<IRuntimeCommand>();
-            appMock.Setup(m => m.InvokeAsync(It.IsAny<object>())).Returns(Task.CompletedTask).Verifiable();
+            appMock.Setup(m => m.InvokeAsync(It.IsAny<object>(), It.IsAny<CancellationToken>())).Returns(Task.CompletedTask).Verifiable();
             var testInstance = new AggregatedRuntimeCommand(new ParseContext(new[] { "app" }),
                 appMock.Object,
                 new[] { cmd });
-            await testInstance.InvokeAsync(new object());
-            cmdMock.Verify(c => c.InvokeAsync(It.IsAny<object>()), Times.Never);
-            appMock.Verify(c => c.InvokeAsync(It.IsAny<object>()), Times.Once);
+            await testInstance.InvokeAsync(new object(), CancellationToken.None);
+            cmdMock.Verify(c => c.InvokeAsync(It.IsAny<object>(), It.IsAny<CancellationToken>()), Times.Never);
+            appMock.Verify(c => c.InvokeAsync(It.IsAny<object>(), It.IsAny<CancellationToken>()), Times.Once);
+        }
+
+        [Fact]
+        public async Task InvokeAsyncCallsAppWithGivenCancellationToken()
+        {
+            using var cancelTokenSource = new CancellationTokenSource();
+            var cancellationToken = cancelTokenSource.Token;
+            Mock<IRuntimeCommand> cmdMock = null;
+            
+            var cmd = MockSubConfiguration("test", runtimeCmdConfig: m =>
+            {
+                cmdMock = m;
+                m.Setup(c => c.InvokeAsync(It.IsAny<object>(), cancellationToken))
+                    .Returns(Task.CompletedTask)
+                    .Verifiable();
+            });
+            var appMock = new Mock<IRuntimeCommand>();
+            appMock.Setup(m => m.InvokeAsync(It.IsAny<object>(), cancellationToken)).Returns(Task.CompletedTask).Verifiable();
+            var testInstance = new AggregatedRuntimeCommand(new ParseContext(new[] { "app" }),
+                appMock.Object,
+                new[] { cmd });
+            await testInstance.InvokeAsync(new object(), cancellationToken);
+            cmdMock.Verify(c => c.InvokeAsync(It.IsAny<object>(), cancellationToken), Times.Never);
+            appMock.Verify(c => c.InvokeAsync(It.IsAny<object>(), cancellationToken), Times.Once);
         }
 
         [Fact]

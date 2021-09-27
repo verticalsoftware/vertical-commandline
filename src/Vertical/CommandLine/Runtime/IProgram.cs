@@ -4,6 +4,7 @@
 // MIT license. Please refer to LICENSE.txt in the root directory
 // or refer to https://opensource.org/licenses/MIT
 
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Vertical.CommandLine.Runtime
@@ -23,7 +24,8 @@ namespace Vertical.CommandLine.Runtime
         /// Invokes the client handler asynchronously.
         /// </summary>
         /// <param name="options">Options object.</param>
+        /// <param name="cancellationToken">Cancellation token</param>
         /// <returns>Task.</returns>
-        Task InvokeAsync(object options);
+        Task InvokeAsync(object options, CancellationToken cancellationToken);
     }
 }

@@ -10,9 +10,11 @@ using Shouldly;
 using Xunit;
 using Vertical.CommandLine.Configuration;
 using System.Linq;
+using System.Threading;
 using Vertical.CommandLine.Parsing;
 using System.Threading.Tasks;
 using Vertical.CommandLine.Provider;
+using Vertical.CommandLine.Tests.Parsing;
 
 namespace Vertical.CommandLine.Tests.Configuration
 {
@@ -81,20 +83,37 @@ namespace Vertical.CommandLine.Tests.Configuration
                 invoked = true;
                 return Task.CompletedTask;
             });
-            await _instanceUnderTest.RuntimeCommand.InvokeAsync(_testOptions);
+            await _instanceUnderTest.RuntimeCommand.InvokeAsync(_testOptions, CancellationToken.None);
+            invoked.ShouldBeTrue();
+        }
+        
+        [Fact]
+        public async Task OnExecuteAsyncWithCancellationSupportRegistersDelegate()
+        {
+            using var cancelTokenSource = new CancellationTokenSource();
+            var cancelToken = cancelTokenSource.Token;
+            var invoked = false;
+            
+            _instanceUnderTest.OnExecuteAsync((_, ct) =>
+            {
+                invoked = true;
+                ct.ShouldBe(cancelToken);
+                return Task.CompletedTask;
+            });
+            await _instanceUnderTest.RuntimeCommand.InvokeAsync(_testOptions, cancelToken);
             invoked.ShouldBeTrue();
         }
 
         [Fact]
         public void OnExecuteThrowsWhenHandlerNull()
         {
-            Should.Throw<ArgumentNullException>(() => _instanceUnderTest.OnExecute(null));
+            Should.Throw<ArgumentNullException>(() => _instanceUnderTest.OnExecute(null!));
         }
 
         [Fact]
         public void OnExecuteAsyncThrowsWhenHandlerNull()
         {
-            Should.Throw<ArgumentNullException>(() => _instanceUnderTest.OnExecuteAsync(null));
+            Should.Throw<ArgumentNullException>(() => _instanceUnderTest.OnExecuteAsync(default(Func<MyOptions, Task>)!));
         }
 
         [Fact]

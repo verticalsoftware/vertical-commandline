@@ -12,6 +12,7 @@ using Vertical.CommandLine.Provider;
 using Vertical.CommandLine.Parsing;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Threading;
 using Vertical.CommandLine.Help;
 
 namespace Vertical.CommandLine.Configuration
@@ -140,8 +141,21 @@ namespace Vertical.CommandLine.Configuration
         /// <returns>Configuration.</returns>
         public CommandConfiguration<TOptions> OnExecuteAsync(Func<TOptions, Task> asyncAction)
         {
-            RuntimeCommand.ClientHandler = new ClientHandler<TOptions>(asyncAction ?? 
-                throw new ArgumentNullException(nameof(asyncAction)));
+            RuntimeCommand.ClientHandler = new ClientHandler<TOptions>(
+                asyncAction ?? throw new ArgumentNullException(nameof(asyncAction)));
+
+            return this;
+        }
+        
+        /// <summary>
+        /// Registers an asynchronous handler for the application.
+        /// </summary>
+        /// <param name="asyncAction">Asynchronous handler.</param>
+        /// <returns>Configuration.</returns>
+        public CommandConfiguration<TOptions> OnExecuteAsync(Func<TOptions, CancellationToken, Task> asyncAction)
+        {
+            RuntimeCommand.ClientHandler = new ClientHandler<TOptions>(
+                asyncAction ?? throw new ArgumentNullException(nameof(asyncAction)));
 
             return this;
         }

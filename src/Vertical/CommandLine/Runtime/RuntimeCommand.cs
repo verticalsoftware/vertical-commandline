@@ -11,6 +11,7 @@ using Vertical.CommandLine.Provider;
 using Vertical.CommandLine.Parsing;
 using Vertical.CommandLine.Configuration;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace Vertical.CommandLine.Runtime
 {
@@ -69,7 +70,8 @@ namespace Vertical.CommandLine.Runtime
         public void Invoke(object options) => GetClientHandlerOrThrow().Invoke((TOptions) options);
 
         /// <inheritdoc />
-        public Task InvokeAsync(object options) => GetClientHandlerOrThrow().InvokeAsync((TOptions) options);
+        public Task InvokeAsync(object options, CancellationToken cancellationToken) => GetClientHandlerOrThrow()
+            .InvokeAsync((TOptions) options, cancellationToken);
 
         /// <summary>
         /// Gets or sets the client handler.
