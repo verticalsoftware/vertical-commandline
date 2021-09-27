@@ -5,6 +5,7 @@
 // or refer to https://opensource.org/licenses/MIT
 
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Shouldly;
 using Vertical.CommandLine.Runtime;
@@ -52,7 +53,7 @@ namespace Vertical.CommandLine.Tests.Runtime
         {
             var invoked = false;
             var handler = new ClientHandler<object>(opt => { invoked = true; });
-            await handler.InvokeAsync(null);
+            await handler.InvokeAsync(null, CancellationToken.None);
             invoked.ShouldBeTrue();
         }
 
@@ -65,7 +66,7 @@ namespace Vertical.CommandLine.Tests.Runtime
                 invoked = true;
                 return Task.CompletedTask;
             });
-            await handler.InvokeAsync(null);
+            await handler.InvokeAsync(null, CancellationToken.None);
             invoked.ShouldBeTrue();   
         }
 

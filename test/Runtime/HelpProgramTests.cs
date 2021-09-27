@@ -7,6 +7,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Moq;
 using Shouldly;
@@ -25,7 +26,7 @@ namespace Vertical.CommandLine.Tests.Runtime
         {
             Should.Throw<ConfigurationException>(() => new HelpProgram(
                 new Mock<IHelpWriter>().Object,
-                null));
+                null!));
         }
 
         [Fact]
@@ -43,8 +44,8 @@ namespace Vertical.CommandLine.Tests.Runtime
 
             var helpProgram = new HelpProgram(helpWriterMock.Object, providerMock.Object);
 
-            helpProgram.Invoke(null);
-            return helpProgram.InvokeAsync(null);
+            helpProgram.Invoke(null!);
+            return helpProgram.InvokeAsync(null!, CancellationToken.None);
         }
 
         [Fact]
@@ -54,7 +55,7 @@ namespace Vertical.CommandLine.Tests.Runtime
                 new Mock<IHelpWriter>().Object,
                 new Mock<IProvider<IReadOnlyCollection<string>>>().Object);
 
-            Should.Throw<ConfigurationException>(() => helpProgram.Invoke(null));
+            Should.Throw<ConfigurationException>(() => helpProgram.Invoke(null!));
         }
 
         [Fact]
@@ -67,7 +68,7 @@ namespace Vertical.CommandLine.Tests.Runtime
                 new Mock<IHelpWriter>().Object,
                 providerMock.Object);
 
-            Should.Throw<ConfigurationException>(() => helpProgram.Invoke(null));
+            Should.Throw<ConfigurationException>(() => helpProgram.Invoke(null!));
         }
     }
 }

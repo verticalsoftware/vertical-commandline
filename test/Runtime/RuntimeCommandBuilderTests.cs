@@ -6,6 +6,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Moq;
 using Shouldly;
@@ -27,14 +28,14 @@ namespace Vertical.CommandLine.Tests.Runtime
         public void BuildWithNullArgsThrows()
         {
             Should.Throw<ArgumentNullException>(() =>
-                RuntimeCommandBuilder.Build(new ApplicationConfiguration<object>(), null, out _));
+                RuntimeCommandBuilder.Build(new ApplicationConfiguration<object>(), null!, out _));
         }
 
         [Fact]
         public void BuildWithNullConfigThrows()
         {
             Should.Throw<ArgumentNullException>(() =>
-                RuntimeCommandBuilder.Build(null, Array.Empty<string>(), out _));
+                RuntimeCommandBuilder.Build(null!, Array.Empty<string>(), out _));
         }
 
         [Fact]
@@ -108,7 +109,8 @@ namespace Vertical.CommandLine.Tests.Runtime
                 opt.ShouldBe(expectedOptions);
                 return Task.CompletedTask;
             });
-            return RuntimeCommandBuilder.Build(configuration, args, out var options).InvokeAsync(options);
+            return RuntimeCommandBuilder.Build(configuration, args, out var options).InvokeAsync(options,
+                CancellationToken.None);
         }
 
         public static IEnumerable<object[]> BaseAppTheories => new[]
@@ -175,7 +177,7 @@ namespace Vertical.CommandLine.Tests.Runtime
                     return Task.CompletedTask;
                 });
             return RuntimeCommandBuilder.Build(configuration, args, out var options)
-                .InvokeAsync(options);
+                .InvokeAsync(options, CancellationToken.None);
         }
 
         public static IEnumerable<object[]> CommandAppTheories => new[]

@@ -7,6 +7,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Vertical.CommandLine.Configuration;
 using Vertical.CommandLine.Infrastructure;
@@ -42,7 +43,22 @@ namespace Vertical.CommandLine
         {
             return RuntimeCommandBuilder
                 .Build(configuration, arguments, out var options)
-                .InvokeAsync(options);
+                .InvokeAsync(options, CancellationToken.None);
+        }
+
+        /// <summary>
+        /// Executes the application asynchronously.
+        /// </summary>
+        /// <param name="configuration">Configuration instance.</param>
+        /// <param name="arguments">Arguments given on the command line.</param>
+        /// <param name="cancellationToken">Cancellation token.</param>
+        public static Task RunAsync(ICommandLineConfiguration configuration,
+            IEnumerable<string> arguments,
+            CancellationToken cancellationToken)
+        {
+            return RuntimeCommandBuilder
+                .Build(configuration, arguments, out var options)
+                .InvokeAsync(options, cancellationToken);
         }
 
         /// <summary>

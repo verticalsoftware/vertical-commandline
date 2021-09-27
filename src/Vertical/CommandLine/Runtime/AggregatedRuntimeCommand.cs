@@ -6,6 +6,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Vertical.CommandLine.Configuration;
 using Vertical.CommandLine.Parsing;
@@ -77,6 +78,7 @@ namespace Vertical.CommandLine.Runtime
         public void Invoke(object options) => SelectedRuntime.Invoke(options);
 
         /// <inheritdoc />
-        public Task InvokeAsync(object options) => SelectedRuntime.InvokeAsync(options);
+        public Task InvokeAsync(object options, CancellationToken cancellationToken) => SelectedRuntime.InvokeAsync(options,
+            cancellationToken);
     }
 }

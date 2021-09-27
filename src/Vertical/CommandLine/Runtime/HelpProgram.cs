@@ -6,6 +6,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Vertical.CommandLine.Help;
 using Vertical.CommandLine.Infrastructure;
@@ -36,7 +37,7 @@ namespace Vertical.CommandLine.Runtime
         public void Invoke(object _) => InvokeHelp();
 
         /// <inheritdoc />
-        public Task InvokeAsync(object _)
+        public Task InvokeAsync(object _, CancellationToken __)
         {
             InvokeHelp();
             return Task.CompletedTask;

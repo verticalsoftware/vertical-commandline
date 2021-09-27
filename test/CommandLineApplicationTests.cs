@@ -7,6 +7,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 using Moq;
 using Shouldly;
@@ -42,6 +43,37 @@ namespace Vertical.CommandLine.Tests
                 }), Array.Empty<string>());
 
             invoked.ShouldBeTrue();
+        }
+        
+        [Fact]
+        public async Task RunAsyncWithCancellationInvokesHandler()
+        {
+            using var cancelTokenSource = new CancellationTokenSource();
+            var cancelToken = cancelTokenSource.Token;
+            
+            var invoked = false;
+            var cancelled = false;
+
+            var configuration = new ApplicationConfiguration<object>()
+                .OnExecuteAsync(async (_, token) =>
+                {
+                    token.ShouldBe(cancelToken);
+                    while (!(cancelled = token.IsCancellationRequested))
+                    {
+                        await Task.Delay(100);
+                    }
+                    invoked = true;
+                });
+
+            var runTask = Task.Run(() => CommandLineApplication.RunAsync(configuration, Array.Empty<string>(),
+                cancelToken));
+
+            cancelTokenSource.Cancel();
+
+            await runTask;
+
+            invoked.ShouldBeTrue();
+            cancelled.ShouldBeTrue();
         }
 
         [Fact]

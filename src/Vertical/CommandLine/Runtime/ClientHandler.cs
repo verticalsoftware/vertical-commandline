@@ -6,6 +6,7 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Threading;
 using System.Threading.Tasks;
 using Vertical.CommandLine.Infrastructure;
 
@@ -18,7 +19,7 @@ namespace Vertical.CommandLine.Runtime
     internal sealed class ClientHandler<TOptions> where TOptions : class
     {
         private readonly Action<TOptions>? _syncHandler;
-        private readonly Func<TOptions, Task>? _asyncHandler;
+        private readonly Func<TOptions, CancellationToken, Task>? _asyncHandler;
 
         /// <summary>
         /// Creates a new instance.
@@ -31,18 +32,31 @@ namespace Vertical.CommandLine.Runtime
         /// Creates a new instance.
         /// </summary>
         /// <param name="handler">Client defined asynchronous handler.</param>
-        internal ClientHandler(Func<TOptions, Task> handler) => _asyncHandler = handler ??
-            throw new ArgumentNullException(nameof(handler));
+        internal ClientHandler(Func<TOptions, Task> handler)
+        {
+            Check.NotNull(handler, nameof(handler));
+            _asyncHandler = (options, token) => handler(options);
+        }
+
+        /// <summary>
+        /// Creates a new instance.
+        /// </summary>
+        /// <param name="handler">Client defined asynchronous handler with cancellation support.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="handler"/> is null.</exception>
+        internal ClientHandler(Func<TOptions, CancellationToken, Task> handler)
+        {
+            _asyncHandler = handler ?? throw new ArgumentNullException(nameof(handler));
+        }
 
         /// <summary>
         /// Invokes the handler synchronously.
         /// </summary>
         /// <param name="options">Options instance.</param>
-        public void Invoke(TOptions options)
+        internal void Invoke(TOptions options)
         {
             if (_syncHandler == null)
             {
-                _asyncHandler!(options).GetAwaiter().GetResult();
+                _asyncHandler!(options, CancellationToken.None).GetAwaiter().GetResult();
                 return;
             }
 
@@ -55,19 +69,21 @@ namespace Vertical.CommandLine.Runtime
         public bool IsAsync => _asyncHandler != null;
 
         /// <summary>
-        /// Invokes the handler asynchronously.
+        /// Invokes the handler asynchronously with cancellation support.
         /// </summary>
         /// <param name="options">Options instance.</param>
+        /// <param name="cancellationToken">Cancellation token.</param>
         /// <returns>Task</returns>
-        public Task InvokeAsync(TOptions options)
+        internal Task InvokeAsync(TOptions options, CancellationToken cancellationToken)
         {
-            if (_asyncHandler == null)
+            if (_asyncHandler != null)
             {
-                _syncHandler!(options);
-                return Task.CompletedTask;
+                return _asyncHandler(options, cancellationToken);
             }
-
-            return _asyncHandler(options);
+            
+            _syncHandler!(options);
+            
+            return Task.CompletedTask;
         }
 
         /// <inheritdoc />
