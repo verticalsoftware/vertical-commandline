@@ -101,5 +101,28 @@ namespace Vertical.CommandLine.Infrastructure
             var markerIndex = typeName.IndexOf('`');
             return markerIndex > -1 ? typeName.Substring(0, markerIndex) : typeName;
         }
+
+        internal static string GetFriendlyDisplayName(Type type)
+        {
+            try
+            {
+                if (!type.IsGenericType)
+                    return type.Name;
+
+                var genericTypeName = type.GetGenericTypeDefinition().Name;
+                var tickIndex = genericTypeName.IndexOf('`');
+                var trimmedTypeName = genericTypeName.Substring(0, tickIndex);
+                var typeParams = type
+                    .GetGenericArguments()
+                    .Select(GetFriendlyDisplayName);
+                var typeParamString = string.Join(",", typeParams);
+
+                return $"{trimmedTypeName}<{typeParamString}>";
+            }
+            catch
+            {
+                return type.Name;
+            }
+        }
     }
 }
