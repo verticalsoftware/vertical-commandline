@@ -7,6 +7,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 
 namespace Vertical.CommandLine.Help
 {
@@ -43,8 +44,8 @@ namespace Vertical.CommandLine.Help
             "\tu              : Previous half page",
             "\tj, <enter>     : Next line",
             "\tk              : Previous line",
-            "\tg, <           : First line",
-            "\tG, >           : Next line",
+            "\tg, <           : First page",
+            "\tG, >           : Last page",
             "\th              : Show command list",
             "\tq              : Quit"
         };
@@ -85,41 +86,46 @@ namespace Vertical.CommandLine.Help
             Help,
             Quit
         }
-
-        // Define key/command structure
-        private struct CommandKeyMapping
+        
+        private sealed class CommandKeyMapping2
         {
-            internal CommandKeyMapping(Command command, char keyChar)
+            private readonly ConsoleKey _key;
+            private readonly ConsoleModifiers _modifiers;
+            
+            internal CommandKeyMapping2(Command command, ConsoleKey key, bool shift = false)
             {
                 Command = command;
-                KeyChar = keyChar;
+                
+                _key = key;
+                _modifiers = shift ? ConsoleModifiers.Shift : default;
             }
-
+            
             internal Command Command { get; }
-            internal char KeyChar { get; }
+
+            internal bool IsEquivalentOf(in ConsoleKeyInfo key) => key.Key == _key && key.Modifiers == _modifiers;
         }
 
         // Defines mapping between keys and commands
-        private static readonly CommandKeyMapping[] Commands = new[]
+        private static readonly CommandKeyMapping2[] Commands = new[]
         {
-            new CommandKeyMapping(Command.PrevPage, 'b'),
-            new CommandKeyMapping(Command.PrevHalfPage, 'u'),
-            new CommandKeyMapping(Command.PrevLine, 'k'),
-            new CommandKeyMapping(Command.NextPage, ' '),
-            new CommandKeyMapping(Command.NextHalfPage, 'd'),
-            new CommandKeyMapping(Command.NextLine, 'j'),
-            new CommandKeyMapping(Command.NextLine, (char)0xd),
-            new CommandKeyMapping(Command.NextLine, (char)0xa),
-            new CommandKeyMapping(Command.FirstLine, 'g'),
-            new CommandKeyMapping(Command.FirstLine, '<'),
-            new CommandKeyMapping(Command.LastLine, 'G'),
-            new CommandKeyMapping(Command.LastLine, '>'),
-            new CommandKeyMapping(Command.Help, 'h'),
-            new CommandKeyMapping(Command.Quit, 'q'),
-            new CommandKeyMapping(Command.Quit, (char)0x1b)
+            new CommandKeyMapping2(Command.PrevPage, ConsoleKey.B),
+            new CommandKeyMapping2(Command.PrevPage, ConsoleKey.UpArrow),
+            new CommandKeyMapping2(Command.PrevHalfPage, ConsoleKey.U),
+            new CommandKeyMapping2(Command.PrevLine, ConsoleKey.K),
+            new CommandKeyMapping2(Command.NextPage, ConsoleKey.Spacebar),
+            new CommandKeyMapping2(Command.NextPage, ConsoleKey.DownArrow),
+            new CommandKeyMapping2(Command.NextHalfPage, ConsoleKey.D),
+            new CommandKeyMapping2(Command.NextLine, ConsoleKey.J),
+            new CommandKeyMapping2(Command.NextLine, ConsoleKey.Enter),
+            new CommandKeyMapping2(Command.FirstLine, ConsoleKey.G),
+            new CommandKeyMapping2(Command.FirstLine, ConsoleKey.OemComma, shift: true),
+            new CommandKeyMapping2(Command.LastLine, ConsoleKey.G, shift: true),
+            new CommandKeyMapping2(Command.LastLine, ConsoleKey.OemPeriod, shift: true),
+            new CommandKeyMapping2(Command.Help, ConsoleKey.H),
+            new CommandKeyMapping2(Command.Quit, ConsoleKey.Q),
+            new CommandKeyMapping2(Command.Quit, ConsoleKey.Escape)
         };
-
-
+        
         /// <inheritdoc />
         public void WriteContent(IReadOnlyCollection<string> content)
         {
@@ -154,10 +160,13 @@ namespace Vertical.CommandLine.Help
 
             while (true)
             {
-                switch (PromptAndAwaitCommand(prompt))
+                var command = PromptAndAwaitCommand(prompt);
+
+                if (_helpMode) return false;
+                
+                switch (command)
                 {
                     case Command.None:
-                        if (_helpMode) return false;
                         prompt = "[command], [h]elp, [q]uit";
                         continue;
 
@@ -216,9 +225,10 @@ namespace Vertical.CommandLine.Help
             }
             Console.Write(" ");
 
-            var keyChar = Console.ReadKey(true).KeyChar;
+            var keyInfo = Console.ReadKey(true);
 
-            return Array.Find(Commands, cmd => cmd.KeyChar == keyChar).Command;
+            return Commands.FirstOrDefault(cmd => cmd.IsEquivalentOf(keyInfo))?.Command
+                   ?? Command.None;
         }
 
         private static void ShowHelp()
