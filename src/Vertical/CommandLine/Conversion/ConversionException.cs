@@ -48,7 +48,9 @@ namespace Vertical.CommandLine.Conversion
         // Formats the exception message.
         private static string FormatMessage(string context, Type targetType, string argumentValue)
         {
-            return $"{context}: could not convert {Formatting.Quote(argumentValue)} to target type {targetType.Name}.";
+            var friendlyTargetType = TypeHelpers.GetFriendlyDisplayName(targetType);
+            
+            return $"{context}: could not convert {Formatting.Quote(argumentValue)} to target type {friendlyTargetType}.";
         }
     }
 }
