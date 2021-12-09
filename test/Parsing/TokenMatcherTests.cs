@@ -37,7 +37,9 @@ namespace Vertical.CommandLine.Tests.Parsing
             Scenario(TokenMatcher.CompositeOption, "-a:", new[]{ new Token(TokenType.CompositeOption, "a")}),
             Scenario(TokenMatcher.CompositeOption, "-a=", new[]{ new Token(TokenType.CompositeOption, "a")}),
             Scenario(TokenMatcher.CompositeOption, "--long=", new[]{ new Token(TokenType.CompositeOption, "long")}),
-            Scenario(TokenMatcher.CompositeOption, "--long:", new[]{ new Token(TokenType.CompositeOption, "long")})
+            Scenario(TokenMatcher.CompositeOption, "--long:", new[]{ new Token(TokenType.CompositeOption, "long")}),
+            Scenario(TokenMatcher.CompositeOption, "--long-with-dashes:", new[]{ new Token(TokenType.CompositeOption, "long-with-dashes")}),
+            Scenario(TokenMatcher.CompositeOption, "--long-with-dashes=", new[]{ new Token(TokenType.CompositeOption, "long-with-dashes")})
         );
 
         [Theory, MemberData(nameof(NegativeTheories))]
