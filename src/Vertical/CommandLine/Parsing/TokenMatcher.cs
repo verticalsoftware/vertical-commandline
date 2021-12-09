@@ -26,7 +26,7 @@ namespace Vertical.CommandLine.Parsing
         private static readonly string CompactShortOptionPattern = $"^-(?<{TemplateIdGroup}>[0-9a-zA-Z]+)$";
         private static readonly string LongOptionPattern = $"^--(?<{TemplateIdGroup}>[\\w-]+)$";
         private static readonly string WordPattern = $"^(?![\\W])(?<{TemplateIdGroup}>[0-9a-zA-Z-]+)$";
-        private static readonly string CompositeOptionPattern = $"^--?(?<{TemplateIdGroup}>[0-9a-zA-Z]+)[=:](?<{OperandGroup}>.+)?$";
+        private static readonly string CompositeOptionPattern = $"^--?(?<{TemplateIdGroup}>[\\w-]+)[=:](?<{OperandGroup}>.+)?$";
         private const string OptionsEndPattern = "^--$";
         private const string AnyPattern = ".+";
 
