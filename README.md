@@ -2,7 +2,7 @@
 
 An easily configured command line arguments parser that makes short work of turning those pesky `string[] args` into a strongly-typed configuration object.
 
-![.net](https://img.shields.io/badge/Frameworks-.netstandard21+net50-purple)
+![.net](https://img.shields.io/badge/Frameworks-.netstandard2.0+.netstandard2.1+net5.0+net6.0-purple)
 ![GitHub](https://img.shields.io/github/license/verticalsoftware/vertical-commandline)
 ![Package info](https://img.shields.io/nuget/v/vertical-commandline.svg)
 
