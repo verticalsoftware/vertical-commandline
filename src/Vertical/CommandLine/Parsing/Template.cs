@@ -55,6 +55,18 @@ namespace Vertical.CommandLine.Parsing
                 () => ConfigurationExceptions.InvalidCommandTemplate(template)));
         }
 
+        /// <summary>
+        /// Creates either an option, switch, or command template.
+        /// </summary>
+        /// <param name="template">String to convert to template.</param>
+        /// <returns><see cref="Template"/></returns>
+        internal static Template Parse(string template)
+        {
+            return template.StartsWith("-")
+                ? ForOptionOrSwitch(template)
+                : ForCommand(template);
+        }
+
         /// <inheritdoc />
         public override string ToString() => string.Join(TokenSeparator.ToString(),
             Tokens.Select(token => token.DistinguishedForm));

@@ -80,8 +80,7 @@ namespace Vertical.CommandLine.Configuration
         /// <returns>Configuration.</returns>
         public ApplicationConfiguration<TOptions> HelpOption(string template, IHelpWriter? helpWriter = null)
         {
-            HelpTemplate = Template.ForOptionOrSwitch(template);
-
+            HelpTemplate = Template.Parse(template);
             _helpWriter = helpWriter;
             ParserConfig.AddTemplate(HelpTemplate);
             ParserConfig.AddParser(new HelpOptionParser<TOptions>(HelpTemplate));
