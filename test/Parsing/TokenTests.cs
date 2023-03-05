@@ -34,11 +34,12 @@ namespace Vertical.CommandLine.Tests.Parsing
         }
 
         [Theory]
-        [InlineData(Type, Value, true)]
-        [InlineData(TokenType.LongOption, Value, false)]
-        [InlineData(Type, "a", false)]
+        [InlineData(TokenType.ShortOption, Value, true)]
+        [InlineData(TokenType.LongOption, Value, true)]
+        [InlineData(TokenType.CompositeOption, Value, true)]
+        [InlineData(TokenType.ShortOption, "a", false)]
         [InlineData(TokenType.LongOption, "a", false)]
-        public void EqualsReturnsFalseForMismatchProperties(TokenType type, string value, bool expected)
+        public void EqualsReturnsExpectedForTokenProperties(TokenType type, string value, bool expected)
         {
             new Token(type, value).Equals(_instanceUnderTest).ShouldBe(expected);
         }

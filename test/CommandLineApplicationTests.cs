@@ -7,6 +7,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Moq;
@@ -180,6 +181,21 @@ namespace Vertical.CommandLine.Tests
             });
             
             result["multi"].ShouldBe("red+green+blue");
+        }
+
+        [Fact]
+        public void ParseCompositeBug60()
+        {
+            var config = new ApplicationConfiguration<Dictionary<string, string>>();
+            config.Option("-S|--surround", arg => arg.Map.Using((opt, value) => opt["option"] = value));
+            config.Options.UseFactory(() => new Dictionary<string, string>());
+
+            var result = CommandLineApplication.ParseArguments<Dictionary<string, string>>(config, new[]
+            {
+                "-S=*5"
+            });
+
+            result["option"].ShouldBe("*5");
         }
     }
 }
