@@ -82,7 +82,7 @@ namespace Vertical.CommandLine.Parsing
         /// <inheritdoc />
         public bool Equals(Token other)
         {
-            return Type == other.Type && string.Equals(Value, other.Value);
+            return IsTypeCompatibleWith(other.Type) && string.Equals(Value, other.Value);
         }
 
         /// <inheritdoc />
@@ -91,5 +91,18 @@ namespace Vertical.CommandLine.Parsing
         /// <inheritdoc />
         public override int GetHashCode() => HashCode.Combine(Type.GetHashCode(), 
             (Value?.GetHashCode()).GetValueOrDefault());
+
+        private bool IsTypeCompatibleWith(TokenType otherType)
+        {
+            switch (Type)
+            {
+                case TokenType.LongOption:
+                case TokenType.CompositeOption:
+                    return otherType == TokenType.LongOption || otherType == TokenType.CompositeOption;
+                
+                default:
+                    return Type == otherType;
+            }
+        }
     }
 }

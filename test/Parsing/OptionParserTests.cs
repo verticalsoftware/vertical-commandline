@@ -39,6 +39,28 @@ namespace Vertical.CommandLine.Tests.Parsing
         }
 
         [Fact]
+        public void ProcessContextAcceptsArgumentWithDash()
+        {
+            _instanceUnderTest.ProcessContext(_options, new ParseContext(new[] {"--option=-test"}))
+                .ShouldBe(ContextResult.Argument);
+            _options.Value.ShouldBe("-test");
+        }
+
+        [Fact]
+        public void ProcessCompositeOptionWithEquals()
+        {
+            _instanceUnderTest.ProcessContext(_options, new ParseContext(new[] { "--option=value" }));
+            _options.Value.ShouldBe("value");
+        }
+        
+        [Fact]
+        public void ProcessCompositeOptionWithColon()
+        {
+            _instanceUnderTest.ProcessContext(_options, new ParseContext(new[] { "--option:value" }));
+            _options.Value.ShouldBe("value");
+        }
+
+        [Fact]
         public void ProcessContextNoMatchForNoOption()
         {
             _instanceUnderTest.ProcessContext(_options, new ParseContext(new[]{"option", "test"}))

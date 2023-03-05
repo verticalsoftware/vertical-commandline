@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;netstandard2.1;net5.0;net6.0</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0;netstandard2.1;net6.0</TargetFrameworks>
     <LangVersion>8.0</LangVersion>
     <RootNamespace />    
     <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
@@ -9,7 +9,7 @@
     <PublicSign Condition="'$(OS)' != 'Windows_NT'">true</PublicSign>
     <Description>Simple command line argument mapping</Description>
     <Authors>Vertical Software contributors</Authors>
-    <VersionPrefix>2.2.0</VersionPrefix>
+    <VersionPrefix>2.3.0</VersionPrefix>
     <PackageId>vertical-commandline</PackageId>
     <PackageTags>commandline;utilities</PackageTags>
     <PackageProjectUrl>https://github.com/verticalsoftware/vertical-commandline</PackageProjectUrl>
