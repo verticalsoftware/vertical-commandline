@@ -96,9 +96,12 @@ namespace Vertical.CommandLine.Parsing
         {
             switch (Type)
             {
+                case TokenType.ShortOption:
                 case TokenType.LongOption:
                 case TokenType.CompositeOption:
-                    return otherType == TokenType.LongOption || otherType == TokenType.CompositeOption;
+                    return otherType == TokenType.LongOption
+                           || otherType == TokenType.ShortOption
+                           || otherType == TokenType.CompositeOption;
                 
                 default:
                     return Type == otherType;
