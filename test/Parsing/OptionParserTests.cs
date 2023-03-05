@@ -67,6 +67,50 @@ namespace Vertical.CommandLine.Tests.Parsing
                 .ShouldBe(ContextResult.NoMatch);
         }
 
+        [Fact]
+        public void ProcessContextWithShortOptions()
+        {
+            var uut =
+                new OptionParser<MyOptions, string>(Template.ForOptionOrSwitch("-o"), ConverterFactory.CreateOrThrow<string>(),
+                    null,
+                    PropertyMapper<MyOptions, string>.Create(opt => opt.Value));
+            uut.ProcessContext(_options, new ParseContext(new[] { "-o", "value" }));
+            _options.Value.ShouldBe("value");
+        }
+        
+        [Fact]
+        public void ProcessContextWithCapitalizedShortOptions()
+        {
+            var uut =
+                new OptionParser<MyOptions, string>(Template.ForOptionOrSwitch("-S"), ConverterFactory.CreateOrThrow<string>(),
+                    null,
+                    PropertyMapper<MyOptions, string>.Create(opt => opt.Value));
+            uut.ProcessContext(_options, new ParseContext(new[] { "-S", "value" }));
+            _options.Value.ShouldBe("value");
+        }
+        
+        [Fact]
+        public void ProcessContextWithCapitalizedShortAndLongOptionsUsingShortOption()
+        {
+            var uut =
+                new OptionParser<MyOptions, string>(Template.ForOptionOrSwitch("-S|--long-option"), ConverterFactory.CreateOrThrow<string>(),
+                    null,
+                    PropertyMapper<MyOptions, string>.Create(opt => opt.Value));
+            uut.ProcessContext(_options, new ParseContext(new[] { "-S", "value" }));
+            _options.Value.ShouldBe("value");
+        }
+        
+        [Fact]
+        public void ProcessContextWithCapitalizedShortAndLongOptionsUsingLongOption()
+        {
+            var uut =
+                new OptionParser<MyOptions, string>(Template.ForOptionOrSwitch("-S|--long-option"), ConverterFactory.CreateOrThrow<string>(),
+                    null,
+                    PropertyMapper<MyOptions, string>.Create(opt => opt.Value));
+            uut.ProcessContext(_options, new ParseContext(new[] { "--long-option", "value" }));
+            _options.Value.ShouldBe("value");
+        }
+
         [Theory]
         [InlineData("--")]
         [InlineData("arg")]
