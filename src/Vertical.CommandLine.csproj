@@ -9,13 +9,14 @@
     <PublicSign Condition="'$(OS)' != 'Windows_NT'">true</PublicSign>
     <Description>Simple command line argument mapping</Description>
     <Authors>Vertical Software contributors</Authors>
-    <VersionPrefix>2.3.1</VersionPrefix>
+    <VersionPrefix>2.3.2</VersionPrefix>
     <PackageId>vertical-commandline</PackageId>
     <PackageTags>commandline;utilities</PackageTags>
     <PackageProjectUrl>https://github.com/verticalsoftware/vertical-commandline</PackageProjectUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageIcon>package-logo.png</PackageIcon>
     <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/verticalsoftware/vertical-commandline</RepositoryUrl>    
     <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
     <Title>vertical-commandline</Title>
     <Copyright>Copyright (C) 2018 Vertical Software</Copyright>
