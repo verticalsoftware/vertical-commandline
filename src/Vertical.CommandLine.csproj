@@ -16,6 +16,7 @@
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageIcon>package-logo.png</PackageIcon>
     <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/verticalsoftware/vertical-commandline</RepositoryUrl>
     <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
     <Title>vertical-commandline</Title>
     <Copyright>Copyright (C) 2018 Vertical Software</Copyright>
