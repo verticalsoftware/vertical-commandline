@@ -9,11 +9,7 @@
     <PublicSign Condition="'$(OS)' != 'Windows_NT'">true</PublicSign>
     <Description>Simple command line argument mapping</Description>
     <Authors>Vertical Software contributors</Authors>
-<<<<<<< Updated upstream
-    <VersionPrefix>2.3.1</VersionPrefix>
-=======
     <VersionPrefix>2.4.0</VersionPrefix>
->>>>>>> Stashed changes
     <PackageId>vertical-commandline</PackageId>
     <PackageTags>commandline;utilities</PackageTags>
     <PackageProjectUrl>https://github.com/verticalsoftware/vertical-commandline</PackageProjectUrl>
