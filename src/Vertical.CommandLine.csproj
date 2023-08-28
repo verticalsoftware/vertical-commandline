@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;netstandard2.1;net6.0</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0;net6.0;net7.0</TargetFrameworks>
     <LangVersion>8.0</LangVersion>
     <RootNamespace />    
     <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
@@ -9,13 +9,14 @@
     <PublicSign Condition="'$(OS)' != 'Windows_NT'">true</PublicSign>
     <Description>Simple command line argument mapping</Description>
     <Authors>Vertical Software contributors</Authors>
-    <VersionPrefix>2.3.1</VersionPrefix>
+    <VersionPrefix>2.4.0</VersionPrefix>
     <PackageId>vertical-commandline</PackageId>
     <PackageTags>commandline;utilities</PackageTags>
     <PackageProjectUrl>https://github.com/verticalsoftware/vertical-commandline</PackageProjectUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageIcon>package-logo.png</PackageIcon>
     <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/verticalsoftware/vertical-commandline</RepositoryUrl>
     <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
     <Title>vertical-commandline</Title>
     <Copyright>Copyright (C) 2018 Vertical Software</Copyright>
@@ -24,10 +25,12 @@
     <SymbolsPackageFormat>snupkg</SymbolsPackageFormat>
     <IsPackable>true</IsPackable>
     <Nullable>enable</Nullable>
+    <PackageReadMeFile>README.md</PackageReadMeFile>
   </PropertyGroup>
   
   <ItemGroup>
     <None Include="../assets/package-logo.png" Pack="true" Visible="false" PackagePath="" />
+    <None Include="../README.md" Pack="true" PackagePath="/" />
   </ItemGroup>
   
   <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
